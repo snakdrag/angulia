@@ -1,5 +1,15 @@
 # angulia
 
+**don't install!!!**
+
+required:
+
+- `quickshell`
+- `hyprland`
+- `brightnessctl`
+- `matugen`
+- `awww`
+
 installation
 
 ```bash
