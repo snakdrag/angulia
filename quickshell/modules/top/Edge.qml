@@ -1,13 +1,15 @@
 import QtQuick
 import "../custom" as Custom
+import qs.angulia.theme
+import qs.angulia.quickshell.settings
 
 Item {
     id: _
     anchors.fill: parent
 
-    property real radius: (0)
-    property color color: ("#ffffff")
-    property int edge: (0)
+    property real radius: (Decorations.radius)
+    property color color: (Colors.surface)
+    property int edge: (Decorations.edge)
 
     Custom.RoundRectangle {
         anchors.top: parent.top

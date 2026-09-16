@@ -1,25 +1,23 @@
 import Quickshell 
 import "layers" as Layers
 import "top" as Top
-import qs.angulia.theme
+import "overlay" as Overlay
 
 ShellRoot {
-    Layers.ExclusiveZones {
-        exclusiveZones: _edge.edge + 20
-        topExclusiveZone: exclusiveZones + 0
-        leftExclusiveZone: exclusiveZones + 0
-        rightExclusiveZone: exclusiveZones + 0
-        bottomExclusiveZone: exclusiveZones + 0
+    Layers.ExclusiveZones {}
+    Layers.Background {
+        mask: Region {}
     }
-    Layers.Background {}
-    Layers.Bottom {}
+    Layers.Bottom {
+        mask: Region {}
+    }
     Layers.Top {
-        Top.Edge {
-            id: _edge
-            edge: 10
-            radius: 25
-            color: Colors.surface
-        }
+        mask: Region {}
+        Top.Edge {}
+        Top.Notifications {}
     }
-    Layers.Overlay {}
+    Layers.Overlay {
+        mask: Region { regions: [_notifications.region, ] }
+        Overlay.Notifications { id: _notifications }
+    }
 }

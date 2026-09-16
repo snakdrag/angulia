@@ -1,13 +1,14 @@
 import Quickshell
 import Quickshell.Wayland
+import qs.angulia.quickshell.settings
 
 ShellRoot {
     id: _
-    property int exclusiveZones: (0)
-    property int topExclusiveZone: (exclusiveZones)
-    property int leftExclusiveZone: (exclusiveZones)
-    property int rightExclusiveZone: (exclusiveZones)
-    property int bottomExclusiveZone: (exclusiveZones)
+    property int exclusiveZones: (Decorations.exclusiveZones)
+    property int topExclusiveZone: (Decorations.topExclusiveZone)
+    property int leftExclusiveZone: (Decorations.leftExclusiveZone)
+    property int rightExclusiveZone: (Decorations.rightExclusiveZone)
+    property int bottomExclusiveZone: (Decorations.bottomExclusiveZone)
     PanelWindow {
         anchors.top: true
         exclusiveZone: _.topExclusiveZone

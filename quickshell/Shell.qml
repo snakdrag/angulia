@@ -1,6 +1,4 @@
 import Quickshell
 import "modules" as Modules
 
-ShellRoot {
-    Modules.Layers {}
-}
+Modules.Layers {}

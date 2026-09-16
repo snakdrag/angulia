@@ -1,6 +1,7 @@
 # angulia
 
 **don't install!!!**
+**never run setup.sh unless you have backup everything might change**
 
 required:
 
