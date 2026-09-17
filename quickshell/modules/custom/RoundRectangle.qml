@@ -8,7 +8,6 @@ Item {
     property int rectangleHeight: (100)
     property real radius: (0)
     property color color: ("#ffffff")
-
     property bool isTopLeft: (false)
     property bool isTopRight: (false)
     property bool isLeftTop: (false)
@@ -42,6 +41,12 @@ Item {
         id: _region
         item: __
     }
+    Behavior on implicitHeight {
+        NumberAnimation {
+            duration: 300
+            easing.type: Easing.OutCubic
+        }
+    }
     Rectangle {
         id: __
         anchors.fill: parent
@@ -60,7 +65,7 @@ Item {
         anchors.bottom: __.top
         radius: _.radius
         color: _.color
-        visible: _.isTopLeft & !_.isTop
+        visible: _.isTopLeft && !_.isTop && rectangleHeight !== 0 && rectangleWidth !== 0
         rotation: 270
     }
     RoundCorner {
@@ -68,7 +73,7 @@ Item {
         anchors.bottom: __.top
         radius: _.radius
         color: _.color
-        visible: _.isTopRight & !_.isTop
+        visible: _.isTopRight && !_.isTop && rectangleHeight !== 0 && rectangleWidth !== 0
         rotation: 180
     }
     RoundCorner {
@@ -76,7 +81,7 @@ Item {
         anchors.right: __.left
         radius: _.radius
         color: _.color
-        visible: _.isLeftTop & !_.isLeft
+        visible: _.isLeftTop && !_.isLeft && rectangleHeight !== 0 && rectangleWidth !== 0
         rotation: 90
     }
     RoundCorner {
@@ -84,7 +89,7 @@ Item {
         anchors.right: __.left
         radius: _.radius
         color: _.color
-        visible: _.isLeftBottom & !_.isLeft
+        visible: _.isLeftBottom && !_.isLeft && rectangleHeight !== 0 && rectangleWidth !== 0
         rotation: 180
     }
     RoundCorner {
@@ -92,7 +97,7 @@ Item {
         anchors.left: __.right
         radius: _.radius
         color: _.color
-        visible: _.isRightTop & !_.isRight
+        visible: _.isRightTop && !_.isRight && rectangleHeight !== 0 && rectangleWidth !== 0
         rotation: 0
     }
     RoundCorner {
@@ -100,7 +105,7 @@ Item {
         anchors.left: __.right
         radius: _.radius
         color: _.color
-        visible: _.isRightBottom & !_.isRight
+        visible: _.isRightBottom && !_.isRight && rectangleHeight !== 0 && rectangleWidth !== 0
         rotation: 270
     }
     RoundCorner {
@@ -108,7 +113,7 @@ Item {
         anchors.left: __.left
         radius: _.radius
         color: _.color
-        visible: _.isBottomLeft & !_.isBottom
+        visible: _.isBottomLeft && !_.isBottom && rectangleHeight !== 0 && rectangleWidth !== 0
         rotation: 0
     }
     RoundCorner {
@@ -116,7 +121,7 @@ Item {
         anchors.right: __.right
         radius: _.radius
         color: _.color
-        visible: _.isBottomRight & !_.isBottom
+        visible: _.isBottomRight && !_.isBottom && rectangleHeight !== 0 && rectangleWidth !== 0
         rotation: 90
     }
 }

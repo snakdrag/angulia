@@ -14,12 +14,18 @@ Singleton {
     readonly property int rightExclusiveZone: (exclusiveZones + 0)
     readonly property int bottomExclusiveZone: (exclusiveZones + 0)
 
-    readonly property int notificationDirection: (3)
+    readonly property int notificationDirection: (1)
     readonly property int notificationSpace: (10)
     readonly property int notificationWidth: (400)
     readonly property int notificationHeight: (80)
-    readonly property font font: ({
+    readonly property font notificationSummaryFont: ({
         family: "Inter",
-        pixelsize: 12,
+        pixelSize: 15,
+        bold: true,
+    })
+    readonly property font notificationBodyFont: ({
+        family: "Inter",
+        pixelSize: 15,
+        bold: false,
     })
 }

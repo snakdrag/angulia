@@ -27,7 +27,7 @@ binds_create("SUPER + D", hl.dsp.exec_cmd("flatpak run dev.vencord.Vesktop"))
 binds_create("SUPER + C", hl.dsp.exec_cmd("distrobox-enter -n fedora -- code"))
 binds_create("SUPER + R",
     hl.dsp.exec_cmd(
-        "notify-send 'Im a test notification... testtesttesttesttesttesttesttesttesttest' 'Im test notification body... testtestesttesttesttesttesttest'"))
+        "notify-send 'Im a test notification... testtesttesttesttesttesttesttesttesttest' 'Im test notification body... testtestesttesttesttesttesttesttesttestesttesttesttesttesttesttesttestesttesttesttesttesttest'"))
 
 
 return {

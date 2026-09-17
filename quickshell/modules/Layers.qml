@@ -14,7 +14,7 @@ ShellRoot {
     Layers.Top {
         mask: Region {}
         Top.Edge {}
-        Top.Notifications {}
+        Top.Notifications { contentHeight: _notifications.contentHeight }
     }
     Layers.Overlay {
         mask: Region { regions: [_notifications.region, ] }
