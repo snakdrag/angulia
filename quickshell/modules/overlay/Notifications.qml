@@ -55,12 +55,6 @@ Item {
         anchors.margins: _.edge + _.space
         radius: _.radius
         color: "transparent"
-        Behavior on implicitWidth {
-            NumberAnimation {
-                duration: 300
-                easing.type: Easing.OutCubic
-            }
-        }
         Behavior on implicitHeight {
             NumberAnimation {
                 duration: 300
@@ -72,24 +66,6 @@ Item {
             anchors.fill: parent
             spacing: _.space
             model: Services.Notifications.server.trackedNotifications
-            add: Transition {
-                NumberAnimation { 
-                    properties: "scale"
-                    from: 0
-                    to: 1
-                    duration: 300
-                    easing.type: Easing.OutCubic 
-                }
-            }
-            remove: Transition {
-                NumberAnimation { 
-                    properties: "scale"
-                    from: 1
-                    to: 0
-                    duration: 300
-                    easing.type: Easing.OutCubic 
-                }
-            }
             displaced: Transition {
                 NumberAnimation { 
                     properties: "y" 
@@ -104,8 +80,22 @@ Item {
                 implicitHeight: Math.max(_.notificationHeight, _summary.height + _body.height + _.space * 2)
                 radius: _.radius
                 color: _.cardColor
+                Image {
+                    id: _iamge
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.bottom: parent.bottom
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.margins: _.space
+                    width: _.notificationWidth / 8
+                    height: _.notificationWidth / 8
+                    source: _card.modelData.image || _card.modelData.appIcon || ""
+                    fillMode: Image.PreserveAspectFit
+                    visible: status === Image.Ready && source != ""
+                }
                 Item {
                     anchors.fill: parent
+                    anchors.leftMargin: _iamge.visible ? _iamge.width + _.space * 2: _.space
                     anchors.margins: _.space
                     Text {
                         id: _summary
@@ -136,16 +126,16 @@ Item {
                     xAxis.maximum: _.notificationWidth
                     yAxis.enabled: false
                     onActiveChanged: {
-                        if (_card.x <= -_.notificationWidth / 2) {
+                        if (_card.x < -_.notificationWidth / 2) {
+                            _card.modelData.dismiss()
+                        } 
+                        else if (_card.x > _.notificationWidth / 2) {
                             if (_card.modelData.actions.length > 0) {
                                 _card.modelData.actions[0].invoke()
                             }
                             else {
                                 _card.modelData.dismiss()
                             }
-                        } 
-                        else if (_card.x >= _.notificationWidth / 2) {
-                            _card.modelData.dismiss()
                         }
                         else {
                             _card.x = 0
