@@ -76,10 +76,17 @@ Item {
             delegate: Rectangle {
                 id: _card
                 required property var modelData
+                readonly property bool haveAction: (modelData.actions.length > 0)
                 implicitWidth: _.notificationWidth
                 implicitHeight: Math.max(_.notificationHeight, _summary.height + _body.height + _.space * 2)
                 radius: _.radius
                 color: _.cardColor
+                Behavior on x {
+                    NumberAnimation { 
+                        duration: 300
+                        easing.type: Easing.OutCubic 
+                    }
+                }
                 Image {
                     id: _iamge
                     anchors.top: parent.top
@@ -130,7 +137,7 @@ Item {
                             _card.modelData.dismiss()
                         } 
                         else if (_card.x > _.notificationWidth / 2) {
-                            if (_card.modelData.actions.length > 0) {
+                            if (_card.haveAction) {
                                 _card.modelData.actions[0].invoke()
                             }
                             else {
