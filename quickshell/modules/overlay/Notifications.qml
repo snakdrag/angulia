@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Widgets
+import Quickshell.Services.Notifications
 import "../custom" as Custom
 import "../services" as Services
 import qs.angulia.theme
@@ -188,7 +189,7 @@ Item {
                             font: _.summaryFont
                             elide: Text.ElideRight
                             wrapMode: Text.WrapAnywhere
-                            maximumLineCount: _card.modelData.urgency === Services.Notifications.NotificationUrgency.Critical ? undefined: 1
+                            maximumLineCount: _card.modelData.urgency === NotificationUrgency.Critical ? undefined: 1
                         }
                         Text {
                             id: _body
@@ -200,7 +201,7 @@ Item {
                             font: _.bodyFont
                             elide: Text.ElideRight
                             wrapMode: Text.WrapAnywhere
-                            maximumLineCount: _card.modelData.urgency === Services.Notifications.NotificationUrgency.Critical ? undefined: 3
+                            maximumLineCount: _card.modelData.urgency === NotificationUrgency.Critical ? undefined: 3
                         }
                     }
                     Behavior on x {
@@ -209,10 +210,24 @@ Item {
                             easing.type: Easing.OutCubic 
                         }
                     }
+                    MouseArea {
+                        anchors.fill: parent
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
+                        onClicked: {
+                            if (mouse.button === Qt.LeftButton) {
+                                parent.x = _.notificationWidth / 4 + _.space
+                            } 
+                            else if (mouse.button === Qt.RightButton) {
+                                parent.x = -_.notificationWidth / 4 - _.space
+                            }
+                            else if (mouse.button === Qt.MiddleButton) {
+                                parent.x = 0
+                            }
+                        }
+                    }
                     DragHandler {
                         xAxis.enabled: true
                         yAxis.enabled: false
-                        cursorShape: Qt.ClosedHandCursor
                         onActiveChanged: {
                             if (parent.x < -_.notificationWidth / 2 - _.space) {
                                 _card.modelData.dismiss()
@@ -232,21 +247,6 @@ Item {
                                 parent.x = _.notificationWidth / 4 + _.space
                             }
                             else {
-                                parent.x = 0
-                            }
-                        }
-                    }
-                    MouseArea {
-                        anchors.fill: parent
-                        acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-                        onClicked: {
-                            if (mouse.button === Qt.LeftButton) {
-                                parent.x = _.notificationWidth / 4 + _.space
-                            } 
-                            else if (mouse.button === Qt.RightButton) {
-                                parent.x = -_.notificationWidth / 4 - _.space
-                            }
-                            else if (mouse.button === Qt.MiddleButton) {
                                 parent.x = 0
                             }
                         }
