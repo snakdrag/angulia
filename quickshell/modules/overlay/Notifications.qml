@@ -111,6 +111,7 @@ Item {
                     }
                     MouseArea {
                         anchors.fill: parent
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
                         cursorShape: Qt.PointingHandCursor
                         onClicked: {
                             _card.modelData.dismiss()
@@ -143,6 +144,7 @@ Item {
                     }
                     MouseArea {
                         anchors.fill: parent
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
                         cursorShape: Qt.PointingHandCursor
                         onClicked: {
                             if (_card.haveAction) {
@@ -230,6 +232,21 @@ Item {
                                 parent.x = _.notificationWidth / 4 + _.space
                             }
                             else {
+                                parent.x = 0
+                            }
+                        }
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
+                        onClicked: {
+                            if (mouse.button === Qt.LeftButton) {
+                                parent.x = _.notificationWidth / 4 + _.space
+                            } 
+                            else if (mouse.button === Qt.RightButton) {
+                                parent.x = -_.notificationWidth / 4 - _.space
+                            }
+                            else if (mouse.button === Qt.MiddleButton) {
                                 parent.x = 0
                             }
                         }
