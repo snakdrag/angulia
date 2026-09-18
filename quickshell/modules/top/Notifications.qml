@@ -32,7 +32,7 @@ Item {
     property int contentHeight: (notificationHeight)
 
     Custom.RoundRectangle {
-        rectangleWidth: _.notificationWidth + _.space * 2
+        rectangleWidth: _.contentHeight !==0 ? _.notificationWidth + _.space * 2: 0
         rectangleHeight: _.contentHeight !==0 ? _.contentHeight + _.space * 2: 0
         anchors.top: _.isTop ? parent.top: undefined
         anchors.left: _.isLeft ? parent.left: undefined

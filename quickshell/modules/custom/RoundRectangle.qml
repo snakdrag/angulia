@@ -41,6 +41,12 @@ Item {
         id: _region
         item: __
     }
+    Behavior on implicitWidth {
+        NumberAnimation {
+            duration: 300
+            easing.type: Easing.OutCubic
+        }
+    }
     Behavior on implicitHeight {
         NumberAnimation {
             duration: 300
