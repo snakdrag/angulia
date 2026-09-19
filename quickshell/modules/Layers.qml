@@ -12,9 +12,10 @@ ShellRoot {
         mask: Region {}
     }
     Layers.Top {
-        mask: Region {}
+        mask: Region { regions: [_launcher.region, ] }
         Top.Edge {}
         Top.Clock {}
+        Top.Launcher { id: _launcher }
         Top.Notifications { contentHeight: _notifications.contentHeight }
     }
     Layers.Overlay {

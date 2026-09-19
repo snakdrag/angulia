@@ -5,6 +5,7 @@ Custom.Angulia {
     id: _
     Custom.RoundRectangle {
         anchors.top: parent.top
+        anchors.left: parent.left
         anchors.right: parent.right
         anchors.rightMargin: _.edge
         rectangleWidth: parent.width
@@ -17,6 +18,7 @@ Custom.Angulia {
         isBottomRight: true
     }
     Custom.RoundRectangle {
+        anchors.top: parent.top
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.bottomMargin: _.edge
@@ -31,6 +33,7 @@ Custom.Angulia {
     }
     Custom.RoundRectangle {
         anchors.left: parent.left
+        anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.leftMargin: _.edge
         rectangleWidth: parent.width
@@ -45,6 +48,7 @@ Custom.Angulia {
     Custom.RoundRectangle {
         anchors.top: parent.top
         anchors.left: parent.left
+        anchors.bottom: parent.bottom
         anchors.topMargin: _.edge
         rectangleWidth: _.edge
         rectangleHeight: parent.height

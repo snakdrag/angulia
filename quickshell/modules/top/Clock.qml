@@ -34,7 +34,7 @@ Custom.Angulia {
         isBottomLeft: _.isLeft
         isBottomRight: _.isRight
         Text {
-            anchors.centerIn: parent
+            anchors.centerIn: parent.rectangle
             text: Qt.formatDateTime(_clock.date, "hh:mm")
             color: _.textColor
             font: _.clockFont

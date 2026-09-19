@@ -37,6 +37,7 @@ Item {
         ): rectangleHeight + radius * 2
     )
     readonly property Region region: (_region)
+    readonly property Rectangle rectangle: (__)
     Region {
         id: _region
         item: __
