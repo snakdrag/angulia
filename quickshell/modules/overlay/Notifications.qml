@@ -87,7 +87,6 @@ Item {
                 implicitWidth: _.notificationWidth
                 implicitHeight: Math.max(_.notificationHeight, _summary.height + _body.height + _.space * 2)
                 Rectangle {
-                    id: _close
                     anchors.top: parent.top
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
@@ -120,7 +119,6 @@ Item {
                     }
                 }
                 Rectangle {
-                    id: _action
                     anchors.top: parent.top
                     anchors.left: parent.left
                     anchors.bottom: parent.bottom
@@ -176,7 +174,10 @@ Item {
                         visible: status === Image.Ready && source != ""
                     }
                     Item {
-                        anchors.fill: parent
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        implicitHeight: _body.text !== "" ? _summary.height + _body.height: _summary.height
                         anchors.leftMargin: _iamge.visible ? _iamge.width + _.space * 2: _.space
                         anchors.margins: _.space
                         Text {
