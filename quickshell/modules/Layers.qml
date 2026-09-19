@@ -14,6 +14,7 @@ ShellRoot {
     Layers.Top {
         mask: Region {}
         Top.Edge {}
+        Top.Clock {}
         Top.Notifications { contentHeight: _notifications.contentHeight }
     }
     Layers.Overlay {

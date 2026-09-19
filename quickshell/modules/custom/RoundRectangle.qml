@@ -69,7 +69,7 @@ Item {
     RoundCorner {
         anchors.left: __.left
         anchors.bottom: __.top
-        radius: _.radius
+        radius: Math.min(_.radius, _.rectangleWidth / 2)
         color: _.color
         visible: _.isTopLeft && !_.isTop && rectangleHeight !== 0 && rectangleWidth !== 0
         rotation: 270
@@ -77,7 +77,7 @@ Item {
     RoundCorner {
         anchors.right: __.right
         anchors.bottom: __.top
-        radius: _.radius
+        radius: Math.min(_.radius, _.rectangleWidth / 2)
         color: _.color
         visible: _.isTopRight && !_.isTop && rectangleHeight !== 0 && rectangleWidth !== 0
         rotation: 180
@@ -85,7 +85,7 @@ Item {
     RoundCorner {
         anchors.top: __.top
         anchors.right: __.left
-        radius: _.radius
+        radius: Math.min(_.radius, _.rectangleHeight / 2)
         color: _.color
         visible: _.isLeftTop && !_.isLeft && rectangleHeight !== 0 && rectangleWidth !== 0
         rotation: 90
@@ -93,7 +93,7 @@ Item {
     RoundCorner {
         anchors.bottom: __.bottom
         anchors.right: __.left
-        radius: _.radius
+        radius: Math.min(_.radius, _.rectangleHeight / 2)
         color: _.color
         visible: _.isLeftBottom && !_.isLeft && rectangleHeight !== 0 && rectangleWidth !== 0
         rotation: 180
@@ -101,7 +101,7 @@ Item {
     RoundCorner {
         anchors.top: __.top
         anchors.left: __.right
-        radius: _.radius
+        radius: Math.min(_.radius, _.rectangleHeight / 2)
         color: _.color
         visible: _.isRightTop && !_.isRight && rectangleHeight !== 0 && rectangleWidth !== 0
         rotation: 0
@@ -109,7 +109,7 @@ Item {
     RoundCorner {
         anchors.bottom: __.bottom
         anchors.left: __.right
-        radius: _.radius
+        radius: Math.min(_.radius, _.rectangleHeight / 2)
         color: _.color
         visible: _.isRightBottom && !_.isRight && rectangleHeight !== 0 && rectangleWidth !== 0
         rotation: 270
@@ -117,7 +117,7 @@ Item {
     RoundCorner {
         anchors.top: __.bottom
         anchors.left: __.left
-        radius: _.radius
+        radius: Math.min(_.radius, _.rectangleWidth / 2)
         color: _.color
         visible: _.isBottomLeft && !_.isBottom && rectangleHeight !== 0 && rectangleWidth !== 0
         rotation: 0
@@ -125,7 +125,7 @@ Item {
     RoundCorner {
         anchors.top: __.bottom
         anchors.right: __.right
-        radius: _.radius
+        radius: Math.min(_.radius, _.rectangleWidth / 2)
         color: _.color
         visible: _.isBottomRight && !_.isBottom && rectangleHeight !== 0 && rectangleWidth !== 0
         rotation: 90

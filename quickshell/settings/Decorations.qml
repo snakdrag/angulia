@@ -8,13 +8,13 @@ Singleton {
     readonly property real radius: (25)
     readonly property int edge: (10)
 
-    readonly property int exclusiveZones: (edge + 20)
+    readonly property int exclusiveZones: (edge + 10)
     readonly property int topExclusiveZone: (exclusiveZones + 0)
     readonly property int leftExclusiveZone: (exclusiveZones + 0)
     readonly property int rightExclusiveZone: (exclusiveZones + 0)
-    readonly property int bottomExclusiveZone: (exclusiveZones + 0)
+    readonly property int bottomExclusiveZone: (exclusiveZones + 50)
 
-    readonly property int notificationDirection: (3)
+    readonly property int notificationDirection: (5)
     readonly property int notificationSpace: (10)
     readonly property int notificationWidth: (400)
     readonly property int notificationHeight: (80)
@@ -28,4 +28,14 @@ Singleton {
         pixelSize: 15,
         bold: false,
     })
+
+    readonly property int clockDirection: (5)
+    readonly property int clockWidth: (200)
+    readonly property int clockHeight: (50)
+    readonly property font clockFont: ({
+        family: "Inter",
+        pixelSize: 15,
+        bold: false,
+    })
+
 }

@@ -5,17 +5,17 @@ import qs.angulia.quickshell.settings
 
 Custom.Angulia {
     id: _
-    direction: (Decorations.notificationDirection % 8)
+    direction: (Decorations.clockDirection % 8)
 
-    property int contentHeight: (0)
-    property int notificationWidth: (Decorations.notificationWidth)
-    property int notificationHeight: (Decorations.notificationHeight)
+    property int clockWidth: (Decorations.clockWidth)
+    property int clockHeight: (Decorations.clockHeight)
+    property font clockFont: (Decorations.clockFont)
     property int space: (Decorations.notificationSpace)
 
 
     Custom.RoundRectangle {
-        rectangleWidth: _.contentHeight !==0 ? _.notificationWidth + _.space * 2: 0
-        rectangleHeight: _.contentHeight !==0 ? _.contentHeight + _.space * 2: 0
+        rectangleWidth: _.clockWidth
+        rectangleHeight: _.clockHeight
         anchors.top: _.isTop ? parent.top: undefined
         anchors.left: _.isLeft ? parent.left: undefined
         anchors.right: _.isRight ? parent.right: undefined
@@ -33,5 +33,15 @@ Custom.Angulia {
         isRightBottom: _.isBottom
         isBottomLeft: _.isLeft
         isBottomRight: _.isRight
+        Text {
+            anchors.centerIn: parent
+            text: Qt.formatDateTime(_clock.date, "hh:mm")
+            color: _.textColor
+            font: _.clockFont
+            SystemClock {
+                id: _clock
+                precision: SystemClock.Minutes
+            }
+        }
     }
 }

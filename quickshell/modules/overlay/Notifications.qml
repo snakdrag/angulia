@@ -7,30 +7,14 @@ import "../services" as Services
 import qs.angulia.theme
 import qs.angulia.quickshell.settings
 
-Item {
+Custom.Angulia {
     id: _
-    anchors.fill: parent
-    property int direction: (Decorations.notificationDirection % 8)
     
-    readonly property bool isTop: ( direction === 0 || direction === 1 || direction === 2 )
-    readonly property bool isLeft: ( direction === 0 || direction === 6 || direction === 7 )
-    readonly property bool isRight: ( direction === 2 || direction === 3 || direction === 4 )
-    readonly property bool isBottom: ( direction === 4 || direction === 5 || direction === 6 )
-
-    readonly property bool isTopBottom: ( direction === 1 || direction === 5 )
-    readonly property bool isLeftRight: ( direction === 3 || direction === 7 )
-
-    readonly property bool isTopLeft: ( direction === 0 || direction === 1 || direction === 7 )
-    readonly property bool isTopRight: ( direction === 1 || direction === 2 || direction === 3 )
-    readonly property bool isBottomLeft: ( direction === 5 || direction === 6 || direction === 7 )
-    readonly property bool isBottomRight: ( direction === 3 || direction === 4 || direction === 5 )
-
+    direction: (Decorations.notificationDirection % 8)
+    
     property int notificationWidth: (Decorations.notificationWidth)
     property int notificationHeight: (Decorations.notificationHeight)
-    property int edge: (Decorations.edge)
     property color cardColor: (Colors.surface_container)
-    property color textColor: (Colors.on_surface)
-    property real radius: (Decorations.radius)
     property int space: (Decorations.notificationSpace)
 
     property font summaryFont: (Decorations.notificationSummaryFont)
@@ -113,9 +97,7 @@ Item {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
                         cursorShape: Qt.PointingHandCursor
-                        onClicked: {
-                            _card.modelData.dismiss()
-                        }
+                        onClicked: _card.modelData.dismiss()
                     }
                 }
                 Rectangle {
@@ -146,10 +128,12 @@ Item {
                         acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
                         cursorShape: Qt.PointingHandCursor
                         onClicked: {
-                            if (_card.haveAction) {
+                            if (_card.haveAction) 
+                            {
                                 _card.modelData.actions[0].invoke()
                             }
-                            else {
+                            else 
+                            {
                                 _card.modelData.dismiss()
                             }
                         }
@@ -163,7 +147,7 @@ Item {
                     radius: _.radius
                     color: _.cardColor
                     Image {
-                        id: _iamge
+                        id: _image
                         anchors.left: parent.left
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.margins: _.space
@@ -178,7 +162,7 @@ Item {
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
                         implicitHeight: _body.text !== "" ? _summary.height + _body.height: _summary.height
-                        anchors.leftMargin: _iamge.visible ? _iamge.width + _.space * 2: _.space
+                        anchors.leftMargin: _image.visible ? _image.width + _.space * 2: _.space
                         anchors.margins: _.space
                         Text {
                             id: _summary
@@ -214,14 +198,17 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-                        onClicked: {
-                            if (mouse.button === Qt.LeftButton) {
+                        onClicked: mouse => {
+                            if (mouse.button === Qt.LeftButton) 
+                            {
                                 parent.x = _.notificationWidth / 4 + _.space
                             } 
-                            else if (mouse.button === Qt.RightButton) {
+                            else if (mouse.button === Qt.RightButton) 
+                            {
                                 parent.x = -_.notificationWidth / 4 - _.space
                             }
-                            else if (mouse.button === Qt.MiddleButton) {
+                            else if (mouse.button === Qt.MiddleButton) 
+                            {
                                 parent.x = 0
                             }
                         }
@@ -230,24 +217,31 @@ Item {
                         xAxis.enabled: true
                         yAxis.enabled: false
                         onActiveChanged: {
-                            if (parent.x < -_.notificationWidth / 2 - _.space) {
+                            if (parent.x < -_.notificationWidth / 2 - _.space) 
+                            {
                                 _card.modelData.dismiss()
                             } 
-                            else if (parent.x < -_.notificationWidth / 4) {
+                            else if (parent.x < -_.notificationWidth / 4) 
+                            {
                                 parent.x = -_.notificationWidth / 4 - _.space
                             }
-                            else if (parent.x > _.notificationWidth / 2 + _.space) {
-                                if (_card.haveAction) {
+                            else if (parent.x > _.notificationWidth / 2 + _.space) 
+                            {
+                                if (_card.haveAction)
+                                {
                                     _card.modelData.actions[0].invoke()
                                 }
-                                else {
+                                else
+                                {
                                     _card.modelData.dismiss()
                                 }
                             }
-                            else if (parent.x > _.notificationWidth / 4) {
+                            else if (parent.x > _.notificationWidth / 4) 
+                            {
                                 parent.x = _.notificationWidth / 4 + _.space
                             }
-                            else {
+                            else 
+                            {
                                 parent.x = 0
                             }
                         }
