@@ -8,10 +8,10 @@ import qs.angulia.quickshell.settings
 
 Custom.Angulia {
     id: _
-    direction: (1)
+    direction: (6)
 
-    property int launcherWidth: (400)
-    property int launcherHeight: (60)
+    property int appWidth: (400)
+    property int appHeight: (60)
     property font appFont: ({
         family: "Inter",
         bold: true,
@@ -45,8 +45,8 @@ Custom.Angulia {
     }
     Custom.RoundRectangle {
         id: __
-        rectangleWidth: _.launcherOpened ? _.launcherWidth: 0
-        rectangleHeight: _.launcherOpened ? _.contentHeight: 0
+        rectangleWidth: _.launcherOpened ? _.appWidth + _.space * 2: 0
+        rectangleHeight: _.launcherOpened ? _.contentHeight + _.space * 2: 0
         anchors.top: _.isTop ? parent.top: undefined
         anchors.left: _.isLeft ? parent.left: undefined
         anchors.right: _.isRight ? parent.right: undefined
@@ -64,95 +64,104 @@ Custom.Angulia {
         isRightBottom: _.isBottom
         isBottomLeft: _.isLeft
         isBottomRight: _.isRight
-        ClippingRectangle {
-            anchors.centerIn: parent.rectangle
-            implicitWidth: _.launcherOpened ? _.launcherWidth - _.space * 2: 0
-            implicitHeight: _.launcherOpened ? _.contentHeight - _.space * 2: 0
-            radius: _.radius
-            color: "transparent"
-            Behavior on implicitWidth {
-                NumberAnimation {
-                    duration: 300
-                    easing.type: Easing.OutCubic
-                }
-            }
-            Behavior on implicitHeight {
-                NumberAnimation {
-                    duration: 300
-                    easing.type: Easing.OutCubic
-                }
-            }
-            ListView {
-                id: _list
+        Item {
+            anchors.fill: parent.rectangle
+            anchors.margins: _.space
+            ClippingRectangle {
                 anchors.fill: parent
-                spacing: _.space
-                model: DesktopEntries.applications
-                delegate: Item {
-                    id: _card
-                    required property var modelData
-                    implicitWidth: _.launcherWidth - _.space * 2
-                    implicitHeight: _.launcherHeight
-                    Rectangle {
-                        anchors.fill: parent
-                        radius: _.radius
-                        color: _.cardColor
-                        Image {
-                            id: _image
-                            anchors.left: parent.left
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.margins: _.space
-                            width: _.launcherHeight - _.space * 2
-                            height: _.launcherHeight - _.space * 2
-                            source: Quickshell.iconPath(_card.modelData.icon, true) || ""
-                            fillMode: Image.PreserveAspectFit
-                            visible: status === Image.Ready && source != ""
-                        }
-                        Item {
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            anchors.verticalCenter: parent.verticalCenter
-                            implicitHeight: _genericName.text !== "" ? _name.height + _genericName.height: _name.height
-                            anchors.leftMargin: _image.visible ? _image.width + _.space * 2: _.space
-                            anchors.margins: _.space
-                            Text {
-                                id: _name
-                                anchors.top: parent.top
-                                anchors.left: parent.left
-                                anchors.right: parent.right
-                                text: _card.modelData.name
-                                color: _.textColor
-                                font: _.appFont
-                                elide: Text.ElideRight
-                                wrapMode: Text.WrapAnywhere
-                            }
-                            Text {
-                                id: _genericName
-                                anchors.top: _name.bottom
-                                anchors.left: parent.left
-                                anchors.right: parent.right
-                                text: _card.modelData.genericName
-                                color: _.textColor
-                                font: _.describeFont
-                                elide: Text.ElideRight
-                                wrapMode: Text.WrapAnywhere
-                            }
-                        }
+                radius: _.radius
+                color: "transparent"
+                Behavior on implicitWidth {
+                    NumberAnimation {
+                        duration: 300
+                        easing.type: Easing.OutCubic
+                    }
+                }
+                Behavior on implicitHeight {
+                    NumberAnimation {
+                        duration: 300
+                        easing.type: Easing.OutCubic
+                    }
+                }
+                ListView {
+                    id: _list
+                    anchors.fill: parent
+                    spacing: _.space
+                    model: ScriptModel {
+                        values: DesktopEntries.applications.values.filter(
+                            entry => entry.name.indexOf(_.query) != -1).sort((a, b) => a.name.localeCompare(b.name)
+                        )
+                    }
+                    delegate: Item {
+                        id: _card
+                        required property var modelData
+                        implicitWidth: _.appWidth
+                        implicitHeight: _.appHeight
                         Rectangle {
-                            id: _active
                             anchors.fill: parent
                             radius: _.radius
-                            opacity: 0.1
-                            color: _.textColor
-                            visible: false
-                        }
-                        MouseArea {
-                            anchors.fill: parent
-                            acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: _card.modelData.execute()
-                            onEntered: _active.visible = true
-                            onExited: _active.visible = false
+                            color: _.cardColor
+                            Image {
+                                id: _image
+                                anchors.left: parent.left
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.margins: _.space
+                                width: _.appHeight - _.space * 2
+                                height: _.appHeight - _.space * 2
+                                source: Quickshell.iconPath(_card.modelData.icon, true) || ""
+                                fillMode: Image.PreserveAspectFit
+                                visible: status === Image.Ready && source != ""
+                            }
+                            Item {
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.verticalCenter: parent.verticalCenter
+                                implicitHeight: _comment.text !== "" ? _name.height + _comment.height: _name.height
+                                anchors.leftMargin: _image.visible ? _image.width + _.space * 2: _.space
+                                anchors.margins: _.space
+                                Text {
+                                    id: _name
+                                    anchors.top: parent.top
+                                    anchors.left: parent.left
+                                    anchors.right: parent.right
+                                    text: _card.modelData.name
+                                    color: _.textColor
+                                    font: _.appFont
+                                    elide: Text.ElideRight
+                                    wrapMode: Text.WrapAnywhere
+                                }
+                                Text {
+                                    id: _comment
+                                    anchors.top: _name.bottom
+                                    anchors.left: parent.left
+                                    anchors.right: parent.right
+                                    text: _card.modelData.comment
+                                    color: _.textColor
+                                    font: _.describeFont
+                                    elide: Text.ElideRight
+                                    wrapMode: Text.WrapAnywhere
+                                }
+                            }
+                            Rectangle {
+                                id: _active
+                                anchors.fill: parent
+                                radius: _.radius
+                                opacity: 0.1
+                                color: _.textColor
+                                visible: false
+                            }
+                            MouseArea {
+                                anchors.fill: parent
+                                acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
+                                hoverEnabled: true
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: {
+                                    _card.modelData.execute()
+                                    _ipc.close()
+                                }
+                                onEntered: _active.visible = true
+                                onExited: _active.visible = false
+                            }
                         }
                     }
                 }

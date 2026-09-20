@@ -6,7 +6,7 @@ Singleton {
     id: _
     
     readonly property real radius: (25)
-    readonly property int edge: (0)
+    readonly property int edge: (10)
 
     readonly property int exclusiveZones: (edge + 15)
     readonly property int topExclusiveZone: (exclusiveZones + 0)
