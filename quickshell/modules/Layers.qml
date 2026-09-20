@@ -1,4 +1,5 @@
 import Quickshell 
+import Quickshell.Wayland
 import "layers" as Layers
 import "top" as Top
 import "overlay" as Overlay
@@ -13,6 +14,7 @@ ShellRoot {
     }
     Layers.Top {
         mask: Region { regions: [_launcher.region, ] }
+        WlrLayershell.keyboardFocus: _launcher.launcherOpened ? WlrKeyboardFocus.Exclusive: WlrKeyboardFocus.None
         Top.Edge {}
         Top.Clock {}
         Top.Launcher { id: _launcher }

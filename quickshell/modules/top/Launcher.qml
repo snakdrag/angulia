@@ -8,7 +8,7 @@ import qs.angulia.quickshell.settings
 
 Custom.Angulia {
     id: _
-    direction: (6)
+    direction: (1)
 
     property int appWidth: (400)
     property int appHeight: (60)
@@ -91,15 +91,16 @@ Custom.Angulia {
                     color: _.textColor 
                     font: _.appFont 
                     text: _.query 
-                    cursorVisible: activeFocus 
+                    visible: __.rectangleWidth !== 0
+                    cursorVisible: activeFocus
                     clip: true 
                     onTextChanged: { 
                         _.query = text 
-                        _.selectedIndex = 0 
+                        _.selectedIndex = 0
                     } 
                     Keys.onEscapePressed: { 
                         _.query = "" 
-                        text = "" 
+                        text = ""
                         _.selectedIndex = 0 
                     } 
                     Keys.onDownPressed: { 
