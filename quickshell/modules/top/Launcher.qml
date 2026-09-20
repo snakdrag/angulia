@@ -31,8 +31,16 @@ Custom.Angulia {
     IpcHandler {
         id: _ipc
         target: "launcher"
-        function open() { _.launcherOpened = true }
-        function close() { _.launcherOpened = false }
+        function open() { 
+            _.launcherOpened = true
+            _.query = "" 
+            _.selectedIndex = 0 
+            _search.forceActiveFocus()
+        }
+        function close() { 
+            _.launcherOpened = false
+            _.query = "" 
+        }
         function toggle() { 
             if(!_.launcherOpened){ open() }
             else { close() }
@@ -46,7 +54,7 @@ Custom.Angulia {
     Custom.RoundRectangle {
         id: __
         rectangleWidth: _.launcherOpened ? _.appWidth + _.space * 2: 0
-        rectangleHeight: _.launcherOpened ? _.contentHeight + _.space * 2: 0
+        rectangleHeight: _.launcherOpened ? _.contentHeight + _search.height + _.space * 3: 0
         anchors.top: _.isTop ? parent.top: undefined
         anchors.left: _.isLeft ? parent.left: undefined
         anchors.right: _.isRight ? parent.right: undefined
@@ -67,8 +75,68 @@ Custom.Angulia {
         Item {
             anchors.fill: parent.rectangle
             anchors.margins: _.space
+            Rectangle { 
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                implicitHeight: 30 
+                radius: _.radius 
+                color: _.cardColor 
+                TextInput { 
+                    id: _search 
+                    anchors.fill: parent 
+                    anchors.leftMargin: _.space 
+                    anchors.rightMargin: _.space 
+                    verticalAlignment: TextInput.AlignVCenter 
+                    color: _.textColor 
+                    font: _.appFont 
+                    text: _.query 
+                    cursorVisible: activeFocus 
+                    clip: true 
+                    onTextChanged: { 
+                        _.query = text 
+                        _.selectedIndex = 0 
+                    } 
+                    Keys.onEscapePressed: { 
+                        _.query = "" 
+                        text = "" 
+                        _.selectedIndex = 0 
+                    } 
+                    Keys.onDownPressed: { 
+                        if (_list.count > 0) 
+                        {
+                             _.selectedIndex = Math.min( _.selectedIndex + 1, _list.count - 1 ) 
+                             _list.positionViewAtIndex( _.selectedIndex, ListView.Contain ) 
+                        } 
+                    } 
+                    Keys.onUpPressed: { 
+                        if (_list.count > 0) 
+                        {
+                            _.selectedIndex = Math.max( _.selectedIndex - 1, 0 ) 
+                            _list.positionViewAtIndex( _.selectedIndex, ListView.Contain ) 
+                        }
+                    }
+                    Keys.onReturnPressed: { 
+                        if (_list.count > 0) 
+                        { 
+                            _list.currentItem.modelData.execute() 
+                            _ipc.close() 
+                        } 
+                    } 
+                    Text { 
+                        anchors.fill: parent 
+                        verticalAlignment: Text.AlignVCenter 
+                        text: "Search applications..." 
+                        color: _.textColor 
+                        opacity: 0.5 
+                        font: _.appFont 
+                        visible: _search.text === "" 
+                    } 
+                } 
+            }
             ClippingRectangle {
                 anchors.fill: parent
+                anchors.bottomMargin: 30 + _.space
                 radius: _.radius
                 color: "transparent"
                 Behavior on implicitWidth {
@@ -87,14 +155,17 @@ Custom.Angulia {
                     id: _list
                     anchors.fill: parent
                     spacing: _.space
+                    currentIndex: _.selectedIndex
                     model: ScriptModel {
                         values: DesktopEntries.applications.values.filter(
-                            entry => entry.name.indexOf(_.query) != -1).sort((a, b) => a.name.localeCompare(b.name)
+                            entry => entry.name.toLowerCase().indexOf(_.query.toLowerCase()) !== -1).sort(
+                                (a, b) => a.name.localeCompare(b.name)
                         )
                     }
                     delegate: Item {
                         id: _card
                         required property var modelData
+                        required property int index
                         implicitWidth: _.appWidth
                         implicitHeight: _.appHeight
                         Rectangle {
@@ -148,7 +219,7 @@ Custom.Angulia {
                                 radius: _.radius
                                 opacity: 0.1
                                 color: _.textColor
-                                visible: false
+                                visible: _card.index === _.selectedIndex
                             }
                             MouseArea {
                                 anchors.fill: parent
@@ -159,8 +230,7 @@ Custom.Angulia {
                                     _card.modelData.execute()
                                     _ipc.close()
                                 }
-                                onEntered: _active.visible = true
-                                onExited: _active.visible = false
+                                onEntered: _.selectedIndex = _card.index
                             }
                         }
                     }
