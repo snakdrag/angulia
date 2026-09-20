@@ -9,6 +9,7 @@ PanelWindow {
     anchors.right: true
     anchors.bottom: true
     color: "transparent"
+    focusable: true
     mask: Region {}
     exclusionMode: ExclusionMode.Ignore
     WlrLayershell.layer: WlrLayer.Bottom

@@ -1,17 +1,17 @@
 import QtQuick
 import Quickshell
-import Quickshell.Widgets
 import Quickshell.Io
+import Quickshell.Widgets
 import "../custom" as Custom
 import qs.angulia.theme
 import qs.angulia.quickshell.settings
 
 Custom.Angulia {
     id: _
-    direction: (6)
+    direction: (1)
 
     property int launcherWidth: (400)
-    property int launcherHeight: (400)
+    property int launcherHeight: (60)
     property font appFont: ({
         family: "Inter",
         bold: true,
@@ -26,12 +26,17 @@ Custom.Angulia {
     property string query: ("")
     property int selectedIndex: (0)
 
+    readonly property int contentHeight: (Math.min(_list.contentHeight, Screen.height / 2))
+
     IpcHandler {
+        id: _ipc
         target: "launcher"
         function open() { _.launcherOpened = true }
         function close() { _.launcherOpened = false }
-
-        function toggle() { _.launcherOpened = !_.launcherOpened }
+        function toggle() { 
+            if(!_.launcherOpened){ open() }
+            else { close() }
+        }
     }
     readonly property Region region: (_region)
     Region {
@@ -40,8 +45,8 @@ Custom.Angulia {
     }
     Custom.RoundRectangle {
         id: __
-        rectangleWidth: _.launcherWidth
-        rectangleHeight: _.launcherOpened ? _.launcherHeight: 0
+        rectangleWidth: _.launcherOpened ? _.launcherWidth: 0
+        rectangleHeight: _.launcherOpened ? _.contentHeight: 0
         anchors.top: _.isTop ? parent.top: undefined
         anchors.left: _.isLeft ? parent.left: undefined
         anchors.right: _.isRight ? parent.right: undefined
@@ -61,11 +66,24 @@ Custom.Angulia {
         isBottomRight: _.isRight
         ClippingRectangle {
             anchors.centerIn: parent.rectangle
-            implicitWidth: _.launcherWidth - _.space * 2
-            implicitHeight: _.launcherOpened ? _.launcherHeight - _.space * 2: 0
+            implicitWidth: _.launcherOpened ? _.launcherWidth - _.space * 2: 0
+            implicitHeight: _.launcherOpened ? _.contentHeight - _.space * 2: 0
             radius: _.radius
             color: "transparent"
+            Behavior on implicitWidth {
+                NumberAnimation {
+                    duration: 300
+                    easing.type: Easing.OutCubic
+                }
+            }
+            Behavior on implicitHeight {
+                NumberAnimation {
+                    duration: 300
+                    easing.type: Easing.OutCubic
+                }
+            }
             ListView {
+                id: _list
                 anchors.fill: parent
                 spacing: _.space
                 model: DesktopEntries.applications
@@ -73,7 +91,7 @@ Custom.Angulia {
                     id: _card
                     required property var modelData
                     implicitWidth: _.launcherWidth - _.space * 2
-                    implicitHeight: 80
+                    implicitHeight: _.launcherHeight
                     Rectangle {
                         anchors.fill: parent
                         radius: _.radius
@@ -83,9 +101,9 @@ Custom.Angulia {
                             anchors.left: parent.left
                             anchors.verticalCenter: parent.verticalCenter
                             anchors.margins: _.space
-                            width: 80
-                            height: 80
-                            source: _card.modelData.icon || ""
+                            width: _.launcherHeight - _.space * 2
+                            height: _.launcherHeight - _.space * 2
+                            source: Quickshell.iconPath(_card.modelData.icon, true) || ""
                             fillMode: Image.PreserveAspectFit
                             visible: status === Image.Ready && source != ""
                         }
@@ -106,7 +124,6 @@ Custom.Angulia {
                                 font: _.appFont
                                 elide: Text.ElideRight
                                 wrapMode: Text.WrapAnywhere
-                                maximumLineCount: _card.modelData.urgency === NotificationUrgency.Critical ? undefined: 1
                             }
                             Text {
                                 id: _genericName
@@ -118,7 +135,6 @@ Custom.Angulia {
                                 font: _.describeFont
                                 elide: Text.ElideRight
                                 wrapMode: Text.WrapAnywhere
-                                maximumLineCount: _card.modelData.urgency === NotificationUrgency.Critical ? undefined: 3
                             }
                         }
                         Rectangle {
