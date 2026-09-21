@@ -34,12 +34,14 @@ Custom.Angulia {
         function open() { 
             _.launcherOpened = true
             _.query = "" 
+            _search.text = ""
             _.selectedIndex = 0 
             _search.forceActiveFocus()
         }
         function close() { 
             _.launcherOpened = false
             _.query = "" 
+            _search.text = ""
         }
         function toggle() { 
             if(!_.launcherOpened){ open() }
