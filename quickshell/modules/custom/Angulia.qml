@@ -11,8 +11,8 @@ Item {
     readonly property bool isRight: ( direction === 2 || direction === 3 || direction === 4 )
     readonly property bool isBottom: ( direction === 4 || direction === 5 || direction === 6 )
 
-    readonly property bool isTopBottom: ( direction === 1 || direction === 5 )
-    readonly property bool isLeftRight: ( direction === 3 || direction === 7 )
+    readonly property bool isTopBottom: ( direction === 1 || direction === 5 || direction === 9)
+    readonly property bool isLeftRight: ( direction === 3 || direction === 7 || direction === 9)
 
     readonly property bool isTopLeft: ( direction === 0 || direction === 1 || direction === 7 )
     readonly property bool isTopRight: ( direction === 1 || direction === 2 || direction === 3 )

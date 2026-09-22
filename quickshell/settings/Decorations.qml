@@ -38,4 +38,17 @@ Singleton {
         bold: false,
     })
 
+
+    readonly property int launcherDirection: (1)
+    readonly property int launcherAppWidth: (400)
+    readonly property int launcherAppHeight: (60)
+    readonly property int launcherInputHeight: (30)
+    readonly property font launcherAppFont: ({
+        family: "Inter",
+        bold: true,
+    })
+    readonly property font launcherDescribeFont: ({
+        family: "Inter",
+    })
+    readonly property int launcherSpace: (10)
 }

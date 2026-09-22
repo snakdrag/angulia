@@ -8,18 +8,14 @@ import qs.angulia.quickshell.settings
 
 Custom.Angulia {
     id: _
-    direction: (1)
+    direction: (Decorations.launcherDirection)
 
-    property int appWidth: (400)
-    property int appHeight: (60)
-    property font appFont: ({
-        family: "Inter",
-        bold: true,
-    })
-    property font describeFont: ({
-        family: "Inter",
-    })
-    property int space: (10)
+    property int appWidth: (Decorations.launcherAppWidth)
+    property int appHeight: (Decorations.launcherAppHeight)
+    property int inputHeight: (Decorations.launcherInputHeight)
+    property font appFont: (Decorations.launcherAppFont)
+    property font describeFont: (Decorations.launcherDescribeFont)
+    property int space: (Decorations.launcherSpace)
     property color cardColor: (Colors.surface_container)
     property bool launcherOpened: (false)
 
@@ -35,7 +31,6 @@ Custom.Angulia {
             _.launcherOpened = true
             _.query = "" 
             _search.text = ""
-            _.selectedIndex = 0 
             _search.forceActiveFocus()
         }
         function close() { 
@@ -81,7 +76,7 @@ Custom.Angulia {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
-                implicitHeight: 30 
+                implicitHeight: _.inputHeight
                 radius: _.radius 
                 color: _.cardColor 
                 TextInput { 
@@ -139,7 +134,7 @@ Custom.Angulia {
             }
             ClippingRectangle {
                 anchors.fill: parent
-                anchors.bottomMargin: 30 + _.space
+                anchors.bottomMargin: _search.height + _.space
                 radius: _.radius
                 color: "transparent"
                 Behavior on implicitWidth {
