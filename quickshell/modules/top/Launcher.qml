@@ -13,6 +13,7 @@ Custom.Angulia {
     property int appWidth: (Decorations.launcherAppWidth)
     property int appHeight: (Decorations.launcherAppHeight)
     property int inputHeight: (Decorations.launcherInputHeight)
+    property bool inputAtTop: (Decorations.launcherInputAtTop)
     property font appFont: (Decorations.launcherAppFont)
     property font describeFont: (Decorations.launcherDescribeFont)
     property int space: (Decorations.launcherSpace)
@@ -73,9 +74,10 @@ Custom.Angulia {
             anchors.fill: parent.rectangle
             anchors.margins: _.space
             Rectangle { 
+                anchors.top: _.inputAtTop ? parent.top: undefined
                 anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.bottom: parent.bottom
+                anchors.bottom: !_.inputAtTop ? parent.bottom: undefined
                 implicitHeight: _.inputHeight
                 radius: _.radius 
                 color: _.cardColor 
@@ -134,7 +136,8 @@ Custom.Angulia {
             }
             ClippingRectangle {
                 anchors.fill: parent
-                anchors.bottomMargin: _search.height + _.space
+                anchors.topMargin: _.inputAtTop ? _search.height + _.space: 0
+                anchors.bottomMargin: !_.inputAtTop ? _search.height + _.space: 0
                 radius: _.radius
                 color: "transparent"
                 Behavior on implicitWidth {
