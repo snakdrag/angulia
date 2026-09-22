@@ -8,7 +8,7 @@ import qs.angulia.quickshell.settings
 
 Custom.Angulia {
     id: _
-    direction: (Decorations.launcherDirection)
+    direction: (Decorations.launcherDirection % 9)
 
     property int appWidth: (Decorations.launcherAppWidth)
     property int appHeight: (Decorations.launcherAppHeight)
