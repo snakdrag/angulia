@@ -1,12 +1,11 @@
 pragma Singleton
 import QtQuick
 import Quickshell
-import Quickshell.Io
 
 Singleton {
 
     readonly property real radius: (25)
-    readonly property int edge: (10)
+    readonly property int edge: (0)
 
     readonly property int float: (10)
 
@@ -41,7 +40,7 @@ Singleton {
     })
 
 
-    readonly property int launcherDirection: (8)
+    readonly property int launcherDirection: (1)
     readonly property int launcherAppWidth: (400)
     readonly property int launcherAppHeight: (60)
     readonly property int launcherInputHeight: (30)

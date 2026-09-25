@@ -51,7 +51,11 @@ Custom.Angulia {
     Custom.RoundRectangle {
         id: __
         rectangleWidth: _.launcherOpened ? _.appWidth + _.space * 2: 0
-        rectangleHeight: _.launcherOpened ? _.contentHeight + _search.height + _.space * 3: 0
+        rectangleHeight: _.launcherOpened ? (
+            _.contentHeight === 0 ? 
+            _search.height + _.space * 2: 
+            _.contentHeight + _search.height + _.space * 3
+        ): 0
         anchors.top: _.isTop ? parent.top: undefined
         anchors.left: _.isLeft ? parent.left: undefined
         anchors.right: _.isRight ? parent.right: undefined
@@ -77,11 +81,11 @@ Custom.Angulia {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.bottom: !_.inputAtTop ? parent.bottom: undefined
-                implicitHeight: _.inputHeight
+                implicitHeight: _.launcherOpened ? _.inputHeight: 0
                 radius: _.radius 
-                color: _.cardColor 
+                color: _.cardColor
                 TextInput { 
-                    id: _search 
+                    id: _search
                     anchors.fill: parent 
                     anchors.leftMargin: _.space 
                     anchors.rightMargin: _.space 
@@ -157,7 +161,7 @@ Custom.Angulia {
                     spacing: _.space
                     currentIndex: _.selectedIndex
                     model: ScriptModel {
-                        values: DesktopEntries.applications.values.filter(
+                        values: _.query === "" ? []: DesktopEntries.applications.values.filter(
                             entry => entry.name.toLowerCase().indexOf(_.query.toLowerCase()) !== -1).sort(
                                 (a, b) => a.name.localeCompare(b.name)
                         )

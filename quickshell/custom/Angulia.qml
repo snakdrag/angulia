@@ -22,4 +22,5 @@ Item {
     property color color: (Colors.surface)
     property color textColor: (Colors.on_surface)
     property int edge: (Settings.edge)
+    property int float: (Settings.float)
 }

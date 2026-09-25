@@ -12,7 +12,6 @@ Custom.Angulia {
     property font clockFont: (Settings.clockFont)
     property int space: (Settings.notificationSpace)
 
-
     Custom.RoundRectangle {
         rectangleWidth: _.clockWidth
         rectangleHeight: _.clockHeight

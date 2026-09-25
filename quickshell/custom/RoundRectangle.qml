@@ -8,6 +8,8 @@ Item {
     property real radius: (0)
     property color color: ("#ffffff")
 
+    property bool float: (false)
+
     property bool isTopLeft: (false)
     property bool isTopRight: (false)
     property bool isLeftTop: (false)
@@ -58,74 +60,74 @@ Item {
         anchors.leftMargin: _.isLeft ? 0: _.radius
         anchors.rightMargin: _.isRight ? 0: _.radius
         anchors.bottomMargin: _.isBottom ? 0: _.radius
-        topLeftRadius: _.isTopLeft || _.isLeftTop ? 0: _.radius
-        topRightRadius: _.isTopRight || _.isRightTop ? 0: _.radius
-        bottomLeftRadius: _.isBottomLeft || _.isLeftBottom ? 0: _.radius
-        bottomRightRadius: _.isBottomRight || _.isRightBottom ? 0: _.radius
+        topLeftRadius: _.isTopLeft || _.isLeftTop && !_.float ? 0: _.radius
+        topRightRadius: _.isTopRight || _.isRightTop && !_.float ? 0: _.radius
+        bottomLeftRadius: _.isBottomLeft || _.isLeftBottom && !_.float ? 0: _.radius
+        bottomRightRadius: _.isBottomRight || _.isRightBottom && !_.float ? 0: _.radius
         color: _.color
     }
     RoundCorner {
         anchors.left: __.left
         anchors.bottom: __.top
-        radius: Math.min(_.radius, _.rectangleWidth / 2)
+        radius: Math.min(_.radius, __.width / 2)
         color: _.color
-        visible: _.isTopLeft && !_.isTop && rectangleHeight !== 0 && rectangleWidth !== 0
+        visible: _.isTopLeft && !_.isTop && !_.float
         rotation: 270
     }
     RoundCorner {
         anchors.right: __.right
         anchors.bottom: __.top
-        radius: Math.min(_.radius, _.rectangleWidth / 2)
+        radius: Math.min(_.radius, __.width / 2)
         color: _.color
-        visible: _.isTopRight && !_.isTop && rectangleHeight !== 0 && rectangleWidth !== 0
+        visible: _.isTopRight && !_.isTop && !_.float
         rotation: 180
     }
     RoundCorner {
         anchors.top: __.top
         anchors.right: __.left
-        radius: Math.min(_.radius, _.rectangleHeight / 2)
+        radius: Math.min(_.radius, __.height / 2)
         color: _.color
-        visible: _.isLeftTop && !_.isLeft && rectangleHeight !== 0 && rectangleWidth !== 0
+        visible: _.isLeftTop && !_.isLeft && !_.float
         rotation: 90
     }
     RoundCorner {
         anchors.bottom: __.bottom
         anchors.right: __.left
-        radius: Math.min(_.radius, _.rectangleHeight / 2)
+        radius: Math.min(_.radius, __.height / 2)
         color: _.color
-        visible: _.isLeftBottom && !_.isLeft && rectangleHeight !== 0 && rectangleWidth !== 0
+        visible: _.isLeftBottom && !_.isLeft && !_.float
         rotation: 180
     }
     RoundCorner {
         anchors.top: __.top
         anchors.left: __.right
-        radius: Math.min(_.radius, _.rectangleHeight / 2)
+        radius: Math.min(_.radius, __.height / 2)
         color: _.color
-        visible: _.isRightTop && !_.isRight && rectangleHeight !== 0 && rectangleWidth !== 0
+        visible: _.isRightTop && !_.isRight && !_.float
         rotation: 0
     }
     RoundCorner {
         anchors.bottom: __.bottom
         anchors.left: __.right
-        radius: Math.min(_.radius, _.rectangleHeight / 2)
+        radius: Math.min(_.radius, __.height / 2)
         color: _.color
-        visible: _.isRightBottom && !_.isRight && rectangleHeight !== 0 && rectangleWidth !== 0
+        visible: _.isRightBottom && !_.isRight && !_.float
         rotation: 270
     }
     RoundCorner {
         anchors.top: __.bottom
         anchors.left: __.left
-        radius: Math.min(_.radius, _.rectangleWidth / 2)
+        radius: Math.min(_.radius, __.width / 2)
         color: _.color
-        visible: _.isBottomLeft && !_.isBottom && rectangleHeight !== 0 && rectangleWidth !== 0
+        visible: _.isBottomLeft && !_.isBottom && !_.float
         rotation: 0
     }
     RoundCorner {
         anchors.top: __.bottom
         anchors.right: __.right
-        radius: Math.min(_.radius, _.rectangleWidth / 2)
+        radius: Math.min(_.radius, __.width / 2)
         color: _.color
-        visible: _.isBottomRight && !_.isBottom && rectangleHeight !== 0 && rectangleWidth !== 0
+        visible: _.isBottomRight && !_.isBottom && !_.float
         rotation: 90
     }
 }
