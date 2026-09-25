@@ -35,7 +35,8 @@ Custom.Angulia {
         anchors.bottom: _.isBottom ? parent.bottom: undefined
         anchors.horizontalCenter: _.isTopBottom ? parent.horizontalCenter: undefined
         anchors.verticalCenter: _.isLeftRight ? parent.verticalCenter: undefined
-        anchors.margins: _.edge
+        anchors.margins: _.edge + _.float
+        float: _.float
         radius: _.radius
         color: _.color
         isTopLeft: _.isLeft
@@ -57,7 +58,7 @@ Custom.Angulia {
         anchors.bottom: _.isBottom ? parent.bottom: undefined
         anchors.horizontalCenter: _.isTopBottom ? parent.horizontalCenter: undefined
         anchors.verticalCenter: _.isLeftRight ? parent.verticalCenter: undefined
-        anchors.margins: _.edge + _.space
+        anchors.margins: _.edge + _.space + _.float
         radius: _.radius
         color: "transparent"
         Behavior on implicitWidth {
@@ -91,6 +92,8 @@ Custom.Angulia {
                 implicitWidth: _.notificationWidth
                 implicitHeight: Math.max(_.notificationHeight, _summary.height + _body.height + _.space * 2)
                 Rectangle {
+                    id: _clear
+                    property bool hovered: (false)
                     anchors.top: parent.top
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
@@ -106,21 +109,29 @@ Custom.Angulia {
                         opacity: (-_main.x - _.space - _.notificationWidth / 8) / _.notificationWidth * 8
                     }
                     Rectangle {
-                        anchors.centerIn: parent
-                        implicitWidth: -_main.x - _.space > _.notificationWidth / 2 ? parent.width: 0
-                        implicitHeight: -_main.x - _.space > _.notificationWidth / 2 ? parent.height: 0
+                        anchors.fill: parent
                         opacity: 0.1
                         radius: _.radius
                         color: _.textColor
+                        visible: (
+                            -_main.x - _.space > _.notificationWidth / 2 || 
+                            _clear.hovered &&
+                            -_main.x - _.space >= _.notificationWidth / 4
+                        )
                     }
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
+                        hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
                         onClicked: _card.modelData.dismiss()
+                        onEntered: _clear.hovered = true
+                        onExited: _clear.hovered = false
                     }
                 }
                 Rectangle {
+                    id: _action
+                    property bool hovered: (false)
                     anchors.top: parent.top
                     anchors.left: parent.left
                     anchors.bottom: parent.bottom
@@ -136,16 +147,20 @@ Custom.Angulia {
                         opacity: (_main.x - _.space - _.notificationWidth / 8) / _.notificationWidth * 8
                     }
                     Rectangle {
-                        anchors.centerIn: parent
-                        implicitWidth: _main.x - _.space > _.notificationWidth / 2 ? parent.width: 0
-                        implicitHeight: _main.x - _.space > _.notificationWidth / 2 ? parent.height: 0
+                        anchors.fill: parent
                         opacity: 0.1
                         radius: _.radius
                         color: _.textColor
+                        visible: (
+                            _main.x - _.space > _.notificationWidth / 2 || 
+                            _action.hovered && 
+                            _main.x - _.space >= _.notificationWidth / 4
+                        )
                     }
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
+                        hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
                         onClicked: {
                             if (_card.haveAction) 
@@ -157,6 +172,8 @@ Custom.Angulia {
                                 _card.modelData.dismiss()
                             }
                         }
+                        onEntered: _action.hovered = true
+                        onExited: _action.hovered = false
                     }
                 }
                 Rectangle {

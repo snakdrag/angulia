@@ -13,7 +13,7 @@ Singleton {
     readonly property int topExclusiveZone: (exclusiveZones + 0)
     readonly property int leftExclusiveZone: (exclusiveZones + 0)
     readonly property int rightExclusiveZone: (exclusiveZones + 0)
-    readonly property int bottomExclusiveZone: (exclusiveZones + 50)
+    readonly property int bottomExclusiveZone: (exclusiveZones + 50 + 10)
 
     readonly property int notificationDirection: (5)
     readonly property int notificationSpace: (10)
@@ -40,11 +40,11 @@ Singleton {
     })
 
 
-    readonly property int launcherDirection: (1)
+    readonly property int launcherDirection: (5)
     readonly property int launcherAppWidth: (400)
     readonly property int launcherAppHeight: (60)
     readonly property int launcherInputHeight: (30)
-    readonly property bool launcherInputAtTop: (true)
+    readonly property bool launcherInputAtTop: (false)
     readonly property font launcherAppFont: ({
         family: "Inter",
         bold: true,

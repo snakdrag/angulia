@@ -21,7 +21,8 @@ Custom.Angulia {
         anchors.bottom: _.isBottom ? parent.bottom: undefined
         anchors.horizontalCenter: _.isTopBottom ? parent.horizontalCenter: undefined
         anchors.verticalCenter: _.isLeftRight ? parent.verticalCenter: undefined
-        anchors.margins: _.edge
+        anchors.margins: _.edge + _.float
+        float: _.float
         radius: _.radius
         color: _.color
         isTopLeft: _.isLeft
