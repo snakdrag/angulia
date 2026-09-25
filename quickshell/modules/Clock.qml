@@ -1,16 +1,16 @@
 import QtQuick
 import Quickshell
 import "../custom" as Custom
-import qs.angulia.quickshell.settings
+import qs.angulia.theme
 
 Custom.Angulia {
     id: _
-    direction: (Decorations.clockDirection % 8)
+    direction: (Settings.clockDirection % 8)
 
-    property int clockWidth: (Decorations.clockWidth)
-    property int clockHeight: (Decorations.clockHeight)
-    property font clockFont: (Decorations.clockFont)
-    property int space: (Decorations.notificationSpace)
+    property int clockWidth: (Settings.clockWidth)
+    property int clockHeight: (Settings.clockHeight)
+    property font clockFont: (Settings.clockFont)
+    property int space: (Settings.notificationSpace)
 
 
     Custom.RoundRectangle {

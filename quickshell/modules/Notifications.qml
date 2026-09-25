@@ -5,20 +5,19 @@ import Quickshell.Services.Notifications
 import "../custom" as Custom
 import "../services" as Services
 import qs.angulia.theme
-import qs.angulia.quickshell.settings
 
 Custom.Angulia {
     id: _
     
-    direction: (Decorations.notificationDirection % 8)
+    direction: (Settings.notificationDirection % 8)
     
-    property int notificationWidth: (Decorations.notificationWidth)
-    property int notificationHeight: (Decorations.notificationHeight)
+    property int notificationWidth: (Settings.notificationWidth)
+    property int notificationHeight: (Settings.notificationHeight)
     property color cardColor: (Colors.surface_container)
-    property int space: (Decorations.notificationSpace)
+    property int space: (Settings.notificationSpace)
 
-    property font summaryFont: (Decorations.notificationSummaryFont)
-    property font bodyFont: (Decorations.notificationBodyFont)
+    property font summaryFont: (Settings.notificationSummaryFont)
+    property font bodyFont: (Settings.notificationBodyFont)
 
     readonly property int contentHeight: (Math.min(_list.contentHeight, Screen.height / 2))
 

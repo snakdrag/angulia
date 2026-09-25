@@ -4,19 +4,18 @@ import Quickshell.Io
 import Quickshell.Widgets
 import "../custom" as Custom
 import qs.angulia.theme
-import qs.angulia.quickshell.settings
 
 Custom.Angulia {
     id: _
-    direction: (Decorations.launcherDirection % 9)
+    direction: (Settings.launcherDirection % 9)
 
-    property int appWidth: (Decorations.launcherAppWidth)
-    property int appHeight: (Decorations.launcherAppHeight)
-    property int inputHeight: (Decorations.launcherInputHeight)
-    property bool inputAtTop: (Decorations.launcherInputAtTop)
-    property font appFont: (Decorations.launcherAppFont)
-    property font describeFont: (Decorations.launcherDescribeFont)
-    property int space: (Decorations.launcherSpace)
+    property int appWidth: (Settings.launcherAppWidth)
+    property int appHeight: (Settings.launcherAppHeight)
+    property int inputHeight: (Settings.launcherInputHeight)
+    property bool inputAtTop: (Settings.launcherInputAtTop)
+    property font appFont: (Settings.launcherAppFont)
+    property font describeFont: (Settings.launcherDescribeFont)
+    property int space: (Settings.launcherSpace)
     property color cardColor: (Colors.surface_container)
     property bool launcherOpened: (false)
 

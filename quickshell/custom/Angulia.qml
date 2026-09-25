@@ -1,6 +1,5 @@
 import QtQuick
 import qs.angulia.theme
-import qs.angulia.quickshell.settings
 
 Item {
     anchors.fill: parent
@@ -19,8 +18,8 @@ Item {
     readonly property bool isBottomLeft: ( direction === 5 || direction === 6 || direction === 7 )
     readonly property bool isBottomRight: ( direction === 3 || direction === 4 || direction === 5 )
 
-    property real radius: (Decorations.radius)
+    property real radius: (Settings.radius)
     property color color: (Colors.surface)
     property color textColor: (Colors.on_surface)
-    property int edge: (Decorations.edge)
+    property int edge: (Settings.edge)
 }
