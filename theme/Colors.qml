@@ -4,7 +4,6 @@ import Quickshell
 import Quickshell.Io
 
 Singleton {
-    id: _
 
     FileView {
         id: colorsFile

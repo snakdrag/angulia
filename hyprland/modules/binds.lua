@@ -2,7 +2,7 @@
 ---- KEYBINDINGS ----
 ---------------------
 
-local binds = require("~/.config/quickshell/angulia/hyprland/settings/binds")
+local binds = require((debug.getinfo(1, "S").source:sub(2):match("(.*/)") or "./") .. "../settings/binds")
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 

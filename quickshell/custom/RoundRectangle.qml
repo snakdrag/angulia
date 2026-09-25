@@ -1,13 +1,13 @@
 import QtQuick
-import Quickshell
 
 Item {
     id: _
 
-    property int rectangleWidth: (100)
-    property int rectangleHeight: (100)
+    property int rectangleWidth: (0)
+    property int rectangleHeight: (0)
     property real radius: (0)
     property color color: ("#ffffff")
+
     property bool isTopLeft: (false)
     property bool isTopRight: (false)
     property bool isLeftTop: (false)
@@ -22,6 +22,8 @@ Item {
     property bool isRight: (!isRightTop && !isRightBottom || anchors.right === parent.right)
     property bool isBottom: (!isBottomLeft && !isBottomRight || anchors.bottom === parent.bottom)
 
+    readonly property Rectangle rectangle: (__)
+
     implicitWidth: (
         isLeft || isRight ? (
             isLeft && isRight ? 
@@ -29,6 +31,13 @@ Item {
             rectangleWidth + radius
         ): rectangleWidth + radius * 2
     )
+    Behavior on implicitWidth {
+        NumberAnimation {
+            duration: 300
+            easing.type: Easing.OutCubic
+        }
+    }
+
     implicitHeight: (
         isTop || isBottom ? (
             isTop && isBottom ? 
@@ -36,18 +45,6 @@ Item {
             rectangleHeight + radius
         ): rectangleHeight + radius * 2
     )
-    readonly property Region region: (_region)
-    readonly property Rectangle rectangle: (__)
-    Region {
-        id: _region
-        item: __
-    }
-    Behavior on implicitWidth {
-        NumberAnimation {
-            duration: 300
-            easing.type: Easing.OutCubic
-        }
-    }
     Behavior on implicitHeight {
         NumberAnimation {
             duration: 300

@@ -1,21 +1,15 @@
-local f = assert(
-    io.open(
-        (debug.getinfo(1, "S").source:sub(2):match("(.*/)") or "./") .. "colors.json",
-        "r"
-    )
-)
+local f = assert(io.open((debug.getinfo(1, "S").source:sub(2):match("(.*/)") or "./") .. "colors.json", "r"))
 local data = f:read("*a")
 f:close()
 
 local mode = data:match('"mode"%s*:%s*"([^"]+)"')
 
 local function get_color(name)
-    local pattern = (
+    return data:match(
         '"colors"%s*:%s*{%s*.-"' ..
         name .. '"%s*:%s*{%s*.-"' ..
         mode .. '"%s*:%s*{%s*"color"%s*:%s*"([^"]+)"'
     )
-    return data:match(pattern)
 end
 
 return {

@@ -1,7 +1,5 @@
-local modules = (
-    (debug.getinfo(1, "S").source:sub(2):match("(.*/)") or "./") ..
-    "modules/"
-)
+local modules = ((debug.getinfo(1, "S").source:sub(2):match("(.*/)") or "./") .. "modules/")
+
 require(modules .. "monitors")
 require(modules .. "autostart")
 require(modules .. "env")

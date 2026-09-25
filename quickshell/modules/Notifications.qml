@@ -27,6 +27,27 @@ Custom.Angulia {
         id: _region
         item: _center
     }
+    Custom.RoundRectangle {
+        rectangleWidth: _.contentHeight !==0 ? _.notificationWidth + _.space * 2: 0
+        rectangleHeight: _.contentHeight !==0 ? _.contentHeight + _.space * 2: 0
+        anchors.top: _.isTop ? parent.top: undefined
+        anchors.left: _.isLeft ? parent.left: undefined
+        anchors.right: _.isRight ? parent.right: undefined
+        anchors.bottom: _.isBottom ? parent.bottom: undefined
+        anchors.horizontalCenter: _.isTopBottom ? parent.horizontalCenter: undefined
+        anchors.verticalCenter: _.isLeftRight ? parent.verticalCenter: undefined
+        anchors.margins: _.edge
+        radius: _.radius
+        color: _.color
+        isTopLeft: _.isLeft
+        isTopRight: _.isRight
+        isLeftTop: _.isTop
+        isLeftBottom: _.isBottom
+        isRightTop: _.isTop
+        isRightBottom: _.isBottom
+        isBottomLeft: _.isLeft
+        isBottomRight: _.isRight
+    }
     ClippingRectangle {
         id: _center
         implicitWidth: _.contentHeight !==0 ? _.notificationWidth: 0
