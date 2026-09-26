@@ -11,7 +11,7 @@ Custom.Angulia {
 
     property int appWidth: (Settings.launcherAppWidth)
     property int appHeight: (Settings.launcherAppHeight)
-    property int inputHeight: (Settings.launcherInputHeight)
+    property int inputHeight: (Settings.launcherHeight)
     property bool inputAtTop: (Settings.launcherInputAtTop)
     property font appFont: (Settings.launcherAppFont)
     property font describeFont: (Settings.launcherDescribeFont)
@@ -48,13 +48,13 @@ Custom.Angulia {
         id: _region
         regions: [__.region, ]
     }
-    Custom.RoundRectangle {
+    Custom.Rectangle {
         id: __
-        rectangleWidth: _.launcherOpened ? _.appWidth + _.space * 2: 0
-        rectangleHeight: _.launcherOpened ? (
+        implicitWidth: _.launcherOpened ? _.appWidth + _.space * 2: 0
+        implicitHeight: _.launcherOpened ? (
             _.contentHeight === 0 ? 
-            _search.height + _.space * 2: 
-            _.contentHeight + _search.height + _.space * 3
+            _.inputHeight: 
+            _.contentHeight + _.inputHeight + _.space
         ): 0
         anchors.top: _.isTop ? parent.top: undefined
         anchors.left: _.isLeft ? parent.left: undefined
@@ -75,26 +75,26 @@ Custom.Angulia {
         isBottomLeft: _.isLeft
         isBottomRight: _.isRight
         Item {
-            anchors.fill: parent.rectangle
+            anchors.fill: parent
             anchors.margins: _.space
             Rectangle { 
                 anchors.top: _.inputAtTop ? parent.top: undefined
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.bottom: !_.inputAtTop ? parent.bottom: undefined
-                implicitHeight: _.launcherOpened ? _.inputHeight: 0
+                implicitHeight: _.launcherOpened ? _.inputHeight - _.space * 2: 0
                 radius: _.radius 
                 color: _.cardColor
                 TextInput { 
                     id: _search
-                    anchors.fill: parent 
-                    anchors.leftMargin: _.space 
-                    anchors.rightMargin: _.space 
+                    anchors.fill: parent
+                    anchors.leftMargin: _.space
+                    anchors.rightMargin: _.space
                     verticalAlignment: TextInput.AlignVCenter 
                     color: _.textColor 
                     font: _.appFont 
                     text: _.query 
-                    visible: __.rectangleWidth !== 0
+                    visible: _.launcherOpened
                     cursorVisible: activeFocus
                     clip: true 
                     onTextChanged: { 
@@ -140,8 +140,8 @@ Custom.Angulia {
             }
             ClippingRectangle {
                 anchors.fill: parent
-                anchors.topMargin: _.inputAtTop ? _search.height + _.space: 0
-                anchors.bottomMargin: !_.inputAtTop ? _search.height + _.space: 0
+                anchors.topMargin: _.inputAtTop ? _.inputHeight - _.space: 0
+                anchors.bottomMargin: !_.inputAtTop ? _.inputHeight - _.space: 0
                 radius: _.radius
                 color: "transparent"
                 Behavior on implicitWidth {
@@ -163,9 +163,8 @@ Custom.Angulia {
                     currentIndex: _.selectedIndex
                     model: ScriptModel {
                         values: _.query === "" ? []: DesktopEntries.applications.values.filter(
-                            entry => entry.name.toLowerCase().indexOf(_.query.toLowerCase()) !== -1).sort(
-                                (a, b) => a.name.localeCompare(b.name)
-                        )
+                            entry => new RegExp([..._.query.toLowerCase()].join(".*"), "i").test(entry.name)
+                        ).sort((a, b) => a.name.localeCompare(b.name))
                     }
                     delegate: Item {
                         id: _card
@@ -218,13 +217,10 @@ Custom.Angulia {
                                     wrapMode: Text.WrapAnywhere
                                 }
                             }
-                            Rectangle {
-                                id: _active
-                                anchors.fill: parent
+                            Custom.Cover {
+                                show: _card.index === _.selectedIndex
                                 radius: _.radius
-                                opacity: 0.1
                                 color: _.textColor
-                                visible: _card.index === _.selectedIndex
                             }
                             MouseArea {
                                 anchors.fill: parent

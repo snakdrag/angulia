@@ -12,9 +12,9 @@ Custom.Angulia {
     property font clockFont: (Settings.clockFont)
     property int space: (Settings.notificationSpace)
 
-    Custom.RoundRectangle {
-        rectangleWidth: _.clockWidth
-        rectangleHeight: _.clockHeight
+    Custom.Rectangle {
+        implicitWidth: _.clockWidth
+        implicitHeight: _.clockHeight
         anchors.top: _.isTop ? parent.top: undefined
         anchors.left: _.isLeft ? parent.left: undefined
         anchors.right: _.isRight ? parent.right: undefined
@@ -34,7 +34,7 @@ Custom.Angulia {
         isBottomLeft: _.isLeft
         isBottomRight: _.isRight
         Text {
-            anchors.centerIn: parent.rectangle
+            anchors.centerIn: parent
             text: Qt.formatDateTime(_clock.date, "hh:mm")
             color: _.textColor
             font: _.clockFont

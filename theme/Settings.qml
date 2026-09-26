@@ -4,16 +4,16 @@ import Quickshell
 
 Singleton {
 
-    readonly property real radius: (25)
-    readonly property int edge: (0)
+    readonly property real radius: (12)
+    readonly property int edge: (10)
 
-    readonly property int float: (10)
+    readonly property int float: (0)
 
     readonly property int exclusiveZones: (edge + 15)
     readonly property int topExclusiveZone: (exclusiveZones + 0)
     readonly property int leftExclusiveZone: (exclusiveZones + 0)
     readonly property int rightExclusiveZone: (exclusiveZones + 0)
-    readonly property int bottomExclusiveZone: (exclusiveZones + 50 + 10)
+    readonly property int bottomExclusiveZone: (exclusiveZones + 50 + float)
 
     readonly property int notificationDirection: (5)
     readonly property int notificationSpace: (10)
@@ -43,7 +43,7 @@ Singleton {
     readonly property int launcherDirection: (5)
     readonly property int launcherAppWidth: (400)
     readonly property int launcherAppHeight: (60)
-    readonly property int launcherInputHeight: (30)
+    readonly property int launcherHeight: (50)
     readonly property bool launcherInputAtTop: (false)
     readonly property font launcherAppFont: ({
         family: "Inter",

@@ -12,14 +12,13 @@ ShellRoot {
     //     mask: Region {}
     // }
     Layers.Top {
-        mask: Region { regions: [_launcher.region, ] }
-        WlrLayershell.keyboardFocus: _launcher.launcherOpened ? WlrKeyboardFocus.Exclusive: WlrKeyboardFocus.None
         Modules.Edge {}
         Modules.Clock {}
-        Modules.Launcher { id: _launcher }
     }
     Layers.Overlay {
-        mask: Region { regions: [_notifications.region, ] }
+        mask: Region { regions: [_notifications.region, _launcher.region,] }
+        WlrLayershell.keyboardFocus: _launcher.launcherOpened ? WlrKeyboardFocus.Exclusive: WlrKeyboardFocus.None
         Modules.Notifications { id: _notifications }
+        Modules.Launcher { id: _launcher }
     }
 }

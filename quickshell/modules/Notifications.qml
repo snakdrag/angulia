@@ -26,9 +26,9 @@ Custom.Angulia {
         id: _region
         item: _center
     }
-    Custom.RoundRectangle {
-        rectangleWidth: _.contentHeight !==0 ? _.notificationWidth + _.space * 2: 0
-        rectangleHeight: _.contentHeight !==0 ? _.contentHeight + _.space * 2: 0
+    Custom.Rectangle {
+        implicitWidth: _.contentHeight !==0 ? _.notificationWidth + _.space * 2: 0
+        implicitHeight: _.contentHeight !==0 ? _.contentHeight + _.space * 2: 0
         anchors.top: _.isTop ? parent.top: undefined
         anchors.left: _.isLeft ? parent.left: undefined
         anchors.right: _.isRight ? parent.right: undefined
@@ -108,16 +108,14 @@ Custom.Angulia {
                         font: _.bodyFont
                         opacity: (-_main.x - _.space - _.notificationWidth / 8) / _.notificationWidth * 8
                     }
-                    Rectangle {
-                        anchors.fill: parent
-                        opacity: 0.1
-                        radius: _.radius
-                        color: _.textColor
-                        visible: (
+                    Custom.Cover {
+                        show: (
                             -_main.x - _.space > _.notificationWidth / 2 || 
                             _clear.hovered &&
                             -_main.x - _.space >= _.notificationWidth / 4
                         )
+                        radius: _.radius
+                        color: _.textColor
                     }
                     MouseArea {
                         anchors.fill: parent
@@ -146,16 +144,14 @@ Custom.Angulia {
                         font: _.bodyFont
                         opacity: (_main.x - _.space - _.notificationWidth / 8) / _.notificationWidth * 8
                     }
-                    Rectangle {
-                        anchors.fill: parent
-                        opacity: 0.1
-                        radius: _.radius
-                        color: _.textColor
-                        visible: (
+                    Custom.Cover {
+                        show: (
                             _main.x - _.space > _.notificationWidth / 2 || 
                             _action.hovered && 
                             _main.x - _.space >= _.notificationWidth / 4
                         )
+                        radius: _.radius
+                        color: _.textColor
                     }
                     MouseArea {
                         anchors.fill: parent
@@ -190,7 +186,7 @@ Custom.Angulia {
                         anchors.margins: _.space
                         width: _.notificationWidth / 8
                         height: _.notificationWidth / 8
-                        source: _card.modelData.image || _card.modelData.appIcon || ""
+                        source: _card.modelData.image || Quickshell.iconPath(_card.modelData.appIcon, true) || ""
                         fillMode: Image.PreserveAspectFit
                         visible: status === Image.Ready && source != ""
                     }
@@ -211,7 +207,7 @@ Custom.Angulia {
                             font: _.summaryFont
                             elide: Text.ElideRight
                             wrapMode: Text.WrapAnywhere
-                            maximumLineCount: _card.modelData.urgency === NotificationUrgency.Critical ? undefined: 1
+                            maximumLineCount: _card.modelData.urgency === NotificationUrgency.Critical ? undefined: 2
                         }
                         Text {
                             id: _body
