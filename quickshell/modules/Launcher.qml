@@ -163,7 +163,12 @@ Custom.Angulia {
                     currentIndex: _.selectedIndex
                     model: ScriptModel {
                         values: _.query === "" ? []: DesktopEntries.applications.values.filter(
-                            entry => new RegExp([..._.query.toLowerCase()].join(".*"), "i").test(entry.name)
+                            entry => {
+                                let i = 0;
+                                return [..._.query.toLowerCase()].every(
+                                    char => (i = entry.name.toLowerCase().indexOf(char, i)) !== -1 && i++ >= 0
+                                );
+                            }
                         ).sort((a, b) => a.name.localeCompare(b.name))
                     }
                     delegate: Item {
