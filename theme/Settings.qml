@@ -40,18 +40,18 @@ Singleton {
     })
 
 
-    readonly property int launcherDirection: (1)
-    readonly property int launcherAppWidth: (400)
-    readonly property int launcherAppHeight: (60)
+    readonly property int launcherDirection: (5)
+    readonly property int launcherSpace: (10)
+    readonly property int launcherWidth: (400)
     readonly property int launcherHeight: (50)
+    readonly property int launcherCardHeight: (60)
     readonly property bool launcherInputAtTop: (false)
-    readonly property font launcherAppFont: ({
+    readonly property font launcherNameFont: ({
         family: "Inter",
         bold: true,
     })
-    readonly property font launcherDescribeFont: ({
+    readonly property font launcherCommentFont: ({
         family: "Inter",
     })
-    readonly property int launcherSpace: (10)
 
 }

@@ -24,6 +24,17 @@ Rectangle {
     bottomLeftRadius: (isBottomLeft || isLeftBottom) && !float ? 0: radius
     bottomRightRadius: (isBottomRight || isRightBottom) && !float ? 0: radius
 
+    property bool show: (true)
+
+    opacity: show ? 1: 0
+
+    Behavior on opacity {
+        NumberAnimation {
+            duration: 300
+            easing.type: Easing.OutCubic
+        }
+    }
+
     Behavior on implicitWidth {
         NumberAnimation {
             duration: 300
