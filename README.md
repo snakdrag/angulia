@@ -3,6 +3,8 @@
 **don't install!!!**
 **never run setup.sh unless you have backup everything might change**
 
+if you want to use this, please go to ~/.config/quickshell/angulia/hyprland/settings/ and change hyprland by your own.
+
 required:
 
 - `quickshell`
