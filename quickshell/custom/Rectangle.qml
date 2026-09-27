@@ -5,19 +5,19 @@ Rectangle {
 
     property bool float: (false)
 
-    property bool isTopLeft: (false)
-    property bool isTopRight: (false)
-    property bool isLeftTop: (false)
-    property bool isLeftBottom: (false)
-    property bool isRightTop: (false)
-    property bool isRightBottom: (false)
-    property bool isBottomLeft: (false)
-    property bool isBottomRight: (false)
+    property bool isTop: (anchors.top === parent.top)
+    property bool isLeft: (anchors.left === parent.left)
+    property bool isRight: (anchors.right === parent.right)
+    property bool isBottom: (anchors.bottom === parent.bottom)
 
-    property bool isTop: (!isTopLeft && !isTopRight || anchors.top === parent.top)
-    property bool isLeft: (!isLeftTop && !isLeftBottom || anchors.left === parent.left)
-    property bool isRight: (!isRightTop && !isRightBottom || anchors.right === parent.right)
-    property bool isBottom: (!isBottomLeft && !isBottomRight || anchors.bottom === parent.bottom)
+    property bool isTopLeft: (isLeft)
+    property bool isTopRight: (isRight)
+    property bool isLeftTop: (isTop)
+    property bool isLeftBottom: (isBottom)
+    property bool isRightTop: (isTop)
+    property bool isRightBottom: (isBottom)
+    property bool isBottomLeft: (isLeft)
+    property bool isBottomRight: (isRight)
 
     topLeftRadius: (isTopLeft || isLeftTop) && !float ? 0: radius
     topRightRadius: (isTopRight || isRightTop) && !float ? 0: radius
@@ -33,6 +33,13 @@ Rectangle {
     Behavior on implicitHeight {
         NumberAnimation {
             duration: 300
+            easing.type: Easing.OutCubic
+        }
+    }
+
+    Behavior on color {
+        ColorAnimation {
+            duration: 1000
             easing.type: Easing.OutCubic
         }
     }

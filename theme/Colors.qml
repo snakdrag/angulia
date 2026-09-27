@@ -20,6 +20,7 @@ Singleton {
     readonly property string image: (data.image)
     readonly property bool isDarkMode: (data.is_dark_mode)
     readonly property string mode: (data.mode)
+    // readonly property string mode: ("light")
 
     readonly property color primary: (colors.primary[mode].color)
     readonly property color on_primary: (colors.on_primary[mode].color)
