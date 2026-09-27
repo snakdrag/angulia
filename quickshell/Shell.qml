@@ -17,7 +17,7 @@ ShellRoot {
     }
     Layers.Overlay {
         mask: Region { regions: [_notifications.region, _launcher.region,] }
-        WlrLayershell.keyboardFocus: _launcher.launcherOpened ? WlrKeyboardFocus.Exclusive: WlrKeyboardFocus.None
+        WlrLayershell.keyboardFocus: _launcher.opened ? WlrKeyboardFocus.Exclusive: WlrKeyboardFocus.None
         Modules.Notifications { id: _notifications }
         Modules.Launcher { id: _launcher }
     }

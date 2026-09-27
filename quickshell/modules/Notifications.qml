@@ -8,7 +8,7 @@ import qs.angulia.theme
 
 Custom.Angulia {
     id: _
-    
+    anchors.fill: parent
     direction: (Settings.notificationDirection % 8)
     
     property int notificationWidth: (Settings.notificationWidth)

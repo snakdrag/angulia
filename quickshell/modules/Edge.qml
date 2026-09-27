@@ -4,13 +4,12 @@ import qs.angulia.theme
 
 Item {
     id: _
-    
     anchors.fill: parent
 
     property real radius: (Settings.radius)
     property color color: (Colors.surface)
     property int edge: (Settings.edge)
-    
+
     Custom.Rectangle {
         anchors.top: parent.top
         anchors.left: parent.left

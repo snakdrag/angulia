@@ -5,6 +5,7 @@ import qs.angulia.theme
 
 Custom.Angulia {
     id: _
+    anchors.fill: parent
     direction: (Settings.clockDirection % 8)
 
     property int clockWidth: (Settings.clockWidth)
@@ -25,14 +26,6 @@ Custom.Angulia {
         float: _.float
         radius: _.radius
         color: _.color
-        isTopLeft: _.isLeft
-        isTopRight: _.isRight
-        isLeftTop: _.isTop
-        isLeftBottom: _.isBottom
-        isRightTop: _.isTop
-        isRightBottom: _.isBottom
-        isBottomLeft: _.isLeft
-        isBottomRight: _.isRight
         Text {
             anchors.centerIn: parent
             text: Qt.formatDateTime(_clock.date, "hh:mm")
