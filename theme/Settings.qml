@@ -5,7 +5,7 @@ import Quickshell
 Singleton {
 
     readonly property real radius: (12)
-    readonly property int edge: (10)
+    readonly property int edge: (0)
 
     readonly property int float: (0)
 
@@ -18,7 +18,7 @@ Singleton {
     readonly property int notificationDirection: (5)
     readonly property int notificationSpace: (10)
     readonly property int notificationWidth: (400)
-    readonly property int notificationHeight: (80)
+    readonly property int notificationCardHeight: (80)
     readonly property font notificationSummaryFont: ({
         family: "Inter",
         pixelSize: 15,
@@ -40,18 +40,20 @@ Singleton {
     })
 
 
-    readonly property int launcherDirection: (5)
+    readonly property int launcherDirection: (1)
     readonly property int launcherSpace: (10)
     readonly property int launcherWidth: (400)
     readonly property int launcherHeight: (50)
-    readonly property int launcherCardHeight: (60)
+    readonly property int launcherCardHeight: (50)
     readonly property bool launcherInputAtTop: (false)
     readonly property font launcherNameFont: ({
         family: "Inter",
+        pixelSize: 12,
         bold: true,
     })
     readonly property font launcherCommentFont: ({
         family: "Inter",
+        pixelSize: 12,
     })
 
 }

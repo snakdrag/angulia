@@ -32,7 +32,7 @@ Custom.Item {
     property bool opened: (false)
     property bool inputAtTop: (Settings.launcherInputAtTop)
 
-    readonly property int contentHeight: (Math.min(_list.contentHeight, parent.height / 2 - _.space * 2 - launcherHeight))
+    readonly property int contentHeight: (Math.min(_list.contentHeight, parent.height / 2 - edge - space - launcherHeight))
 
     IpcHandler {
         id: _ipc
@@ -51,7 +51,6 @@ Custom.Item {
         }
     }
     Custom.Rectangle {
-        id: __
         anchors.top: _.isTop ? parent.top: undefined
         anchors.left: _.isLeft ? parent.left: undefined
         anchors.right: _.isRight ? parent.right: undefined

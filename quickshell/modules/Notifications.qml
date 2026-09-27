@@ -6,20 +6,28 @@ import "../custom" as Custom
 import "../services" as Services
 import qs.angulia.theme
 
-Custom.Angulia {
+Custom.Item {
     id: _
     anchors.fill: parent
-    direction: (Settings.notificationDirection % 8)
+    direction: Settings.notificationDirection % 8
     
+    property real radius: (Settings.radius)
+    property color color: (Colors.surface)
+    property color textColor: (Colors.on_surface)
+    property int edge: (Settings.edge)
+    property int float: (Settings.float)
+
     property int notificationWidth: (Settings.notificationWidth)
-    property int notificationHeight: (Settings.notificationHeight)
+    property int notificationCardHeight: (Settings.notificationCardHeight)
     property color cardColor: (Colors.surface_container)
     property int space: (Settings.notificationSpace)
 
     property font summaryFont: (Settings.notificationSummaryFont)
     property font bodyFont: (Settings.notificationBodyFont)
 
-    readonly property int contentHeight: (Math.min(_list.contentHeight, Screen.height / 2))
+    anchors.margins: edge + float
+
+    readonly property int contentHeight: (Math.min(_list.contentHeight, parent.height / 2 - edge - space * 2))
 
     readonly property Region region: (_region)
     Region {
@@ -27,26 +35,19 @@ Custom.Angulia {
         item: _center
     }
     Custom.Rectangle {
-        implicitWidth: _.contentHeight !==0 ? _.notificationWidth + _.space * 2: 0
-        implicitHeight: _.contentHeight !==0 ? _.contentHeight + _.space * 2: 0
         anchors.top: _.isTop ? parent.top: undefined
         anchors.left: _.isLeft ? parent.left: undefined
         anchors.right: _.isRight ? parent.right: undefined
         anchors.bottom: _.isBottom ? parent.bottom: undefined
         anchors.horizontalCenter: _.isTopBottom ? parent.horizontalCenter: undefined
         anchors.verticalCenter: _.isLeftRight ? parent.verticalCenter: undefined
-        anchors.margins: _.edge + _.float
+
+        implicitWidth: _.contentHeight !==0 ? _.notificationWidth: 0
+        implicitHeight: _.contentHeight !==0 ? _.contentHeight + _.space * 2: 0
+
         float: _.float
         radius: _.radius
         color: _.color
-        isTopLeft: _.isLeft
-        isTopRight: _.isRight
-        isLeftTop: _.isTop
-        isLeftBottom: _.isBottom
-        isRightTop: _.isTop
-        isRightBottom: _.isBottom
-        isBottomLeft: _.isLeft
-        isBottomRight: _.isRight
     }
     ClippingRectangle {
         id: _center
@@ -58,7 +59,7 @@ Custom.Angulia {
         anchors.bottom: _.isBottom ? parent.bottom: undefined
         anchors.horizontalCenter: _.isTopBottom ? parent.horizontalCenter: undefined
         anchors.verticalCenter: _.isLeftRight ? parent.verticalCenter: undefined
-        anchors.margins: _.edge + _.space + _.float
+        anchors.margins: _.space
         radius: _.radius
         color: "transparent"
         Behavior on implicitWidth {
@@ -90,7 +91,7 @@ Custom.Angulia {
                 required property var modelData
                 readonly property bool haveAction: (modelData.actions.length > 0)
                 implicitWidth: _.notificationWidth
-                implicitHeight: Math.max(_.notificationHeight, _summary.height + _body.height + _.space * 2)
+                implicitHeight: Math.max(_.notificationCardHeight, _summary.height + _body.height + _.space * 2)
                 Rectangle {
                     id: _clear
                     property bool hovered: (false)
