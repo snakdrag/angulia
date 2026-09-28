@@ -44,7 +44,7 @@ Singleton {
     readonly property int launcherWidth: (400)
     readonly property int launcherHeight: (50)
     readonly property int launcherCardHeight: (60)
-    readonly property bool launcherInputAtTop: (false)
+    readonly property bool launcherInputAtTop: (true)
     readonly property font launcherNameFont: ({
         family: "Inter",
         pixelSize: 12,

@@ -11,7 +11,7 @@ Custom.Item {
     direction: Settings.launcherDirection
 
     property real radius: (Settings.radius)
-    color: (Colors.surface)
+    property color color: (Colors.surface)
     property color cardColor: (Colors.surface_container)
     property color textColor: (Colors.on_surface)
     property int edge: (Settings.edge)

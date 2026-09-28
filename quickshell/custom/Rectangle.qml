@@ -48,13 +48,6 @@ Rectangle {
         }
     }
 
-    Behavior on color {
-        ColorAnimation {
-            duration: 1000
-            easing.type: Easing.OutCubic
-        }
-    }
-
     RoundCorner {
         anchors.left: _.left
         anchors.bottom: _.top

@@ -12,7 +12,7 @@ Custom.Item {
     direction: Settings.notificationDirection % 8
     
     property real radius: (Settings.radius)
-    color: (Colors.surface)
+    property color color: (Colors.surface)
     property color textColor: (Colors.on_surface)
     property int edge: (Settings.edge)
     property int float: (Settings.float)

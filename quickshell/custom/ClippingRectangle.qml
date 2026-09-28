@@ -27,11 +27,4 @@ ClippingRectangle {
             easing.type: Easing.OutCubic
         }
     }
-
-    Behavior on color {
-        ColorAnimation {
-            duration: 1000
-            easing.type: Easing.OutCubic
-        }
-    }
 }
