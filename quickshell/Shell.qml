@@ -13,7 +13,7 @@ ShellRoot {
     // }
     Layers.Top {
         Modules.Edge {}
-        Modules.Clock {}
+        Modules.Bar {}
     }
     Layers.Overlay {
         mask: Region { regions: [_notifications.region,] }

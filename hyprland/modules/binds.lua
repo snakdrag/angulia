@@ -15,7 +15,7 @@ local locked_repeating = { locked = true, repeating = true }
 -- quickshell --
 ----------------
 
-binds.create("SUPER + R", hl.dsp.exec_cmd("qs ipc call launcher toggle"))
+binds.create(binds.quickshell.launcher, hl.dsp.exec_cmd("qs ipc call launcher toggle"))
 
 
 -------------

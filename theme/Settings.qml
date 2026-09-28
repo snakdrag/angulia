@@ -5,9 +5,9 @@ import Quickshell
 Singleton {
 
     readonly property real radius: (12)
-    readonly property int edge: (10)
+    readonly property int edge: (5)
 
-    readonly property int float: (0)
+    readonly property int float: (10)
     readonly property int space: (10)
 
     readonly property int exclusiveZones: (edge + 15)
@@ -30,16 +30,6 @@ Singleton {
         bold: false,
     })
 
-    readonly property int clockDirection: (5)
-    readonly property int clockWidth: (200)
-    readonly property int clockHeight: (50)
-    readonly property font clockFont: ({
-        family: "Inter",
-        pixelSize: 15,
-        bold: false,
-    })
-
-
     readonly property int launcherDirection: (1)
     readonly property int launcherWidth: (400)
     readonly property int launcherHeight: (50)
@@ -54,5 +44,15 @@ Singleton {
         family: "Inter",
         pixelSize: 12,
     })
+
+    readonly property font clockFont: ({
+        family: "Inter",
+        pixelSize: 15,
+        bold: false,
+    })
+
+    readonly property int barDirection: (5)
+    readonly property int barWidth: (300)
+    readonly property int barHeight: (50)
 
 }

@@ -1,39 +1,37 @@
 import QtQuick
+import QtQuick.Layouts
 import Quickshell
+import "bar" as Bar
 import "../custom" as Custom
 import qs.angulia.theme
 
 Custom.Angulia {
     id: _
     anchors.fill: parent
-    direction: (Settings.clockDirection % 8)
+    direction: (Settings.barDirection % 8)
 
-    property int clockWidth: (Settings.clockWidth)
-    property int clockHeight: (Settings.clockHeight)
-    property font clockFont: (Settings.clockFont)
+    property int barWidth: (Settings.barWidth)
+    property int barHeight: (Settings.barHeight)
+
+    anchors.margins: _.edge + _.float
 
     Custom.Rectangle {
-        implicitWidth: _.clockWidth
-        implicitHeight: _.clockHeight
+        implicitWidth: _.barWidth
+        implicitHeight: _.barHeight
         anchors.top: _.isTop ? parent.top: undefined
         anchors.left: _.isLeft ? parent.left: undefined
         anchors.right: _.isRight ? parent.right: undefined
         anchors.bottom: _.isBottom ? parent.bottom: undefined
         anchors.horizontalCenter: _.isTopBottom ? parent.horizontalCenter: undefined
         anchors.verticalCenter: _.isLeftRight ? parent.verticalCenter: undefined
-        anchors.margins: _.edge + _.float
         float: _.float
         radius: _.radius
         color: _.color
-        Text {
-            anchors.centerIn: parent
-            text: Qt.formatDateTime(_clock.date, "hh:mm")
-            color: _.textColor
-            font: _.clockFont
-            SystemClock {
-                id: _clock
-                precision: SystemClock.Minutes
-            }
+        RowLayout {
+            anchors.fill: parent
+            Bar.Space {}
+            Bar.Clock {}
+            Bar.Space {}
         }
     }
 }

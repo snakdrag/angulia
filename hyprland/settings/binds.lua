@@ -28,6 +28,9 @@ binds_create("SUPER + C", hl.dsp.exec_cmd("distrobox-enter -n fedora -- code"))
 
 return {
     create = binds_create,
+    quickshell = {
+        launcher = "SUPER + R",
+    },
     session = {
         logout = "SUPER + M",
         lock = "SUPER + L",
