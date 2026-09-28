@@ -1,7 +1,8 @@
 import QtQuick
 import qs.angulia.theme
+import "." as Custom
 
-Item {
+Custom.Item {
     anchors.fill: parent
     property int direction: (1)
 
@@ -19,7 +20,7 @@ Item {
     readonly property bool isBottomRight: ( direction === 3 || direction === 4 || direction === 5 )
 
     property real radius: (Settings.radius)
-    property color color: (Colors.surface)
+    color: (Colors.surface)
     property color textColor: (Colors.on_surface)
     property int edge: (Settings.edge)
     property int float: (Settings.float)

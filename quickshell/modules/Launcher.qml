@@ -11,12 +11,12 @@ Custom.Item {
     direction: Settings.launcherDirection
 
     property real radius: (Settings.radius)
-    property color color: (Colors.surface)
+    color: (Colors.surface)
     property color cardColor: (Colors.surface_container)
     property color textColor: (Colors.on_surface)
     property int edge: (Settings.edge)
     property int float: (Settings.float)
-    property int space: (Settings.launcherSpace)
+    property int space: (Settings.space)
 
     property int launcherWidth: (Settings.launcherWidth)
     property int launcherHeight: (Settings.launcherHeight)
@@ -32,7 +32,14 @@ Custom.Item {
     property bool opened: (false)
     property bool inputAtTop: (Settings.launcherInputAtTop)
 
-    readonly property int contentHeight: (Math.min(_list.contentHeight, parent.height / 2 - edge - space - launcherHeight))
+    readonly property int contentHeight: (Math.min(
+        _list.contentHeight,
+        (
+            isLeftRight ?
+            parent.height / 2 - edge - space - launcherHeight:
+            parent.height / 2 - edge - space - float - launcherHeight
+        )
+    ))
 
     IpcHandler {
         id: _ipc
