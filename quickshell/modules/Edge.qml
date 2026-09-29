@@ -17,31 +17,31 @@ Item {
         implicitHeight: _.edge
         color: _.color
     }
-    Custom.Rectangle {
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.bottom: parent.bottom
-        anchors.topMargin: _.edge
-        anchors.bottomMargin: _.edge
-        implicitWidth: _.edge
-        color: _.color
-        radius: _.radius
-    }
-    Custom.Rectangle {
-        anchors.top: parent.top
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.topMargin: _.edge
-        anchors.bottomMargin: _.edge
-        implicitWidth: _.edge
-        color: _.color
-        radius: _.radius
-    }
     Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         implicitHeight: _.edge
         color: _.color
+    }
+    Custom.Rectangle {
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        anchors.topMargin: _.edge
+        anchors.bottomMargin: _.edge
+        implicitWidth: _.edge
+        color: _.color
+        radius: _.radius
+    }
+    Custom.Rectangle {
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.topMargin: _.edge
+        anchors.bottomMargin: _.edge
+        implicitWidth: _.edge
+        color: _.color
+        radius: _.radius
     }
 }

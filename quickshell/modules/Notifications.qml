@@ -56,6 +56,8 @@ Custom.Item {
         float: _.float
         radius: _.radius
         color: _.color
+        show: _.contentHeight !== 0
+
         ClippingRectangle {
             anchors.fill: parent
             anchors.margins: _.space

@@ -205,7 +205,6 @@ Custom.Item {
                             _card.modelData.execute()
                             _ipc.close()
                         }
-                        onEntered: _.selectedIndex = _card.index
                     }
                 }
             }
