@@ -6,9 +6,9 @@ Rectangle {
     id: _
     anchors.fill: parent
 
+    property int edge: (Settings.edge)
     property real edgeRadius: (Settings.radius)
     property color edgeColor: (Colors.surface)
-    property int edge: (Settings.edge)
 
     color: "transparent"
     border.color: edgeColor

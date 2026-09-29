@@ -5,28 +5,28 @@ import "bar" as Bar
 import "../custom" as Custom
 import qs.angulia.theme
 
-Custom.Angulia {
+Custom.Rectangle {
     id: _
-    anchors.fill: parent
     direction: (Settings.barDirection % 8)
 
     property int barWidth: (Settings.barWidth)
     property int barHeight: (Settings.barHeight)
 
-    anchors.margins: _.edge + _.float
+    property int edge: (Settings.edge)
 
-    Custom.Rectangle {
-        implicitWidth: _.barWidth
-        implicitHeight: _.barHeight
-        direction: _.direction
-        float: _.float
-        radius: _.radius
-        color: _.color
-        RowLayout {
-            anchors.fill: parent
-            Bar.Space {}
-            Bar.Clock {}
-            Bar.Space {}
-        }
+    radius: (Settings.radius)
+    color: (Colors.surface)
+    float: (Settings.float)
+
+    anchors.margins: edge + float
+
+    implicitWidth: barWidth
+    implicitHeight: barHeight
+
+    RowLayout {
+        anchors.fill: parent
+        Bar.Space {}
+        Bar.Clock {}
+        Bar.Space {}
     }
 }

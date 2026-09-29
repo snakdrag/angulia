@@ -25,7 +25,7 @@ Rectangle {
     anchors.horizontalCenter: _IsTopBottom ? parent.horizontalCenter: undefined
     anchors.verticalCenter: _IsLeftRight ? parent.verticalCenter: undefined
 
-    property bool float: (false)
+    property int float: (0)
 
     property bool isTop: (anchors.top === parent.top)
     property bool isLeft: (anchors.left === parent.left)
