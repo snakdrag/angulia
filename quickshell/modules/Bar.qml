@@ -14,9 +14,9 @@ Custom.Rectangle {
 
     property int edge: (Settings.edge)
 
-    radius: (Settings.radius)
-    color: (Colors.surface)
-    float: (Settings.float)
+    radius: Settings.radius
+    color: Colors.surface
+    float: Settings.float
 
     anchors.margins: edge + float
 

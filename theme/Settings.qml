@@ -16,7 +16,7 @@ Singleton {
     readonly property int rightExclusiveZone: (exclusiveZones + 0)
     readonly property int bottomExclusiveZone: (exclusiveZones + 50 + float)
 
-    readonly property int notificationDirection: (5)
+    readonly property int notificationDirection: (1)
     readonly property int notificationWidth: (400)
     readonly property int notificationCardHeight: (60)
     readonly property font notificationSummaryFont: ({

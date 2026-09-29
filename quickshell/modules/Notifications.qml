@@ -9,10 +9,10 @@ import qs.angulia.theme
 Custom.Rectangle {
     id: _
     direction: Settings.notificationDirection % 8
-    
-    radius: (Settings.radius)
-    color: (Colors.surface)
-    float: (Settings.float)
+
+    radius: Settings.radius
+    color: Colors.surface
+    float: Settings.float
 
     property color textColor: (Colors.on_surface)
     property int edge: (Settings.edge)

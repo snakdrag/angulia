@@ -10,9 +10,9 @@ Custom.Rectangle {
     direction: Settings.launcherDirection
     anchors.margins: edge + float
 
-    radius: (Settings.radius)
-    color: (Colors.surface)
-    float: (Settings.float)
+    radius: Settings.radius
+    color: Colors.surface
+    float: Settings.float
 
     property color cardColor: (Colors.surface_container)
     property color textColor: (Colors.on_surface)
