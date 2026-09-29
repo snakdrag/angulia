@@ -56,7 +56,7 @@ Custom.Item {
         float: _.float
         radius: _.radius
         color: _.color
-        Custom.ClippingRectangle {
+        ClippingRectangle {
             anchors.fill: parent
             anchors.margins: _.space
             radius: _.radius
@@ -152,12 +152,11 @@ Custom.Item {
                             onExited: _clear.hovered = false
                         }
                     }
-                    Custom.Rectangle {
+                    Rectangle {
                         id: _main
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         implicitWidth: parent.width
-                        float: true
                         radius: _.radius
                         color: _.cardColor
                         Behavior on x {

@@ -10,7 +10,7 @@ Item {
     property color color: (Colors.surface)
     property int edge: (Settings.edge)
 
-    Custom.Rectangle {
+    Rectangle {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
@@ -37,7 +37,7 @@ Item {
         color: _.color
         radius: _.radius
     }
-    Custom.Rectangle {
+    Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom

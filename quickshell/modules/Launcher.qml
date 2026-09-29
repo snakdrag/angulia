@@ -71,7 +71,8 @@ Custom.Item {
         float: _.float
         radius: _.radius
         color: _.color
-        Custom.Rectangle {
+        show: _.opened
+        Rectangle {
             anchors.top: _.inputAtTop ? parent.top: undefined
             anchors.left: parent.left
             anchors.right: parent.right
@@ -80,8 +81,6 @@ Custom.Item {
             implicitHeight: _.opened ? _.launcherHeight - _.space * 2: 0
             radius: _.radius
             color: _.cardColor
-            show: _.opened
-            float: true
             TextInput {
                 id: _search
                 anchors.fill: parent
@@ -120,14 +119,13 @@ Custom.Item {
                 }
             } 
         }
-        Custom.ClippingRectangle {
+        ClippingRectangle {
             anchors.fill: parent
             anchors.margins: _.space
             anchors.topMargin: _.inputAtTop ? _.launcherHeight: _.space
             anchors.bottomMargin: !_.inputAtTop ? _.launcherHeight: _.space
             radius: _.radius
             color: "transparent"
-            show: _.opened
             ListView {
                 id: _list
                 anchors.fill: parent
