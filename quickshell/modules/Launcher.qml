@@ -58,12 +58,7 @@ Custom.Item {
         }
     }
     Custom.Rectangle {
-        anchors.top: _.isTop ? parent.top: undefined
-        anchors.left: _.isLeft ? parent.left: undefined
-        anchors.right: _.isRight ? parent.right: undefined
-        anchors.bottom: _.isBottom ? parent.bottom: undefined
-        anchors.horizontalCenter: _.isTopBottom ? parent.horizontalCenter: undefined
-        anchors.verticalCenter: _.isLeftRight ? parent.verticalCenter: undefined
+        direction: _.direction
 
         implicitWidth: _.opened ? _.launcherWidth: 0
         implicitHeight: _.opened ? (_.contentHeight === 0 ? _.launcherHeight: _.contentHeight + _.space + _.launcherHeight): 0

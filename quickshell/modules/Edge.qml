@@ -2,46 +2,48 @@ import QtQuick
 import "../custom" as Custom
 import qs.angulia.theme
 
-Item {
+Rectangle {
     id: _
     anchors.fill: parent
 
-    property real radius: (Settings.radius)
-    property color color: (Colors.surface)
+    property real edgeRadius: (Settings.radius)
+    property color edgeColor: (Colors.surface)
     property int edge: (Settings.edge)
 
-    Rectangle {
+    color: "transparent"
+    border.color: edgeColor
+    border.width: edge
+
+    Custom.RoundCorner {
         anchors.top: parent.top
         anchors.left: parent.left
-        anchors.right: parent.right
-        implicitHeight: _.edge
-        color: _.color
+        anchors.margins: _.edge
+        radius: _.edgeRadius
+        color: _.edgeColor
+        rotation: 0
     }
-    Rectangle {
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        implicitHeight: _.edge
-        color: _.color
-    }
-    Custom.Rectangle {
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.bottom: parent.bottom
-        anchors.topMargin: _.edge
-        anchors.bottomMargin: _.edge
-        implicitWidth: _.edge
-        color: _.color
-        radius: _.radius
-    }
-    Custom.Rectangle {
+    Custom.RoundCorner {
         anchors.top: parent.top
         anchors.right: parent.right
+        anchors.margins: _.edge
+        radius: _.edgeRadius
+        color: _.edgeColor
+        rotation: 90
+    }
+    Custom.RoundCorner {
+        anchors.left: parent.left
         anchors.bottom: parent.bottom
-        anchors.topMargin: _.edge
-        anchors.bottomMargin: _.edge
-        implicitWidth: _.edge
-        color: _.color
-        radius: _.radius
+        anchors.margins: _.edge
+        radius: _.edgeRadius
+        color: _.edgeColor
+        rotation: 270
+    }
+    Custom.RoundCorner {
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.margins: _.edge
+        radius: _.edgeRadius
+        color: _.edgeColor
+        rotation: 180
     }
 }

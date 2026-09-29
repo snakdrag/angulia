@@ -43,12 +43,7 @@ Custom.Item {
     }
     Custom.Rectangle {
         id: __
-        anchors.top: _.isTop ? parent.top: undefined
-        anchors.left: _.isLeft ? parent.left: undefined
-        anchors.right: _.isRight ? parent.right: undefined
-        anchors.bottom: _.isBottom ? parent.bottom: undefined
-        anchors.horizontalCenter: _.isTopBottom ? parent.horizontalCenter: undefined
-        anchors.verticalCenter: _.isLeftRight ? parent.verticalCenter: undefined
+        direction: _.direction
 
         implicitWidth: _.contentHeight !==0 ? _.notificationWidth: 0
         implicitHeight: _.contentHeight !==0 ? _.contentHeight + _.space * 2: 0

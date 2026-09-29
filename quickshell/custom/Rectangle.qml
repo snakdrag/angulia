@@ -3,6 +3,28 @@ import QtQuick
 Rectangle {
     id: _
 
+    property int direction: (1)
+
+    readonly property bool _IsTop: ( direction === 0 || direction === 1 || direction === 2 )
+    readonly property bool _IsLeft: ( direction === 0 || direction === 6 || direction === 7 )
+    readonly property bool _IsRight: ( direction === 2 || direction === 3 || direction === 4 )
+    readonly property bool _IsBottom: ( direction === 4 || direction === 5 || direction === 6 )
+
+    readonly property bool _IsTopBottom: ( direction === 1 || direction === 5 || direction === 8)
+    readonly property bool _IsLeftRight: ( direction === 3 || direction === 7 || direction === 8)
+
+    readonly property bool _IsTopLeft: ( direction === 0 || direction === 1 || direction === 7 )
+    readonly property bool _IsTopRight: ( direction === 1 || direction === 2 || direction === 3 )
+    readonly property bool _IsBottomLeft: ( direction === 5 || direction === 6 || direction === 7 )
+    readonly property bool _IsBottomRight: ( direction === 3 || direction === 4 || direction === 5 )
+
+    anchors.top: _IsTop ? parent.top: undefined
+    anchors.left: _IsLeft ? parent.left: undefined
+    anchors.right: _IsRight ? parent.right: undefined
+    anchors.bottom: _IsBottom ? parent.bottom: undefined
+    anchors.horizontalCenter: _IsTopBottom ? parent.horizontalCenter: undefined
+    anchors.verticalCenter: _IsLeftRight ? parent.verticalCenter: undefined
+
     property bool float: (false)
 
     property bool isTop: (anchors.top === parent.top)
