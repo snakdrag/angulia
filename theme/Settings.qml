@@ -14,7 +14,7 @@ Singleton {
     readonly property int topExclusiveZone: (exclusiveZones + 0)
     readonly property int leftExclusiveZone: (exclusiveZones + 0)
     readonly property int rightExclusiveZone: (exclusiveZones + 0)
-    readonly property int bottomExclusiveZone: (exclusiveZones + 50 + float)
+    readonly property int bottomExclusiveZone: (exclusiveZones + float)
 
     readonly property int notificationDirection: (1)
     readonly property int notificationWidth: (400)
@@ -50,9 +50,4 @@ Singleton {
         pixelSize: 15,
         bold: false,
     })
-
-    readonly property int barDirection: (5)
-    readonly property int barWidth: (300)
-    readonly property int barHeight: (50)
-
 }

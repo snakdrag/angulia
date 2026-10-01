@@ -1,13 +1,12 @@
 import Quickshell
-import qs.angulia.theme
 
 ShellRoot {
     id: _
-    property int exclusiveZones: (Settings.exclusiveZones)
-    property int topExclusiveZone: (Settings.topExclusiveZone)
-    property int leftExclusiveZone: (Settings.leftExclusiveZone)
-    property int rightExclusiveZone: (Settings.rightExclusiveZone)
-    property int bottomExclusiveZone: (Settings.bottomExclusiveZone)
+    property int exclusiveZones: (0)
+    property int topExclusiveZone: (exclusiveZones)
+    property int leftExclusiveZone: (exclusiveZones)
+    property int rightExclusiveZone: (exclusiveZones)
+    property int bottomExclusiveZone: (exclusiveZones)
     PanelWindow {
         anchors.top: true
         exclusiveZone: _.topExclusiveZone

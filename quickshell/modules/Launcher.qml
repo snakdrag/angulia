@@ -3,33 +3,9 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Widgets
 import "../custom" as Custom
-import qs.angulia.theme
 
 Custom.Rectangle {
     id: _
-    direction: Settings.launcherDirection
-    anchors.margins: edge + float
-
-    radius: Settings.radius
-    color: Colors.surface
-    float: Settings.float
-
-    property color cardColor: (Colors.surface_container)
-    property color textColor: (Colors.on_surface)
-    property int edge: (Settings.edge)
-    property int space: (Settings.space)
-
-    property int launcherWidth: (Settings.launcherWidth)
-    property int launcherHeight: (Settings.launcherHeight)
-    property int cardHeight: (Settings.launcherCardHeight)
-
-    property font nameFont: (Settings.launcherNameFont)
-    property font commentFont: (Settings.launcherCommentFont)
-
-    property int selectedIndex: (0)
-
-    property bool opened: (false)
-    property bool inputAtTop: (Settings.launcherInputAtTop)
 
     readonly property int contentHeight: (Math.min(
         _list.contentHeight,
@@ -39,35 +15,34 @@ Custom.Rectangle {
             parent.height / 2 - edge - space - float - launcherHeight
         )
     ))
+    property int selectedIndex: (0)
 
-    implicitWidth: opened ? launcherWidth: 0
-    implicitHeight: opened ? (contentHeight === 0 ? launcherHeight: contentHeight + space + launcherHeight): 0
+    implicitWidth: show ? launcherWidth: 0
+    implicitHeight: show ? (contentHeight === 0 ? launcherHeight: contentHeight + space + launcherHeight): 0
 
-    show: opened
+    show: false
 
     IpcHandler {
         id: _ipc
         target: "launcher"
         function open() {
-            _.opened = true
+            _.show = true
             _search.text = ""
             _search.forceActiveFocus()
         }
-        function close() {
-            _.opened = false
-        }
+        function close() { _.show = false }
         function toggle() {
-            if(!_.opened){ open() }
+            if(!_.show){ open() }
             else { close() }
         }
     }
     Rectangle {
-        anchors.top: _.inputAtTop ? parent.top: undefined
+        anchors.top: _.launcherInputAtTop ? parent.top: undefined
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.bottom: !_.inputAtTop ? parent.bottom: undefined
+        anchors.bottom: !_.launcherInputAtTop ? parent.bottom: undefined
         anchors.margins: _.space
-        implicitHeight: _.opened ? _.launcherHeight - _.space * 2: 0
+        implicitHeight: _.show ? _.launcherHeight - _.space * 2: 0
         radius: _.radius
         color: _.cardColor
         TextInput {
@@ -76,7 +51,7 @@ Custom.Rectangle {
             anchors.leftMargin: _.space
             anchors.rightMargin: _.space
             verticalAlignment: TextInput.AlignVCenter
-            font: _.nameFont
+            font: _.launcherNameFont
             color: _.textColor
             cursorVisible: activeFocus
             clip: true
@@ -111,8 +86,8 @@ Custom.Rectangle {
     ClippingRectangle {
         anchors.fill: parent
         anchors.margins: _.space
-        anchors.topMargin: _.inputAtTop ? _.launcherHeight: _.space
-        anchors.bottomMargin: !_.inputAtTop ? _.launcherHeight: _.space
+        anchors.topMargin: _.launcherInputAtTop ? _.launcherHeight: _.space
+        anchors.bottomMargin: !_.launcherInputAtTop ? _.launcherHeight: _.space
         radius: _.radius
         color: "transparent"
         ListView {
@@ -135,7 +110,7 @@ Custom.Rectangle {
                 required property var modelData
                 required property int index
                 implicitWidth: _.launcherWidth - _.space * 2
-                implicitHeight: _.cardHeight
+                implicitHeight: _.launcherCardHeight
                 color: _.cardColor
                 radius: _.radius
                 Image {
@@ -162,7 +137,7 @@ Custom.Rectangle {
                         anchors.left: parent.left
                         anchors.right: parent.right
                         text: _card.modelData.name
-                        font: _.nameFont
+                        font: _.launcherNameFont
                         color: _.textColor
                         elide: Text.ElideRight
                         wrapMode: Text.WrapAnywhere
@@ -174,7 +149,7 @@ Custom.Rectangle {
                         anchors.left: parent.left
                         anchors.right: parent.right
                         text: _card.modelData.comment
-                        font: _.commentFont
+                        font: _.launcherCommentFont
                         color: _.textColor
                         elide: Text.ElideRight
                         wrapMode: Text.WrapAnywhere

@@ -4,28 +4,9 @@ import Quickshell.Widgets
 import Quickshell.Services.Notifications
 import "../custom" as Custom
 import "../services" as Services
-import qs.angulia.theme
 
 Custom.Rectangle {
     id: _
-    direction: Settings.notificationDirection % 8
-
-    radius: Settings.radius
-    color: Colors.surface
-    float: Settings.float
-
-    property color textColor: (Colors.on_surface)
-    property int edge: (Settings.edge)
-
-    property int notificationWidth: (Settings.notificationWidth)
-    property int notificationCardHeight: (Settings.notificationCardHeight)
-    property color cardColor: (Colors.surface_container)
-    property int space: (Settings.space)
-
-    property font summaryFont: (Settings.notificationSummaryFont)
-    property font bodyFont: (Settings.notificationBodyFont)
-
-    anchors.margins: edge + float
 
     readonly property int contentHeight: (Math.min(
         _list.contentHeight,
@@ -35,12 +16,6 @@ Custom.Rectangle {
             parent.height / 2 - edge - space * 2 - float
         )
     ))
-
-    readonly property Region region: (_region)
-    Region {
-        id: _region
-        item: _
-    }
 
     implicitWidth: _.contentHeight !==0 ? _.notificationWidth: 0
     implicitHeight: _.contentHeight !==0 ? _.contentHeight + _.space * 2: 0
@@ -84,7 +59,7 @@ Custom.Rectangle {
                         anchors.centerIn: parent
                         text: _card.haveAction ? "Open": "Clear"
                         color: _.textColor
-                        font: _.bodyFont
+                        font: _.notificationBodyFont
                         opacity: (_main.x - _.space - _card.width / 8) / _card.width * 8
                     }
                     Custom.Cover {
@@ -122,7 +97,7 @@ Custom.Rectangle {
                         anchors.centerIn: parent
                         text: "Clear"
                         color: _.textColor
-                        font: _.bodyFont
+                        font: _.notificationBodyFont
                         opacity: (-_main.x - _.space - _card.width / 8) / _card.width * 8
                     }
                     Custom.Cover {
@@ -181,7 +156,7 @@ Custom.Rectangle {
                             anchors.right: parent.right
                             text: _card.modelData.summary
                             color: _.textColor
-                            font: _.summaryFont
+                            font: _.notificationSummaryFont
                             elide: Text.ElideRight
                             wrapMode: Text.WrapAnywhere
                             maximumLineCount: _card.modelData.urgency === NotificationUrgency.Critical ? undefined: 2
@@ -193,7 +168,7 @@ Custom.Rectangle {
                             anchors.right: parent.right
                             text: _card.modelData.body
                             color: _.textColor
-                            font: _.bodyFont
+                            font: _.notificationBodyFont
                             elide: Text.ElideRight
                             wrapMode: Text.WrapAnywhere
                             maximumLineCount: _card.modelData.urgency === NotificationUrgency.Critical ? undefined: 3

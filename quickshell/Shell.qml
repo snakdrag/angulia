@@ -2,23 +2,29 @@ import Quickshell
 import Quickshell.Wayland
 import "modules" as Modules
 import "layers" as Layers
+import qs.angulia.theme
 
 ShellRoot {
-    Layers.ExclusiveZones {}
-    // Layers.Background {
-    //     mask: Region {}
-    // }
-    // Layers.Bottom {
-    //     mask: Region {}
-    // }
-    Layers.Top {
-        Modules.Edge {}
-        Modules.Bar {}
+    Layers.ExclusiveZones {
+        exclusiveZones: Settings.exclusiveZones
+        topExclusiveZone: Settings.topExclusiveZone
+        leftExclusiveZone: Settings.leftExclusiveZone
+        rightExclusiveZone: Settings.rightExclusiveZone
+        bottomExclusiveZone: Settings.bottomExclusiveZone
     }
     Layers.Overlay {
         mask: Region { regions: [_notifications.region,] }
-        WlrLayershell.keyboardFocus: _launcher.opened ? WlrKeyboardFocus.Exclusive: WlrKeyboardFocus.None
-        Modules.Notifications { id: _notifications }
-        Modules.Launcher { id: _launcher }
+        WlrLayershell.keyboardFocus: _launcher.show ? WlrKeyboardFocus.Exclusive: WlrKeyboardFocus.None
+        Modules.Notifications { id: _notifications; direction: Settings.notificationDirection % 8 }
+        Modules.Launcher { id: _launcher; direction: Settings.launcherDirection }
     }
+    Layers.Top {
+        Modules.Edge { edge: Settings.edge; edgeRadius: Settings.radius; edgeColor: Colors.surface }
+    }
+    // Layers.Bottom {
+    //     mask: Region {}
+    // }
+    // Layers.Background {
+    //     mask: Region {}
+    // }
 }

@@ -1,22 +1,45 @@
 import QtQuick
+import Quickshell
+import qs.angulia.theme
 
 Rectangle {
     id: _
 
+    property int notificationWidth: (Settings.notificationWidth)
+    property int notificationCardHeight: (Settings.notificationCardHeight)
+    property font notificationSummaryFont: (Settings.notificationSummaryFont)
+    property font notificationBodyFont: (Settings.notificationBodyFont)
+
+    property int launcherWidth: (Settings.launcherWidth)
+    property int launcherHeight: (Settings.launcherHeight)
+    property int launcherCardHeight: (Settings.launcherCardHeight)
+    property font launcherNameFont: (Settings.launcherNameFont)
+    property font launcherCommentFont: (Settings.launcherCommentFont)
+    property bool launcherInputAtTop: (Settings.launcherInputAtTop)
+
+    radius: Settings.radius
+    color: Colors.surface
+
+    property int edge: (Settings.edge)
+    property int float: (Settings.float)
+    property int space: (Settings.space)
+    property color cardColor: (Colors.surface_container)
+    property color textColor: (Colors.on_surface)
+
     property int direction: (1)
 
-    readonly property bool _IsTop: ( direction === 0 || direction === 1 || direction === 2 )
-    readonly property bool _IsLeft: ( direction === 0 || direction === 6 || direction === 7 )
-    readonly property bool _IsRight: ( direction === 2 || direction === 3 || direction === 4 )
-    readonly property bool _IsBottom: ( direction === 4 || direction === 5 || direction === 6 )
+    readonly property bool _IsTop: ( direction % 9 === 0 || direction % 9 === 1 || direction % 9 === 2 )
+    readonly property bool _IsLeft: ( direction % 9 === 0 || direction % 9 === 6 || direction % 9 === 7 )
+    readonly property bool _IsRight: ( direction % 9 === 2 || direction % 9 === 3 || direction % 9 === 4 )
+    readonly property bool _IsBottom: ( direction % 9 === 4 || direction % 9 === 5 || direction % 9 === 6 )
 
-    readonly property bool _IsTopBottom: ( direction === 1 || direction === 5 || direction === 8)
-    readonly property bool _IsLeftRight: ( direction === 3 || direction === 7 || direction === 8)
+    readonly property bool _IsTopBottom: ( direction % 9 === 1 || direction % 9 === 5 || direction % 9 === 8)
+    readonly property bool _IsLeftRight: ( direction % 9 === 3 || direction % 9 === 7 || direction % 9 === 8)
 
-    readonly property bool _IsTopLeft: ( direction === 0 || direction === 1 || direction === 7 )
-    readonly property bool _IsTopRight: ( direction === 1 || direction === 2 || direction === 3 )
-    readonly property bool _IsBottomLeft: ( direction === 5 || direction === 6 || direction === 7 )
-    readonly property bool _IsBottomRight: ( direction === 3 || direction === 4 || direction === 5 )
+    readonly property bool _IsTopLeft: ( direction % 9 === 0 || direction % 9 === 1 || direction % 9 === 7 )
+    readonly property bool _IsTopRight: ( direction % 9 === 1 || direction % 9 === 2 || direction % 9 === 3 )
+    readonly property bool _IsBottomLeft: ( direction % 9 === 5 || direction % 9 === 6 || direction % 9 === 7 )
+    readonly property bool _IsBottomRight: ( direction % 9 === 3 || direction % 9 === 4 || direction % 9 === 5 )
 
     anchors.top: _IsTop ? parent.top: undefined
     anchors.left: _IsLeft ? parent.left: undefined
@@ -24,8 +47,7 @@ Rectangle {
     anchors.bottom: _IsBottom ? parent.bottom: undefined
     anchors.horizontalCenter: _IsTopBottom ? parent.horizontalCenter: undefined
     anchors.verticalCenter: _IsLeftRight ? parent.verticalCenter: undefined
-
-    property int float: (0)
+    anchors.margins: edge + float
 
     property bool isTop: (anchors.top === parent.top)
     property bool isLeft: (anchors.left === parent.left)
@@ -49,6 +71,9 @@ Rectangle {
     property bool show: (true)
 
     opacity: show ? 1: 0
+
+    property Region region: (_region)
+    Region { id: _region; item: _ }
 
     Behavior on opacity {
         NumberAnimation {
@@ -75,7 +100,7 @@ Rectangle {
         anchors.bottom: _.top
         radius: Math.min(_.radius, _.width / 2)
         color: _.color
-        visible: _.isTopLeft && !_.isTop && !_.float
+        opacity: _.isTopLeft && !_.isTop && !_.float ? _.opacity: 0
         rotation: 270
     }
     RoundCorner {
@@ -83,7 +108,7 @@ Rectangle {
         anchors.bottom: _.top
         radius: Math.min(_.radius, _.width / 2)
         color: _.color
-        visible: _.isTopRight && !_.isTop && !_.float
+        opacity: _.isTopRight && !_.isTop && !_.float ? _.opacity: 0
         rotation: 180
     }
     RoundCorner {
@@ -91,7 +116,7 @@ Rectangle {
         anchors.right: _.left
         radius: Math.min(_.radius, _.height / 2)
         color: _.color
-        visible: _.isLeftTop && !_.isLeft && !_.float
+        opacity: _.isLeftTop && !_.isLeft && !_.float ? _.opacity: 0
         rotation: 90
     }
     RoundCorner {
@@ -99,7 +124,7 @@ Rectangle {
         anchors.right: _.left
         radius: Math.min(_.radius, _.height / 2)
         color: _.color
-        visible: _.isLeftBottom && !_.isLeft && !_.float
+        opacity: _.isLeftBottom && !_.isLeft && !_.float ? _.opacity: 0
         rotation: 180
     }
     RoundCorner {
@@ -107,7 +132,7 @@ Rectangle {
         anchors.left: _.right
         radius: Math.min(_.radius, _.height / 2)
         color: _.color
-        visible: _.isRightTop && !_.isRight && !_.float
+        opacity: _.isRightTop && !_.isRight && !_.float ? _.opacity: 0
         rotation: 0
     }
     RoundCorner {
@@ -115,7 +140,7 @@ Rectangle {
         anchors.left: _.right
         radius: Math.min(_.radius, _.height / 2)
         color: _.color
-        visible: _.isRightBottom && !_.isRight && !_.float
+        opacity: _.isRightBottom && !_.isRight && !_.float ? _.opacity: 0
         rotation: 270
     }
     RoundCorner {
@@ -123,7 +148,7 @@ Rectangle {
         anchors.left: _.left
         radius: Math.min(_.radius, _.width / 2)
         color: _.color
-        visible: _.isBottomLeft && !_.isBottom && !_.float
+        opacity: _.isBottomLeft && !_.isBottom && !_.float ? _.opacity: 0
         rotation: 0
     }
     RoundCorner {
@@ -131,7 +156,7 @@ Rectangle {
         anchors.right: _.right
         radius: Math.min(_.radius, _.width / 2)
         color: _.color
-        visible: _.isBottomRight && !_.isBottom && !_.float
+        opacity: _.isBottomRight && !_.isBottom && !_.float ? _.opacity: 0
         rotation: 90
     }
 }

@@ -11,7 +11,7 @@ Item {
     implicitHeight: radius
 
     Loader {
-        active: _.visible
+        active: _.visible && _.opacity !== 0
         sourceComponent: Shape {
             preferredRendererType: Shape.CurveRenderer
             ShapePath {

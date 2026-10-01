@@ -1,14 +1,13 @@
 import QtQuick
 import "../custom" as Custom
-import qs.angulia.theme
 
 Rectangle {
     id: _
     anchors.fill: parent
 
-    property int edge: (Settings.edge)
-    property real edgeRadius: (Settings.radius)
-    property color edgeColor: (Colors.surface)
+    property int edge: (0)
+    property real edgeRadius: (0)
+    property color edgeColor: ("#ffffff")
 
     color: "transparent"
     border.color: edgeColor
