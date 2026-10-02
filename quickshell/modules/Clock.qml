@@ -1,15 +1,21 @@
 import QtQuick
 import Quickshell
-import qs.angulia.theme
+import "../custom" as Custom
 
-// Text {
-//     id: _text
-//     anchors.centerIn: parent
-//     text: Qt.formatDateTime(_clock.date, "hh:mm")
-//     color: _.textColor
-//     font: _.clockFont
-//     SystemClock {
-//         id: _clock
-//         precision: SystemClock.Minutes
-//     }
-// }
+Custom.Rectangle {
+    id: _
+
+    implicitWidth: clcokWidth
+    implicitHeight: clcokHeight
+    Text {
+        id: _text
+        anchors.centerIn: parent
+        text: Qt.formatDateTime(_clock.date, "hh:mm")
+        color: _.textColor
+        font: _.clockFont
+        SystemClock {
+            id: _clock
+            precision: SystemClock.Minutes
+        }
+    }
+}

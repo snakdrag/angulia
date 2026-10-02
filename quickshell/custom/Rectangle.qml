@@ -5,6 +5,10 @@ import qs.angulia.theme
 Rectangle {
     id: _
 
+    color: Colors.surface
+    property color cardColor: (Colors.surface_container)
+    property color textColor: (Colors.on_surface)
+
     property int notificationWidth: (Settings.notificationWidth)
     property int notificationCardHeight: (Settings.notificationCardHeight)
     property font notificationSummaryFont: (Settings.notificationSummaryFont)
@@ -17,14 +21,14 @@ Rectangle {
     property font launcherCommentFont: (Settings.launcherCommentFont)
     property bool launcherInputAtTop: (Settings.launcherInputAtTop)
 
-    radius: Settings.radius
-    color: Colors.surface
+    property int clcokWidth: (Settings.clcokWidth)
+    property int clcokHeight: (Settings.clcokHeight)
+    property font clockFont: (Settings.clockFont)
 
+    radius: Settings.radius
     property int edge: (Settings.edge)
     property int float: (Settings.float)
     property int space: (Settings.space)
-    property color cardColor: (Colors.surface_container)
-    property color textColor: (Colors.on_surface)
 
     property int direction: (1)
 
@@ -100,7 +104,7 @@ Rectangle {
         anchors.bottom: _.top
         radius: Math.min(_.radius, _.width / 2)
         color: _.color
-        opacity: _.isTopLeft && !_.isTop && !_.float ? _.opacity: 0
+        opacity: _.isTopLeft && !_.isTop && !_.float ? 1: 0
         rotation: 270
     }
     RoundCorner {
@@ -108,7 +112,7 @@ Rectangle {
         anchors.bottom: _.top
         radius: Math.min(_.radius, _.width / 2)
         color: _.color
-        opacity: _.isTopRight && !_.isTop && !_.float ? _.opacity: 0
+        opacity: _.isTopRight && !_.isTop && !_.float ? 1: 0
         rotation: 180
     }
     RoundCorner {
@@ -116,7 +120,7 @@ Rectangle {
         anchors.right: _.left
         radius: Math.min(_.radius, _.height / 2)
         color: _.color
-        opacity: _.isLeftTop && !_.isLeft && !_.float ? _.opacity: 0
+        opacity: _.isLeftTop && !_.isLeft && !_.float ? 1: 0
         rotation: 90
     }
     RoundCorner {
@@ -124,7 +128,7 @@ Rectangle {
         anchors.right: _.left
         radius: Math.min(_.radius, _.height / 2)
         color: _.color
-        opacity: _.isLeftBottom && !_.isLeft && !_.float ? _.opacity: 0
+        opacity: _.isLeftBottom && !_.isLeft && !_.float ? 1: 0
         rotation: 180
     }
     RoundCorner {
@@ -132,7 +136,7 @@ Rectangle {
         anchors.left: _.right
         radius: Math.min(_.radius, _.height / 2)
         color: _.color
-        opacity: _.isRightTop && !_.isRight && !_.float ? _.opacity: 0
+        opacity: _.isRightTop && !_.isRight && !_.float ? 1: 0
         rotation: 0
     }
     RoundCorner {
@@ -140,7 +144,7 @@ Rectangle {
         anchors.left: _.right
         radius: Math.min(_.radius, _.height / 2)
         color: _.color
-        opacity: _.isRightBottom && !_.isRight && !_.float ? _.opacity: 0
+        opacity: _.isRightBottom && !_.isRight && !_.float ? 1: 0
         rotation: 270
     }
     RoundCorner {
@@ -148,7 +152,7 @@ Rectangle {
         anchors.left: _.left
         radius: Math.min(_.radius, _.width / 2)
         color: _.color
-        opacity: _.isBottomLeft && !_.isBottom && !_.float ? _.opacity: 0
+        opacity: _.isBottomLeft && !_.isBottom && !_.float ? 1: 0
         rotation: 0
     }
     RoundCorner {
@@ -156,7 +160,7 @@ Rectangle {
         anchors.right: _.right
         radius: Math.min(_.radius, _.width / 2)
         color: _.color
-        opacity: _.isBottomRight && !_.isBottom && !_.float ? _.opacity: 0
+        opacity: _.isBottomRight && !_.isBottom && !_.float ? 1: 0
         rotation: 90
     }
 }

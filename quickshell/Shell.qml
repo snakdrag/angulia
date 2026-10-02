@@ -20,6 +20,7 @@ ShellRoot {
     }
     Layers.Top {
         Modules.Edge { edge: Settings.edge; edgeRadius: Settings.radius; edgeColor: Colors.surface }
+        Modules.Clock { direction: Settings.clockDirection }
     }
     // Layers.Bottom {
     //     mask: Region {}
