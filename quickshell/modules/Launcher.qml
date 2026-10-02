@@ -7,18 +7,34 @@ import "../custom" as Custom
 Custom.Rectangle {
     id: _
 
+    readonly property int contentWidth: (Math.min(
+        _list.contentWidth,
+        (
+            _IsTopBottom ?
+            parent.width / 2 - edge - space:
+            parent.width / 2 - edge - space - float
+        )
+    ))
     readonly property int contentHeight: (Math.min(
         _list.contentHeight,
         (
             _IsLeftRight ?
-            parent.height / 2 - edge - space - launcherHeight:
-            parent.height / 2 - edge - space - float - launcherHeight
+            parent.height / 2 - edge - space - _input.height - space * 2:
+            parent.height / 2 - edge - space - float - _input.height - space * 2
         )
     ))
     property int selectedIndex: (0)
 
-    implicitWidth: show ? launcherWidth: 0
-    implicitHeight: show ? (contentHeight === 0 ? launcherHeight: contentHeight + space + launcherHeight): 0
+    implicitWidth: show ? Math.max(contentWidth, launcherCardWidth) + space * 2: 0
+    implicitHeight: (
+        show ? 
+        (
+            contentHeight !== 0 && contentWidth !== 0 ?
+            Math.max(contentHeight, launcherCardHeight) + space + _input.height:
+            _input.height
+        ) + space * 2:
+        0
+    )
 
     show: false
 
@@ -37,14 +53,16 @@ Custom.Rectangle {
         }
     }
     Rectangle {
+        id: _input
         anchors.top: _.launcherInputAtTop ? parent.top: undefined
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: !_.launcherInputAtTop ? parent.bottom: undefined
         anchors.margins: _.space
-        implicitHeight: _.show ? _.launcherHeight - _.space * 2: 0
+        implicitHeight: _.launcherInputHeight
         radius: _.radius
         color: _.cardColor
+        visible: _.show
         TextInput {
             id: _search
             anchors.fill: parent
@@ -57,12 +75,20 @@ Custom.Rectangle {
             clip: true
             onTextChanged: {_.selectedIndex = 0}
             Keys.onEscapePressed: {_ipc.close()}
+            Keys.onUpPressed: {if (_list.count > 0) {
+                _.selectedIndex = Math.max(_.selectedIndex - 1, 0)
+                _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
+            }}
             Keys.onDownPressed: {if (_list.count > 0) {
                 _.selectedIndex = Math.min(_.selectedIndex + 1, _list.count - 1)
                 _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
             }}
-            Keys.onUpPressed: {if (_list.count > 0) {
+            Keys.onLeftPressed: {if (_list.count > 0) {
                 _.selectedIndex = Math.max(_.selectedIndex - 1, 0)
+                _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
+            }}
+            Keys.onRightPressed: {if (_list.count > 0) {
+                _.selectedIndex = Math.min(_.selectedIndex + 1, _list.count - 1)
                 _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
             }}
             Keys.onReturnPressed: {
@@ -86,14 +112,16 @@ Custom.Rectangle {
     ClippingRectangle {
         anchors.fill: parent
         anchors.margins: _.space
-        anchors.topMargin: _.launcherInputAtTop ? _.launcherHeight: _.space
-        anchors.bottomMargin: !_.launcherInputAtTop ? _.launcherHeight: _.space
+        anchors.topMargin: _.launcherInputAtTop ? _input.height + _.space * 2: _.space
+        anchors.bottomMargin: !_.launcherInputAtTop ? _input.height + _.space * 2: _.space
         radius: _.radius
         color: "transparent"
+        visible: _.show
         ListView {
             id: _list
             anchors.fill: parent
             spacing: _.space
+            orientation: _.launcherInputIsVertical ? ListView.Vertical: ListView.Horizontal
             currentIndex: _.selectedIndex
             model: ScriptModel {
                 values: _search.text === "" ? []: DesktopEntries.applications.values.filter(
@@ -109,7 +137,7 @@ Custom.Rectangle {
                 id: _card
                 required property var modelData
                 required property int index
-                implicitWidth: _.launcherWidth - _.space * 2
+                implicitWidth: _.launcherCardWidth
                 implicitHeight: _.launcherCardHeight
                 color: _.cardColor
                 radius: _.radius
@@ -118,8 +146,8 @@ Custom.Rectangle {
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.margins: _.space
-                    width: _card.implicitHeight - _.space * 2
-                    height: _card.implicitHeight - _.space * 2
+                    width: _card.height - _.space * 2
+                    height: _card.height - _.space * 2
                     source: Quickshell.iconPath(_card.modelData.icon, true) || ""
                     fillMode: Image.PreserveAspectFit
                     visible: status === Image.Ready && source != ""

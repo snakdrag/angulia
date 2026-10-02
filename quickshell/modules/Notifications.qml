@@ -8,6 +8,14 @@ import "../services" as Services
 Custom.Rectangle {
     id: _
 
+    readonly property int contentWidth: (Math.min(
+        _list.contentWidth,
+        (
+            _IsTopBottom ?
+            parent.width / 2 - edge - space:
+            parent.width / 2 - edge - space - float
+        )
+    ))
     readonly property int contentHeight: (Math.min(
         _list.contentHeight,
         (
@@ -17,10 +25,10 @@ Custom.Rectangle {
         )
     ))
 
-    implicitWidth: _.contentHeight !==0 ? _.notificationWidth: 0
-    implicitHeight: _.contentHeight !==0 ? _.contentHeight + _.space * 2: 0
+    implicitWidth: contentHeight !==0 && contentWidth !== 0 ? Math.max(contentWidth, notificationCardWidth) + space * 2: 0
+    implicitHeight: contentHeight !==0 && contentWidth !== 0 ? Math.max(contentHeight, notificationCardHeight) + space * 2: 0
 
-    show: _.contentHeight !== 0
+    show: contentHeight !== 0
 
     ClippingRectangle {
         anchors.fill: parent
@@ -31,6 +39,7 @@ Custom.Rectangle {
             id: _list
             anchors.fill: parent
             spacing: _.space
+            orientation: _.notificationIsVertical ? ListView.Vertical: ListView.Horizontal
             model: Services.Notifications.server.trackedNotifications
             displaced: Transition {
                 NumberAnimation {
@@ -43,7 +52,7 @@ Custom.Rectangle {
                 id: _card
                 required property var modelData
                 readonly property bool haveAction: (modelData.actions.length > 0)
-                implicitWidth: _.notificationWidth - _.space * 2
+                implicitWidth: _.notificationCardWidth
                 implicitHeight: Math.max(_.notificationCardHeight, _summary.height + _body.height + _.space * 2)
                 Rectangle {
                     id: _action
@@ -184,8 +193,8 @@ Custom.Rectangle {
                         }
                     }
                     DragHandler {
-                        xAxis.enabled: true
-                        yAxis.enabled: false
+                        xAxis.enabled: _.notificationIsVertical
+                        yAxis.enabled: !_.notificationIsVertical
                         onActiveChanged: {
                             if (parent.x < -_card.width / 2 - _.space) {_card.modelData.dismiss()} 
                             else if (parent.x < -_card.width / 4) {parent.x = -_card.width / 4 - _.space}

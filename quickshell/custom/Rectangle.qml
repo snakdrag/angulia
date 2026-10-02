@@ -9,17 +9,19 @@ Rectangle {
     property color cardColor: (Colors.surface_container)
     property color textColor: (Colors.on_surface)
 
-    property int notificationWidth: (Settings.notificationWidth)
+    property int notificationCardWidth: (Settings.notificationCardWidth)
     property int notificationCardHeight: (Settings.notificationCardHeight)
+    property bool notificationIsVertical: (Settings.notificationIsVertical)
     property font notificationSummaryFont: (Settings.notificationSummaryFont)
     property font notificationBodyFont: (Settings.notificationBodyFont)
 
-    property int launcherWidth: (Settings.launcherWidth)
-    property int launcherHeight: (Settings.launcherHeight)
+    property int launcherCardWidth: (Settings.launcherCardWidth)
     property int launcherCardHeight: (Settings.launcherCardHeight)
+    property int launcherInputHeight: (Settings.launcherInputHeight)
+    property bool launcherInputAtTop: (Settings.launcherInputAtTop)
+    property bool launcherInputIsVertical: (Settings.launcherInputIsVertical)
     property font launcherNameFont: (Settings.launcherNameFont)
     property font launcherCommentFont: (Settings.launcherCommentFont)
-    property bool launcherInputAtTop: (Settings.launcherInputAtTop)
 
     property int clcokWidth: (Settings.clcokWidth)
     property int clcokHeight: (Settings.clcokHeight)

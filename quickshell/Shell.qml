@@ -13,14 +13,18 @@ ShellRoot {
         bottomExclusiveZone: Settings.bottomExclusiveZone
     }
     Layers.Overlay {
+        id: _overlay
         mask: Region { regions: [_notifications.region,] }
         WlrLayershell.keyboardFocus: _launcher.show ? WlrKeyboardFocus.Exclusive: WlrKeyboardFocus.None
         Modules.Notifications { id: _notifications; direction: Settings.notificationDirection % 8 }
         Modules.Launcher { id: _launcher; direction: Settings.launcherDirection }
     }
     Layers.Top {
+        id: _top
+        mask: Region { regions: [_systemtray.region,] }
         Modules.Edge { edge: Settings.edge; edgeRadius: Settings.radius; edgeColor: Colors.surface }
         Modules.Clock { direction: Settings.clockDirection }
+        Modules.SystemTray { id: _systemtray; direction: 4 }
     }
     // Layers.Bottom {
     //     mask: Region {}

@@ -16,17 +16,19 @@ Singleton {
     readonly property int rightExclusiveZone: (exclusiveZones + 0)
     readonly property int bottomExclusiveZone: (exclusiveZones + float + 50)
 
-    readonly property int notificationDirection: (1)
-    readonly property int notificationWidth: (400)
+    readonly property int notificationDirection: (7)
+    readonly property int notificationCardWidth: (360)
     readonly property int notificationCardHeight: (60)
+    readonly property bool notificationIsVertical: (true)
     readonly property font notificationSummaryFont: ({ family: "Inter", pixelSize: 15, bold: true, })
     readonly property font notificationBodyFont: ({ family: "Inter", pixelSize: 15, bold: false, })
 
     readonly property int launcherDirection: (1)
-    readonly property int launcherWidth: (400)
-    readonly property int launcherHeight: (50)
+    readonly property int launcherCardWidth: (60)
     readonly property int launcherCardHeight: (60)
+    readonly property int launcherInputHeight: (30)
     readonly property bool launcherInputAtTop: (true)
+    readonly property bool launcherInputIsVertical: (false)
     readonly property font launcherNameFont: ({ family: "Inter", pixelSize: 12, bold: true, })
     readonly property font launcherCommentFont: ({ family: "Inter", pixelSize: 12, })
 
