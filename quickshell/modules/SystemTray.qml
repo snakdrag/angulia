@@ -7,30 +7,30 @@ import "../custom" as Custom
 Custom.Rectangle {
     id: _
 
-    implicitWidth: contentHeight !== 0 && contentWidth !== 0 ? Math.max(contentWidth, 30) + _.space * 2: 0
-    implicitHeight:  contentHeight !== 0 && contentWidth !== 0 ? Math.max(contentHeight, 30) + _.space * 2: 0
+    implicitWidth: contentHeight !== 0 && contentWidth !== 0 ? Math.max(contentWidth, systemtrayIconSize) + _.space * 2: 0
+    implicitHeight:  contentHeight !== 0 && contentWidth !== 0 ? Math.max(contentHeight, systemtrayIconSize) + _.space * 2: 0
 
     readonly property int contentWidth: (Math.min(
         _list.contentWidth,
         (
             _IsTopBottom ?
-            parent.width / 2 - edge - space:
-            parent.width / 2 - edge - space - float
+            parent.width / 2 - edge - space * 2:
+            parent.width / 2 - edge - space * 2 - float
         )
     ))
     readonly property int contentHeight: (Math.min(
         _list.contentHeight,
         (
             _IsLeftRight ?
-            parent.height / 2 - edge - space:
-            parent.height / 2 - edge - space - float
+            parent.height / 2 - edge - space * 2:
+            parent.height / 2 - edge - space * 2 - float
         )
     ))
 
     ClippingRectangle {
         anchors.fill: parent
         anchors.margins: _.space
-        color: "transparent"
+        color: _.backgroundColor
         radius: _.radius
         ListView {
             id: _list
@@ -40,7 +40,7 @@ Custom.Rectangle {
             orientation: ListView.Horizontal
             displaced: Transition {
                 NumberAnimation {
-                    properties: "y"
+                    properties: "x, y"
                     duration: 300
                     easing.type: Easing.OutCubic
                 }
@@ -49,14 +49,15 @@ Custom.Rectangle {
                 id: _card
                 required property var modelData
                 property bool hovered: false
-                implicitWidth: 30
-                implicitHeight: 30
+                implicitWidth: _.systemtrayIconSize
+                implicitHeight: _.systemtrayIconSize
                 radius: _.radius
                 color: _.cardColor
                 Image {
                     anchors.fill: parent
-                    anchors.margins: _.space / 2
+                    anchors.margins: width / 8
                     source: _card.modelData.icon || ""
+                    fillMode: Image.PreserveAspectFit
                 }
                 Custom.Cover {
                     show: _card.hovered

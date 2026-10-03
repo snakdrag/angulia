@@ -11,8 +11,8 @@ Custom.Rectangle {
         _list.contentWidth,
         (
             _IsTopBottom ?
-            parent.width / 2 - edge - space:
-            parent.width / 2 - edge - space - float
+            parent.width / 2 - edge - space * 2:
+            parent.width / 2 - edge - space * 2 - float
         )
     ))
     readonly property int contentHeight: (Math.min(
@@ -115,13 +115,13 @@ Custom.Rectangle {
         anchors.topMargin: _.launcherInputAtTop ? _input.height + _.space * 2: _.space
         anchors.bottomMargin: !_.launcherInputAtTop ? _input.height + _.space * 2: _.space
         radius: _.radius
-        color: "transparent"
+        color: _.backgroundColor
         visible: _.show
         ListView {
             id: _list
             anchors.fill: parent
             spacing: _.space
-            orientation: _.launcherInputIsVertical ? ListView.Vertical: ListView.Horizontal
+            orientation: _.launcherIsVertical ? ListView.Vertical: ListView.Horizontal
             currentIndex: _.selectedIndex
             model: ScriptModel {
                 values: _search.text === "" ? []: DesktopEntries.applications.values.filter(
@@ -141,23 +141,23 @@ Custom.Rectangle {
                 implicitHeight: _.launcherCardHeight
                 color: _.cardColor
                 radius: _.radius
-                Image {
+                IconImage {
                     id: _image
+                    anchors.top: parent.top
                     anchors.left: parent.left
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.margins: _.space
-                    width: _card.height - _.space * 2
-                    height: _card.height - _.space * 2
+                    implicitSize: Math.min(_card.height, _card.width) - _.space * 2
                     source: Quickshell.iconPath(_card.modelData.icon, true) || ""
-                    fillMode: Image.PreserveAspectFit
                     visible: status === Image.Ready && source != ""
                 }
                 Item {
+                    anchors.top: !_.launcherIsVertical ? parent.top: undefined
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.verticalCenter: _.launcherIsVertical ? parent.verticalCenter: undefined
                     implicitHeight: _comment.text !== "" ? _name.height + _comment.height: _name.height
-                    anchors.leftMargin: _image.visible ? _image.width + _.space * 2: _.space
+                    anchors.topMargin: _image.visible && !_.launcherIsVertical ? _image.height + _.space * 2: _.space
+                    anchors.leftMargin: _image.visible && _.launcherIsVertical ? _image.width + _.space * 2: _.space
                     anchors.margins: _.space
                     Text {
                         id: _name
@@ -168,7 +168,8 @@ Custom.Rectangle {
                         font: _.launcherNameFont
                         color: _.textColor
                         elide: Text.ElideRight
-                        wrapMode: Text.WrapAnywhere
+                        horizontalAlignment: !_.launcherIsVertical ? Text.AlignHCenter: undefined
+                        wrapMode: !_.launcherIsVertical ? Text.NoWrap: Text.WrapAnywhere
                         maximumLineCount: 1
                     }
                     Text {
@@ -176,7 +177,7 @@ Custom.Rectangle {
                         anchors.top: _name.bottom
                         anchors.left: parent.left
                         anchors.right: parent.right
-                        text: _card.modelData.comment
+                        text: _.launcherIsVertical ? _card.modelData.comment: ""
                         font: _.launcherCommentFont
                         color: _.textColor
                         elide: Text.ElideRight

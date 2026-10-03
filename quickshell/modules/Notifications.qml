@@ -12,8 +12,8 @@ Custom.Rectangle {
         _list.contentWidth,
         (
             _IsTopBottom ?
-            parent.width / 2 - edge - space:
-            parent.width / 2 - edge - space - float
+            parent.width / 2 - edge - space * 2:
+            parent.width / 2 - edge - space * 2 - float
         )
     ))
     readonly property int contentHeight: (Math.min(
@@ -34,7 +34,7 @@ Custom.Rectangle {
         anchors.fill: parent
         anchors.margins: _.space
         radius: _.radius
-        color: "transparent"
+        color: _.backgroundColor
         ListView {
             id: _list
             anchors.fill: parent
@@ -43,7 +43,7 @@ Custom.Rectangle {
             model: Services.Notifications.server.trackedNotifications
             displaced: Transition {
                 NumberAnimation {
-                    properties: "y"
+                    properties: "x, y"
                     duration: 300
                     easing.type: Easing.OutCubic
                 }
@@ -129,9 +129,9 @@ Custom.Rectangle {
                 }
                 Rectangle {
                     id: _main
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    implicitWidth: parent.width
+                    property bool hovered: (false)
+                    implicitWidth: _card.width
+                    implicitHeight: _card.height
                     radius: _.radius
                     color: _.cardColor
                     Behavior on x {
@@ -140,15 +140,21 @@ Custom.Rectangle {
                             easing.type: Easing.OutCubic 
                         }
                     }
-                    Image {
+                    Behavior on y {
+                        NumberAnimation { 
+                            duration: 300
+                            easing.type: Easing.OutCubic 
+                        }
+                    }
+                    IconImage {
                         id: _image
-                        anchors.left: parent.left
-                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.top: !_.notificationIsVertical ? parent.top: undefined
+                        anchors.left: _.notificationIsVertical ? parent.left: undefined
+                        anchors.verticalCenter: _.notificationIsVertical ? parent.verticalCenter: undefined
+                        anchors.horizontalCenter: !_.notificationIsVertical ? parent.horizontalCenter: undefined
                         anchors.margins: _.space
-                        width: _.notificationCardHeight - _.space * 2
-                        height: _.notificationCardHeight - _.space * 2
+                        implicitSize: Math.min(_card.width, _card.height) - _.space * 2
                         source: _card.modelData.image || Quickshell.iconPath(_card.modelData.appIcon, true) || ""
-                        fillMode: Image.PreserveAspectFit
                         visible: status === Image.Ready && source != ""
                     }
                     Item {
@@ -183,30 +189,63 @@ Custom.Rectangle {
                             maximumLineCount: _card.modelData.urgency === NotificationUrgency.Critical ? undefined: 3
                         }
                     }
+                    Custom.Cover {
+                        show: _main.hovered
+                        color: _.textColor
+                    }
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
+                        hoverEnabled: true
+                        onEntered: _main.hovered = true
+                        onExited: _main.hovered = false
                         onClicked: mouse => {
-                            if (mouse.button === Qt.LeftButton) {parent.x = _card.width / 4 + _.space} 
-                            else if (mouse.button === Qt.RightButton) {parent.x = -_card.width / 4 - _.space}
-                            else if (mouse.button === Qt.MiddleButton) {parent.x = 0}
+                            if (_.notificationIsVertical)
+                            {
+                                if (mouse.button === Qt.LeftButton) {parent.x = _card.width / 4 + _.space} 
+                                else if (mouse.button === Qt.RightButton) {parent.x = -_card.width / 4 - _.space}
+                                else if (mouse.button === Qt.MiddleButton) {parent.x = 0}
+                            }
+                            else
+                            {
+                                if (mouse.button === Qt.LeftButton) {parent.y = _card.height / 4 + _.space} 
+                                else if (mouse.button === Qt.RightButton) {parent.y = -_card.height / 4 - _.space}
+                                else if (mouse.button === Qt.MiddleButton) {parent.y = 0}
+                            }
                         }
                     }
                     DragHandler {
                         xAxis.enabled: _.notificationIsVertical
                         yAxis.enabled: !_.notificationIsVertical
                         onActiveChanged: {
-                            if (parent.x < -_card.width / 2 - _.space) {_card.modelData.dismiss()} 
-                            else if (parent.x < -_card.width / 4) {parent.x = -_card.width / 4 - _.space}
-                            else if (parent.x > _card.width / 2 + _.space) 
+                            if (_.notificationIsVertical)
                             {
-                                if (_card.haveAction)
-                                {_card.modelData.actions[0].invoke()}
-                                else {_card.modelData.dismiss()}
+                                if (parent.x < -_card.width / 2 - _.space) {_card.modelData.dismiss()} 
+                                else if (parent.x < -_card.width / 4) {parent.x = -_card.width / 4 - _.space}
+                                else if (parent.x > _card.width / 2 + _.space) 
+                                {
+                                    if (_card.haveAction)
+                                    {_card.modelData.actions[0].invoke()}
+                                    else {_card.modelData.dismiss()}
+                                }
+                                else if (parent.x > _card.width / 4) 
+                                {parent.x = _card.width / 4 + _.space}
+                                else {parent.x = 0}
                             }
-                            else if (parent.x > _card.width / 4) 
-                            {parent.x = _card.width / 4 + _.space}
-                            else {parent.x = 0}
+                            else
+                            {
+                                if (parent.y < -_card.height / 2 - _.space) {_card.modelData.dismiss()} 
+                                else if (parent.y < -_card.height / 4) {parent.y = -_card.height / 4 - _.space}
+                                else if (parent.y > _card.height / 2 + _.space) 
+                                {
+                                    if (_card.haveAction)
+                                    {_card.modelData.actions[0].invoke()}
+                                    else {_card.modelData.dismiss()}
+                                }
+                                else if (parent.y > _card.height / 4) 
+                                {parent.y = _card.height / 4 + _.space}
+                                else {parent.y = 0}
+                            }
                         }
                     }
                 }

@@ -24,7 +24,7 @@ ShellRoot {
         mask: Region { regions: [_systemtray.region,] }
         Modules.Edge { edge: Settings.edge; edgeRadius: Settings.radius; edgeColor: Colors.surface }
         Modules.Clock { direction: Settings.clockDirection }
-        Modules.SystemTray { id: _systemtray; direction: 4 }
+        Modules.SystemTray { id: _systemtray; direction: Settings.systemtrayDirection; cardColor: Colors.surface }
     }
     // Layers.Bottom {
     //     mask: Region {}

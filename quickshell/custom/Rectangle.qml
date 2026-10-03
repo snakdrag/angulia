@@ -7,6 +7,7 @@ Rectangle {
 
     color: Colors.surface
     property color cardColor: (Colors.surface_container)
+    property color backgroundColor: (Colors.surface)
     property color textColor: (Colors.on_surface)
 
     property int notificationCardWidth: (Settings.notificationCardWidth)
@@ -19,13 +20,15 @@ Rectangle {
     property int launcherCardHeight: (Settings.launcherCardHeight)
     property int launcherInputHeight: (Settings.launcherInputHeight)
     property bool launcherInputAtTop: (Settings.launcherInputAtTop)
-    property bool launcherInputIsVertical: (Settings.launcherInputIsVertical)
+    property bool launcherIsVertical: (Settings.launcherIsVertical)
     property font launcherNameFont: (Settings.launcherNameFont)
     property font launcherCommentFont: (Settings.launcherCommentFont)
 
     property int clcokWidth: (Settings.clcokWidth)
     property int clcokHeight: (Settings.clcokHeight)
     property font clockFont: (Settings.clockFont)
+
+    property int systemtrayIconSize: (Settings.systemtrayIconSize)
 
     radius: Settings.radius
     property int edge: (Settings.edge)
