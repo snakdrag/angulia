@@ -39,4 +39,5 @@ Singleton {
 
     readonly property int systemtrayDirection: (4)
     readonly property int systemtrayIconSize: (30)
+    readonly property bool systemtrayIsVertical: (false)
 }

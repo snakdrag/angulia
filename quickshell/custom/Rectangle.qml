@@ -29,6 +29,7 @@ Rectangle {
     property font clockFont: (Settings.clockFont)
 
     property int systemtrayIconSize: (Settings.systemtrayIconSize)
+    property bool systemtrayIsVertical: (Settings.systemtrayIsVertical)
 
     radius: Settings.radius
     property int edge: (Settings.edge)

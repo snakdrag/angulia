@@ -37,7 +37,7 @@ Custom.Rectangle {
             anchors.fill: parent
             spacing: _.space
             model: SystemTray.items
-            orientation: ListView.Horizontal
+            orientation: _.systemtrayIsVertical ? ListView.Vertical: ListView.Horizontal
             interactive: false
             displaced: Transition {
                 NumberAnimation {
