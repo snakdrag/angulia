@@ -59,23 +59,43 @@ Custom.Rectangle {
                     property bool hovered: (false)
                     anchors.top: parent.top
                     anchors.left: parent.left
-                    anchors.bottom: parent.bottom
                     radius: _.radius
                     color: _.cardColor
-                    implicitWidth: Math.min(_card.width, Math.max(_main.x - _.space, _card.width / 4))
-                    visible: -_main.x < 0
+                    implicitWidth: (
+                        _.notificationIsVertical ?
+                        Math.min(_card.width, Math.max(_main.x - _.space, _card.width / 4)):
+                        _card.width
+                    )
+                    implicitHeight: (
+                        _.notificationIsVertical ?
+                        _card.height:
+                        Math.min(_card.height, Math.max(_main.y - _.space, _card.height / 4))
+                    )
+                    visible: _.notificationIsVertical ? -_main.x < 0: -_main.y < 0
                     Text {
                         anchors.centerIn: parent
                         text: _card.haveAction ? "Open": "Clear"
                         color: _.textColor
                         font: _.notificationBodyFont
-                        opacity: (_main.x - _.space - _card.width / 8) / _card.width * 8
+                        opacity: (
+                            _.notificationIsVertical ?
+                            (_main.x - _.space - _card.width / 8) / _card.width * 8:
+                            (_main.y - _.space - _card.height / 8) / _card.height * 8
+                        )
                     }
                     Custom.Cover {
                         show: (
-                            _action.hovered &&
-                            _main.x - _.space >= _card.width / 4 ||
-                            _main.x - _.space > _card.width / 2
+                            _.notificationIsVertical ?
+                            (
+                                _action.hovered &&
+                                _main.x - _.space >= _card.width / 4 ||
+                                _main.x - _.space > _card.width / 2
+                            ):
+                            (
+                                _action.hovered &&
+                                _main.y - _.space >= _card.height / 4 ||
+                                _main.y - _.space > _card.height / 2
+                            )
                         )
                         color: _.textColor
                     }
@@ -95,25 +115,45 @@ Custom.Rectangle {
                 Rectangle {
                     id: _clear
                     property bool hovered: (false)
-                    anchors.top: parent.top
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
                     radius: _.radius
                     color: _.cardColor
-                    implicitWidth: Math.min(_card.width, Math.max(-_main.x - _.space, _card.width / 4))
-                    visible: _main.x < 0
+                    implicitWidth: (
+                        _.notificationIsVertical ?
+                        Math.min(_card.width, Math.max(-_main.x - _.space, _card.width / 4)):
+                        _card.width
+                    )
+                    implicitHeight: (
+                        _.notificationIsVertical ?
+                        _card.height:
+                        Math.min(_card.height, Math.max(-_main.y - _.space, _card.height / 4))
+                    )
+                    visible: _.notificationIsVertical ? _main.x < 0: _main.y < 0
                     Text {
                         anchors.centerIn: parent
                         text: "Clear"
                         color: _.textColor
                         font: _.notificationBodyFont
-                        opacity: (-_main.x - _.space - _card.width / 8) / _card.width * 8
+                        opacity: (
+                            _.notificationIsVertical ?
+                            (-_main.x - _.space - _card.width / 8) / _card.width * 8:
+                            (-_main.y - _.space - _card.height / 8) / _card.height * 8
+                        )
                     }
                     Custom.Cover {
                         show: (
-                            _clear.hovered &&
-                            -_main.x - _.space >= _card.width / 4 ||
-                            -_main.x - _.space > _card.width / 2
+                            _.notificationIsVertical ?
+                            (
+                                _clear.hovered &&
+                                -_main.x - _.space >= _card.width / 4 ||
+                                -_main.x - _.space > _card.width / 2
+                            ):
+                            (
+                                _clear.hovered &&
+                                -_main.y - _.space >= _card.height / 4 ||
+                                -_main.y - _.space > _card.height / 2
+                            )
                         )
                         color: _.textColor
                     }
@@ -153,16 +193,18 @@ Custom.Rectangle {
                         anchors.verticalCenter: _.notificationIsVertical ? parent.verticalCenter: undefined
                         anchors.horizontalCenter: !_.notificationIsVertical ? parent.horizontalCenter: undefined
                         anchors.margins: _.space
-                        implicitSize: Math.min(_card.width, _card.height) - _.space * 2
+                        implicitSize: Math.min(_.notificationCardWidth, _.notificationCardHeight) - _.space * 2
                         source: _card.modelData.image || Quickshell.iconPath(_card.modelData.appIcon, true) || ""
                         visible: status === Image.Ready && source != ""
                     }
                     Item {
+                        anchors.top: !_.notificationIsVertical ? parent.top: undefined
                         anchors.left: parent.left
                         anchors.right: parent.right
-                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.verticalCenter: _.notificationIsVertical ? parent.verticalCenter: undefined
                         implicitHeight: _body.text !== "" ? _summary.height + _body.height: _summary.height
-                        anchors.leftMargin: _image.visible ? _image.width + _.space * 2: _.space
+                        anchors.topMargin: _image.visible && !_.notificationIsVertical ? _image.height + _.space * 2: _.space
+                        anchors.leftMargin: _image.visible && _.notificationIsVertical ? _image.width + _.space * 2: _.space
                         anchors.margins: _.space
                         Text {
                             id: _summary

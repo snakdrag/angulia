@@ -38,6 +38,7 @@ Custom.Rectangle {
             spacing: _.space
             model: SystemTray.items
             orientation: ListView.Horizontal
+            interactive: false
             displaced: Transition {
                 NumberAnimation {
                     properties: "x, y"
