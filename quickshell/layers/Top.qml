@@ -13,4 +13,6 @@ PanelWindow {
     mask: Region {}
     exclusionMode: ExclusionMode.Ignore
     WlrLayershell.layer: WlrLayer.Top
+    Item { id: _item; anchors.fill: parent}
+    BackgroundEffect.blurRegion: Region { item: _item }
 }

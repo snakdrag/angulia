@@ -36,6 +36,8 @@ Rectangle {
     property int clcokHeight: (Settings.clcokHeight)
     property font clockFont: (Settings.clockFont)
 
+    property int systemtrayCardWidth: (Settings.systemtrayCardWidth)
+    property int systemtrayCardHeight: (Settings.systemtrayCardHeight)
     property int systemtrayIconSize: (Settings.systemtrayIconSize)
     property bool systemtrayIsVertical: (Settings.systemtrayIsVertical)
 

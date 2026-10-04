@@ -7,8 +7,8 @@ import "../custom" as Custom
 Custom.Rectangle {
     id: _
 
-    implicitWidth: contentHeight === 0 || contentWidth === 0 ? 0: Math.max(contentWidth, systemtrayIconSize) + _.space * 2
-    implicitHeight:  contentHeight === 0 || contentWidth === 0 ? 0: Math.max(contentHeight, systemtrayIconSize) + _.space * 2
+    implicitWidth: contentHeight === 0 || contentWidth === 0 ? 0: Math.max(contentWidth, systemtrayCardWidth) + _.space * 2
+    implicitHeight:  contentHeight === 0 || contentWidth === 0 ? 0: Math.max(contentHeight, systemtrayCardHeight) + _.space * 2
 
     readonly property int contentWidth: (Math.min(
         _list.contentWidth,
@@ -50,13 +50,14 @@ Custom.Rectangle {
                 id: _card
                 required property var modelData
                 property bool hovered: false
-                implicitWidth: _.systemtrayIconSize
-                implicitHeight: _.systemtrayIconSize
+                implicitWidth: _.systemtrayCardWidth
+                implicitHeight: _.systemtrayCardHeight
                 radius: _.radius
                 color: _.cardColor
                 Image {
-                    anchors.fill: parent
-                    anchors.margins: width / 8
+                    anchors.centerIn: parent
+                    width: _.systemtrayIconSize
+                    height: _.systemtrayIconSize
                     source: _card.modelData.icon || ""
                     fillMode: Image.PreserveAspectFit
                 }

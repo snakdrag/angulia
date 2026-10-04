@@ -43,12 +43,15 @@
   "clock": {
     "direction": 5,
     "width": 300,
-    "height": 50,
+    "height": 300,
     "isVertical": false
   },
 
   "systemtray": {
     "direction": 4,
+    "card": {
+      "image": 25
+    },
     "isVertical": false
   }
 }

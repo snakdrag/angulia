@@ -10,11 +10,14 @@ Singleton {
     readonly property int float: (Angulia.data.float)
     readonly property int space: (Angulia.data.space)
 
+    readonly property int barWidth: (Angulia.data.bar.width)
+    readonly property int barHeight: (Angulia.data.bar.height)
+
     readonly property int exclusiveZones: (edge + (Angulia.data.gaps_out))
-    readonly property int topExclusiveZone: (exclusiveZones + (_top ? Angulia.data.bar.height + float: 0))
-    readonly property int leftExclusiveZone: (exclusiveZones + (_left ? Angulia.data.bar.width + float: 0))
-    readonly property int rightExclusiveZone: (exclusiveZones + (_right ? Angulia.data.bar.width + float: 0))
-    readonly property int bottomExclusiveZone: (exclusiveZones + (_bottom ? Angulia.data.bar.height + float: 0))
+    readonly property int topExclusiveZone: (exclusiveZones + (_top ? barHeight + float: 0))
+    readonly property int leftExclusiveZone: (exclusiveZones + (_left ? barWidth + float: 0))
+    readonly property int rightExclusiveZone: (exclusiveZones + (_right ? barWidth + float: 0))
+    readonly property int bottomExclusiveZone: (exclusiveZones + (_bottom ? barHeight + float: 0))
 
     readonly property bool _top: (
         (_clock._IsTop && !clockIsVertical) ||
@@ -48,19 +51,21 @@ Singleton {
     readonly property int launcherImageSize: (Angulia.data.launcher.card.image)
     readonly property font launcherNameFont: (Angulia.data.font.name)
     readonly property font launcherCommentFont: (Angulia.data.font.comment)
-    readonly property int launcherInputHeight: (Math.min(Angulia.data.bar.width, Angulia.data.bar.height) - space * 2)
+    readonly property int launcherInputHeight: (barHeight - space * 2)
     readonly property bool launcherInputAtTop: (Angulia.data.launcher.inputAtTop)
 
     readonly property int clockDirection: (Angulia.data.clock.direction % 8)
     readonly property bool clockIsVertical: (Angulia.data.clock.isVertical)
-    readonly property int clcokWidth: (clockIsVertical ? Angulia.data.bar.width: Angulia.data.clock.width)
-    readonly property int clcokHeight: (clockIsVertical ? Angulia.data.clock.height: Angulia.data.bar.height)
+    readonly property int clcokWidth: (clockIsVertical ? barWidth: Angulia.data.clock.width)
+    readonly property int clcokHeight: (clockIsVertical ? Angulia.data.clock.height: barHeight)
     readonly property font clockFont: (Angulia.data.font.body)
     Direction { id: _clock; direction: clockDirection}
 
     readonly property int systemtrayDirection: (Angulia.data.systemtray.direction % 8)
     readonly property bool systemtrayIsVertical: (Angulia.data.systemtray.isVertical)
-    readonly property int systemtrayIconSize: ((systemtrayIsVertical ? Angulia.data.bar.width: Angulia.data.bar.height) - space * 2)
+    readonly property int systemtrayCardWidth: ((systemtrayIsVertical ? barWidth: barHeight) - space * 2)
+    readonly property int systemtrayCardHeight: ((systemtrayIsVertical ? barWidth: barHeight) - space * 2)
+    readonly property int systemtrayIconSize: (Angulia.data.systemtray.card.image)
     Direction { id: _systemtray; direction: systemtrayDirection}
 
 }
