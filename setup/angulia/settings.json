@@ -43,7 +43,8 @@
   "clock": {
     "direction": 5,
     "width": 300,
-    "height": 50
+    "height": 50,
+    "isVertical": false
   },
 
   "systemtray": {
