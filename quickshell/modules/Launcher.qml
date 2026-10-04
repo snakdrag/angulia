@@ -29,9 +29,9 @@ Custom.Rectangle {
     implicitHeight: (
         show ? 
         (
-            contentHeight !== 0 && contentWidth !== 0 ?
-            Math.max(contentHeight, launcherCardHeight) + space + _input.height:
-            _input.height
+            contentHeight === 0 || contentWidth === 0 ?
+            _input.height:
+            Math.max(contentHeight, launcherCardHeight) + space + _input.height
         ) + space * 2:
         0
     )
@@ -48,16 +48,19 @@ Custom.Rectangle {
         }
         function close() { _.show = false }
         function toggle() {
-            if(!_.show){ open() }
-            else { close() }
+            if(_.show){ close() }
+            else { open() }
         }
     }
     Rectangle {
         id: _input
-        anchors.top: _.launcherInputAtTop ? parent.top: undefined
+        y: (
+            _.launcherInputAtTop ?
+            anchors.topMargin:
+            Math.max(parent.height - height - anchors.bottomMargin, anchors.topMargin)
+        )
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.bottom: !_.launcherInputAtTop ? parent.bottom: undefined
         anchors.margins: _.space
         implicitHeight: _.launcherInputHeight
         radius: _.radius
@@ -113,7 +116,7 @@ Custom.Rectangle {
         anchors.fill: parent
         anchors.margins: _.space
         anchors.topMargin: _.launcherInputAtTop ? _input.height + _.space * 2: _.space
-        anchors.bottomMargin: !_.launcherInputAtTop ? _input.height + _.space * 2: _.space
+        anchors.bottomMargin: _.launcherInputAtTop ? _.space: _input.height + _.space * 2
         radius: _.radius
         color: _.backgroundColor
         visible: _.show
@@ -143,19 +146,26 @@ Custom.Rectangle {
                 radius: _.radius
                 IconImage {
                     id: _image
+                    x: (
+                        _.launcherIsVertical ?
+                        anchors.leftMargin:
+                        Math.max((parent.width - width) / 2, anchors.leftMargin)
+                    )
                     anchors.top: parent.top
-                    anchors.left: parent.left
                     anchors.margins: _.space
-                    implicitSize: Math.min(_card.height, _card.width) - _.space * 2
+                    implicitSize: _.launcherImageSize
                     source: Quickshell.iconPath(_card.modelData.icon, true) || ""
                     visible: status === Image.Ready && source != ""
                 }
                 Item {
-                    anchors.top: !_.launcherIsVertical ? parent.top: undefined
+                    y: (
+                        _.launcherIsVertical ?
+                        Math.max((parent.height - height) / 2, anchors.topMargin):
+                        anchors.topMargin
+                    )
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    anchors.verticalCenter: _.launcherIsVertical ? parent.verticalCenter: undefined
-                    implicitHeight: _comment.text !== "" ? _name.height + _comment.height: _name.height
+                    implicitHeight: _comment.text === "" ? _name.height: _name.height + _comment.height
                     anchors.topMargin: _image.visible && !_.launcherIsVertical ? _image.height + _.space * 2: _.space
                     anchors.leftMargin: _image.visible && _.launcherIsVertical ? _image.width + _.space * 2: _.space
                     anchors.margins: _.space
@@ -168,8 +178,8 @@ Custom.Rectangle {
                         font: _.launcherNameFont
                         color: _.textColor
                         elide: Text.ElideRight
-                        horizontalAlignment: !_.launcherIsVertical ? Text.AlignHCenter: undefined
-                        wrapMode: !_.launcherIsVertical ? Text.NoWrap: Text.WrapAnywhere
+                        horizontalAlignment: _.launcherIsVertical ? Text.AlignLeft: Text.AlignHCenter
+                        wrapMode: _.launcherIsVertical ? Text.WrapAnywhere: Text.NoWrap
                         maximumLineCount: 1
                     }
                     Text {

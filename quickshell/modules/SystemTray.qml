@@ -7,8 +7,8 @@ import "../custom" as Custom
 Custom.Rectangle {
     id: _
 
-    implicitWidth: contentHeight !== 0 && contentWidth !== 0 ? Math.max(contentWidth, systemtrayIconSize) + _.space * 2: 0
-    implicitHeight:  contentHeight !== 0 && contentWidth !== 0 ? Math.max(contentHeight, systemtrayIconSize) + _.space * 2: 0
+    implicitWidth: contentHeight === 0 || contentWidth === 0 ? 0: Math.max(contentWidth, systemtrayIconSize) + _.space * 2
+    implicitHeight:  contentHeight === 0 || contentWidth === 0 ? 0: Math.max(contentHeight, systemtrayIconSize) + _.space * 2
 
     readonly property int contentWidth: (Math.min(
         _list.contentWidth,

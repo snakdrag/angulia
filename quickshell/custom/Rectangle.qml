@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell
+import qs.angulia.settings
 import qs.angulia.theme
 
 Rectangle {
@@ -12,6 +13,7 @@ Rectangle {
 
     property int notificationCardWidth: (Settings.notificationCardWidth)
     property int notificationCardHeight: (Settings.notificationCardHeight)
+    property int notificationImageSize: (Settings.notificationImageSize)
     property bool notificationIsVertical: (Settings.notificationIsVertical)
     property font notificationSummaryFont: (Settings.notificationSummaryFont)
     property font notificationBodyFont: (Settings.notificationBodyFont)
@@ -19,6 +21,7 @@ Rectangle {
     property int launcherCardWidth: (Settings.launcherCardWidth)
     property int launcherCardHeight: (Settings.launcherCardHeight)
     property int launcherInputHeight: (Settings.launcherInputHeight)
+    property int launcherImageSize: (Settings.launcherImageSize)
     property bool launcherInputAtTop: (Settings.launcherInputAtTop)
     property bool launcherIsVertical: (Settings.launcherIsVertical)
     property font launcherNameFont: (Settings.launcherNameFont)
@@ -51,13 +54,25 @@ Rectangle {
     readonly property bool _IsBottomLeft: ( direction % 9 === 5 || direction % 9 === 6 || direction % 9 === 7 )
     readonly property bool _IsBottomRight: ( direction % 9 === 3 || direction % 9 === 4 || direction % 9 === 5 )
 
-    anchors.top: _IsTop ? parent.top: undefined
-    anchors.left: _IsLeft ? parent.left: undefined
-    anchors.right: _IsRight ? parent.right: undefined
-    anchors.bottom: _IsBottom ? parent.bottom: undefined
-    anchors.horizontalCenter: _IsTopBottom ? parent.horizontalCenter: undefined
-    anchors.verticalCenter: _IsLeftRight ? parent.verticalCenter: undefined
     anchors.margins: edge + float
+    x: (
+        _IsLeft ?
+        anchors.leftMargin:
+        (
+            _IsRight ?
+            parent.width - width - anchors.rightMargin:
+            (parent.width - width) / 2
+        )
+    )
+    y: (
+        _IsTop ?
+        anchors.topMargin:
+        (
+            _IsBottom ?
+            parent.height - height - anchors.bottomMargin:
+            (parent.height - height) / 2
+        )
+    )
 
     property bool isTop: (anchors.top === parent.top)
     property bool isLeft: (anchors.left === parent.left)

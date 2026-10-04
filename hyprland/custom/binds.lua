@@ -30,10 +30,10 @@ return {
     create = binds_create,
     quickshell = {
         launcher = "SUPER + R",
+        lock = "SUPER + L",
     },
     session = {
         logout = "SUPER + M",
-        lock = "SUPER + L",
     },
     window = {
         close = "SUPER + Q",

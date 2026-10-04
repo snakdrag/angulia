@@ -2,7 +2,7 @@
 ---- KEYBINDINGS ----
 ---------------------
 
-local binds = require((debug.getinfo(1, "S").source:sub(2):match("(.*/)") or "./") .. "../settings/binds")
+local binds = require((debug.getinfo(1, "S").source:sub(2):match("(.*/)") or "./") .. "../custom/binds")
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 
@@ -16,17 +16,15 @@ local locked_repeating = { locked = true, repeating = true }
 ----------------
 
 binds.create(binds.quickshell.launcher, hl.dsp.exec_cmd("qs ipc call launcher toggle"))
-
+binds.create(binds.quickshell.lock, hl.dsp.exec_cmd("notify-send 'Not done yet' 'please wait......'"))
 
 -------------
 -- session --
 -------------
 
 local logoutCmd = "command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"
-local lockCmd = ""
 
 binds.create(binds.session.logout, hl.dsp.exec_cmd(logoutCmd))
-binds.create(binds.session.lock, hl.dsp.exec_cmd(lockCmd))
 
 
 ------------

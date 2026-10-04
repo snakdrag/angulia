@@ -6,14 +6,14 @@ import Quickshell.Io
 Singleton {
 
     FileView {
-        id: colorsFile
+        id: _colors
         path: Qt.resolvedUrl("./colors.json")
         blockLoading: true
         watchChanges: true
         onFileChanged: reload()
     }
 
-    readonly property var data: (JSON.parse(colorsFile.text()))
+    readonly property var data: (JSON.parse(_colors.text()))
     readonly property var base16: (data.base16)
     readonly property var colors: (data.colors)
     readonly property var palettes: (data.palettes)

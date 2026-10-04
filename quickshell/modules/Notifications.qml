@@ -25,11 +25,11 @@ Custom.Rectangle {
         )
     ))
 
-    implicitWidth: contentHeight !==0 && contentWidth !== 0 ? Math.max(contentWidth, notificationCardWidth) + space * 2: 0
-    implicitHeight: contentHeight !==0 && contentWidth !== 0 ? Math.max(contentHeight, notificationCardHeight) + space * 2: 0
+    implicitWidth: contentHeight ===0 || contentWidth === 0 ? 0: Math.max(contentWidth, notificationCardWidth) + space * 2
+    implicitHeight: contentHeight ===0 || contentWidth === 0 ? 0: Math.max(contentHeight, notificationCardHeight) + space * 2
 
-    show: contentHeight !== 0
-
+    show: !(contentHeight ===0 || contentWidth === 0
+)
     ClippingRectangle {
         anchors.fill: parent
         anchors.margins: _.space
@@ -188,21 +188,30 @@ Custom.Rectangle {
                     }
                     IconImage {
                         id: _image
-                        anchors.top: !_.notificationIsVertical ? parent.top: undefined
-                        anchors.left: _.notificationIsVertical ? parent.left: undefined
-                        anchors.verticalCenter: _.notificationIsVertical ? parent.verticalCenter: undefined
-                        anchors.horizontalCenter: !_.notificationIsVertical ? parent.horizontalCenter: undefined
+                        x: (
+                            _.notificationIsVertical ?
+                            anchors.leftMargin:
+                            Math.max((parent.width - width) / 2, anchors.leftMargin)
+                        )
+                        y: (
+                            _.notificationIsVertical ?
+                            Math.max((parent.height - height) / 2, anchors.topMargin):
+                            anchors.topMargin
+                        )
                         anchors.margins: _.space
-                        implicitSize: Math.min(_.notificationCardWidth, _.notificationCardHeight) - _.space * 2
+                        implicitSize: _.notificationImageSize
                         source: _card.modelData.image || Quickshell.iconPath(_card.modelData.appIcon, true) || ""
                         visible: status === Image.Ready && source != ""
                     }
                     Item {
-                        anchors.top: !_.notificationIsVertical ? parent.top: undefined
+                        y: (
+                            _.notificationIsVertical ?
+                            Math.max((parent.height - height) / 2, anchors.topMargin):
+                            anchors.topMargin
+                        )
                         anchors.left: parent.left
                         anchors.right: parent.right
-                        anchors.verticalCenter: _.notificationIsVertical ? parent.verticalCenter: undefined
-                        implicitHeight: _body.text !== "" ? _summary.height + _body.height: _summary.height
+                        implicitHeight: _body.text === "" ? _summary.height: _summary.height + _body.height
                         anchors.topMargin: _image.visible && !_.notificationIsVertical ? _image.height + _.space * 2: _.space
                         anchors.leftMargin: _image.visible && _.notificationIsVertical ? _image.width + _.space * 2: _.space
                         anchors.margins: _.space
@@ -216,7 +225,7 @@ Custom.Rectangle {
                             font: _.notificationSummaryFont
                             elide: Text.ElideRight
                             wrapMode: Text.WrapAnywhere
-                            maximumLineCount: _card.modelData.urgency === NotificationUrgency.Critical ? undefined: 2
+                            maximumLineCount: _card.modelData.urgency === NotificationUrgency.Critical ? 0: 2
                         }
                         Text {
                             id: _body
@@ -228,7 +237,7 @@ Custom.Rectangle {
                             font: _.notificationBodyFont
                             elide: Text.ElideRight
                             wrapMode: Text.WrapAnywhere
-                            maximumLineCount: _card.modelData.urgency === NotificationUrgency.Critical ? undefined: 3
+                            maximumLineCount: _card.modelData.urgency === NotificationUrgency.Critical ? 0: 3
                         }
                     }
                     Custom.Cover {
