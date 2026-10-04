@@ -16,7 +16,7 @@ local locked_repeating = { locked = true, repeating = true }
 ----------------
 
 binds.create(binds.quickshell.launcher, hl.dsp.exec_cmd("qs ipc call launcher toggle"))
-binds.create(binds.quickshell.lock, hl.dsp.exec_cmd("notify-send 'Not done yet' 'please wait......'"))
+binds.create(binds.quickshell.lock, hl.dsp.exec_cmd("notify-send 'Not done yet' 'please wait...'"))
 
 -------------
 -- session --
