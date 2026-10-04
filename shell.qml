@@ -1,0 +1,2 @@
+import "quickshell"
+Shell {}

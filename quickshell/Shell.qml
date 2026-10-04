@@ -2,8 +2,8 @@ import Quickshell
 import Quickshell.Wayland
 import "modules" as Modules
 import "layers" as Layers
-import qs.angulia.settings
-import qs.angulia.theme
+import "../settings"
+import "../theme"
 
 ShellRoot {
     Layers.ExclusiveZones {

@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell
-import qs.angulia.settings
-import qs.angulia.theme
+import "../../settings"
+import "../../theme"
 
 Rectangle {
     id: _
@@ -56,28 +56,30 @@ Rectangle {
 
     anchors.margins: edge + float
     x: (
-        _IsLeft ?
-        anchors.leftMargin:
-        (
-            _IsRight ?
-            parent.width - width - anchors.rightMargin:
-            (parent.width - width) / 2
-        )
+        _IsLeft ? anchors.leftMargin:
+        _IsRight ? parent.width - implicitWidth - anchors.rightMargin: (parent.width - implicitWidth) / 2
     )
     y: (
-        _IsTop ?
-        anchors.topMargin:
-        (
-            _IsBottom ?
-            parent.height - height - anchors.bottomMargin:
-            (parent.height - height) / 2
-        )
+        _IsTop ? anchors.topMargin:
+        _IsBottom ? parent.height - implicitHeight - anchors.bottomMargin: (parent.height - implicitHeight) / 2
     )
+    Behavior on x {
+        NumberAnimation {
+            duration: 300
+            easing.type: Easing.OutCubic
+        }
+    }
+    Behavior on y {
+        NumberAnimation {
+            duration: 300
+            easing.type: Easing.OutCubic
+        }
+    }
 
-    property bool isTop: (anchors.top === parent.top)
-    property bool isLeft: (anchors.left === parent.left)
-    property bool isRight: (anchors.right === parent.right)
-    property bool isBottom: (anchors.bottom === parent.bottom)
+    property bool isTop: (_IsTop)
+    property bool isLeft: (_IsLeft)
+    property bool isRight: (_IsRight)
+    property bool isBottom: (_IsBottom)
 
     property bool isTopLeft: (isLeft)
     property bool isTopRight: (isRight)
@@ -93,27 +95,20 @@ Rectangle {
     bottomLeftRadius: (isBottomLeft || isLeftBottom) && !float ? 0: radius
     bottomRightRadius: (isBottomRight || isRightBottom) && !float ? 0: radius
 
-    property bool show: (true)
-
-    opacity: show ? 1: 0
-
     property Region region: (_region)
     Region { id: _region; item: _ }
 
-    Behavior on opacity {
-        NumberAnimation {
-            duration: 300
-            easing.type: Easing.OutCubic
-        }
-    }
+    property bool show: (true)
 
-    Behavior on implicitWidth {
+    width: implicitWidth
+    height: implicitHeight
+    Behavior on width {
         NumberAnimation {
             duration: 300
             easing.type: Easing.OutCubic
         }
     }
-    Behavior on implicitHeight {
+    Behavior on height {
         NumberAnimation {
             duration: 300
             easing.type: Easing.OutCubic

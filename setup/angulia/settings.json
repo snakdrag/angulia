@@ -1,1 +1,53 @@
-{}
+{
+  "radius": 12,
+  "edge": 5,
+  "float": 10,
+  "space": 10,
+
+  "gaps_in": 5,
+  "gaps_out": 15,
+
+  "font": {
+    "summary": { "family": "Inter", "pixelSize": 15, "bold": true },
+    "body": { "family": "Inter", "pixelSize": 15, "bold": false },
+    "name": { "family": "Inter", "pixelSize": 12, "bold": true },
+    "comment": { "family": "Inter", "pixelSize": 12, "bold": false }
+  },
+
+  "bar": {
+    "width": 50,
+    "height": 50
+  },
+
+  "notification": {
+    "direction": 2,
+    "card": {
+      "width": 360,
+      "height": 60,
+      "image": 40
+    },
+    "isVertical": true
+  },
+
+  "launcher": {
+    "direction": 1,
+    "card": {
+      "width": 120,
+      "height": 85,
+      "image": 40
+    },
+    "isVertical": false,
+    "inputAtTop": true
+  },
+
+  "clock": {
+    "direction": 5,
+    "width": 300,
+    "height": 50
+  },
+
+  "systemtray": {
+    "direction": 4,
+    "isVertical": false
+  }
+}
