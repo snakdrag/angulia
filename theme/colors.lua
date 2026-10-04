@@ -4,12 +4,17 @@ f:close()
 
 local mode = data:match('"mode"%s*:%s*"([^"]+)"')
 
+local function matchJSON(jsonData, keys)
+    local matchSTR = ''
+    for _, key in ipairs(keys) do
+        matchSTR = matchSTR .. '"' .. key .. '"%s*:%s*.-'
+    end
+    matchSTR = matchSTR .. '"([^"]+)"'
+    return jsonData:match(matchSTR)
+end
+
 local function get_color(name)
-    return data:match(
-        '"colors"%s*:%s*{%s*.-"' ..
-        name .. '"%s*:%s*{%s*.-"' ..
-        mode .. '"%s*:%s*{%s*"color"%s*:%s*"([^"]+)"'
-    )
+    return matchJSON(data, { "colors", name, mode, "color" })
 end
 
 return {

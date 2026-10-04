@@ -11,12 +11,29 @@ Singleton {
     readonly property int space: (Angulia.data.space)
 
     readonly property int exclusiveZones: (edge + (Angulia.data.gaps_out))
-    readonly property int topExclusiveZone: (exclusiveZones + (0))
-    readonly property int leftExclusiveZone: (exclusiveZones + (0))
-    readonly property int rightExclusiveZone: (exclusiveZones + (0))
-    readonly property int bottomExclusiveZone: (exclusiveZones + (50))
+    readonly property int topExclusiveZone: (exclusiveZones + (_top ? Angulia.data.bar.height + float: 0))
+    readonly property int leftExclusiveZone: (exclusiveZones + (_left ? Angulia.data.bar.width + float: 0))
+    readonly property int rightExclusiveZone: (exclusiveZones + (_right ? Angulia.data.bar.width + float: 0))
+    readonly property int bottomExclusiveZone: (exclusiveZones + (_bottom ? Angulia.data.bar.height + float: 0))
 
-    readonly property int notificationDirection: (Angulia.data.notification.direction)
+    readonly property bool _top: (
+        (_clock._IsTop && !clockIsVertical) ||
+        (_systemtray._IsTop && !systemtrayIsVertical)
+    )
+    readonly property bool _left: (
+        (_clock._IsLeft && clockIsVertical) ||
+        (_systemtray._IsLeft && systemtrayIsVertical)
+    )
+    readonly property bool _right: (
+        (_clock._IsRight && clockIsVertical) ||
+        (_systemtray._IsRight && systemtrayIsVertical)
+    )
+    readonly property bool _bottom: (
+        (_clock._IsBottom && !clockIsVertical) ||
+        (_systemtray._IsBottom && !systemtrayIsVertical)
+    )
+
+    readonly property int notificationDirection: (Angulia.data.notification.direction % 8)
     readonly property bool notificationIsVertical: (Angulia.data.notification.isVertical)
     readonly property int notificationCardWidth: (Angulia.data.notification.card.width)
     readonly property int notificationCardHeight: (Angulia.data.notification.card.height)
@@ -24,7 +41,7 @@ Singleton {
     readonly property font notificationSummaryFont: (Angulia.data.font.summary)
     readonly property font notificationBodyFont: (Angulia.data.font.body)
 
-    readonly property int launcherDirection: (Angulia.data.launcher.direction)
+    readonly property int launcherDirection: (Angulia.data.launcher.direction % 9)
     readonly property bool launcherIsVertical: (Angulia.data.launcher.isVertical)
     readonly property int launcherCardWidth: (Angulia.data.launcher.card.width)
     readonly property int launcherCardHeight: (Angulia.data.launcher.card.height)
@@ -34,13 +51,16 @@ Singleton {
     readonly property int launcherInputHeight: (Math.min(Angulia.data.bar.width, Angulia.data.bar.height) - space * 2)
     readonly property bool launcherInputAtTop: (Angulia.data.launcher.inputAtTop)
 
-    readonly property int clockDirection: (Angulia.data.clock.direction)
+    readonly property int clockDirection: (Angulia.data.clock.direction % 8)
     readonly property bool clockIsVertical: (Angulia.data.clock.isVertical)
     readonly property int clcokWidth: (clockIsVertical ? Angulia.data.bar.width: Angulia.data.clock.width)
     readonly property int clcokHeight: (clockIsVertical ? Angulia.data.clock.height: Angulia.data.bar.height)
     readonly property font clockFont: (Angulia.data.font.body)
+    Direction { id: _clock; direction: clockDirection}
 
-    readonly property int systemtrayDirection: (Angulia.data.systemtray.direction)
+    readonly property int systemtrayDirection: (Angulia.data.systemtray.direction % 8)
     readonly property bool systemtrayIsVertical: (Angulia.data.systemtray.isVertical)
     readonly property int systemtrayIconSize: ((systemtrayIsVertical ? Angulia.data.bar.width: Angulia.data.bar.height) - space * 2)
+    Direction { id: _systemtray; direction: systemtrayDirection}
+
 }

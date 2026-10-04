@@ -11,6 +11,11 @@ Rectangle {
     property color backgroundColor: (Colors.surface)
     property color textColor: (Colors.on_surface)
 
+    radius: Settings.radius
+    property int edge: (Settings.edge)
+    property int float: (Settings.float)
+    property int space: (Settings.space)
+
     property int notificationCardWidth: (Settings.notificationCardWidth)
     property int notificationCardHeight: (Settings.notificationCardHeight)
     property int notificationImageSize: (Settings.notificationImageSize)
@@ -33,11 +38,6 @@ Rectangle {
 
     property int systemtrayIconSize: (Settings.systemtrayIconSize)
     property bool systemtrayIsVertical: (Settings.systemtrayIsVertical)
-
-    radius: Settings.radius
-    property int edge: (Settings.edge)
-    property int float: (Settings.float)
-    property int space: (Settings.space)
 
     property int direction: (1)
 
@@ -63,18 +63,8 @@ Rectangle {
         _IsTop ? anchors.topMargin:
         _IsBottom ? parent.height - implicitHeight - anchors.bottomMargin: (parent.height - implicitHeight) / 2
     )
-    Behavior on x {
-        NumberAnimation {
-            duration: 300
-            easing.type: Easing.OutCubic
-        }
-    }
-    Behavior on y {
-        NumberAnimation {
-            duration: 300
-            easing.type: Easing.OutCubic
-        }
-    }
+    Behavior on x { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
+    Behavior on y { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
 
     property bool isTop: (_IsTop)
     property bool isLeft: (_IsLeft)
@@ -102,18 +92,8 @@ Rectangle {
 
     width: implicitWidth
     height: implicitHeight
-    Behavior on width {
-        NumberAnimation {
-            duration: 300
-            easing.type: Easing.OutCubic
-        }
-    }
-    Behavior on height {
-        NumberAnimation {
-            duration: 300
-            easing.type: Easing.OutCubic
-        }
-    }
+    Behavior on width { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
+    Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
 
     RoundCorner {
         anchors.left: _.left

@@ -19,8 +19,8 @@ Custom.Rectangle {
         _list.contentHeight,
         (
             _IsLeftRight ?
-            parent.height / 2 - edge - space - _input.height - space * 2:
-            parent.height / 2 - edge - space - float - _input.height - space * 2
+            parent.height / 2 - edge - space - _.launcherInputHeight - space * 2:
+            parent.height / 2 - edge - space - float - _.launcherInputHeight - space * 2
         )
     ))
     property int selectedIndex: (0)
@@ -30,8 +30,8 @@ Custom.Rectangle {
         show ? 
         (
             contentHeight === 0 || contentWidth === 0 ?
-            _input.height:
-            Math.max(contentHeight, launcherCardHeight) + space + _input.height
+            _.launcherInputHeight:
+            Math.max(contentHeight, launcherCardHeight) + space + _.launcherInputHeight
         ) + space * 2:
         0
     )
@@ -57,12 +57,13 @@ Custom.Rectangle {
         y: (
             _.launcherInputAtTop ?
             anchors.topMargin:
-            Math.max(parent.height - height - anchors.bottomMargin, anchors.topMargin)
+            Math.max(parent.height - implicitHeight - anchors.bottomMargin, anchors.topMargin)
         )
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.margins: _.space
-        implicitHeight: _.launcherInputHeight
+        implicitHeight: _.show ? _.launcherInputHeight: 0
+        Behavior on implicitHeight { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
         radius: _.radius
         color: _.cardColor
         visible: _.show
@@ -115,8 +116,8 @@ Custom.Rectangle {
     ClippingRectangle {
         anchors.fill: parent
         anchors.margins: _.space
-        anchors.topMargin: _.launcherInputAtTop ? _input.height + _.space * 2: _.space
-        anchors.bottomMargin: _.launcherInputAtTop ? _.space: _input.height + _.space * 2
+        anchors.topMargin: _.launcherInputAtTop ? _.launcherInputHeight + _.space * 2: _.space
+        anchors.bottomMargin: _.launcherInputAtTop ? _.space: _.launcherInputHeight + _.space * 2
         radius: _.radius
         color: _.backgroundColor
         visible: _.show

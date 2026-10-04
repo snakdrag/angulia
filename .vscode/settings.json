@@ -1,4 +1,3 @@
 {
-  "Lua.workspace.library": ["/usr/share/hypr/stubs"],
-  "Lua.diagnostics.globals": ["hl"]
+  "Lua.workspace.library": ["/run/host/usr/share/hypr/stubs"] // using distrobox
 }
