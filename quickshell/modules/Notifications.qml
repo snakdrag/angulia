@@ -41,13 +41,7 @@ Custom.Rectangle {
             spacing: _.space
             orientation: _.notificationIsVertical ? ListView.Vertical: ListView.Horizontal
             model: Services.Notifications.server.trackedNotifications
-            displaced: Transition {
-                NumberAnimation {
-                    properties: "x, y"
-                    duration: 300
-                    easing.type: Easing.OutCubic
-                }
-            }
+            displaced: Transition { Custom.NA { properties: "x, y" } }
             delegate: Item {
                 id: _card
                 required property var modelData
@@ -174,18 +168,8 @@ Custom.Rectangle {
                     implicitHeight: _card.height
                     radius: _.radius
                     color: _.cardColor
-                    Behavior on x {
-                        NumberAnimation { 
-                            duration: 300
-                            easing.type: Easing.OutCubic 
-                        }
-                    }
-                    Behavior on y {
-                        NumberAnimation { 
-                            duration: 300
-                            easing.type: Easing.OutCubic 
-                        }
-                    }
+                    Behavior on x { Custom.NA {} }
+                    Behavior on y { Custom.NA {} }
                     IconImage {
                         id: _image
                         x: (

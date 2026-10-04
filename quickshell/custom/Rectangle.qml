@@ -7,9 +7,13 @@ Rectangle {
     id: _
 
     color: Colors.surface
+    Behavior on color { CA {} }
     property color cardColor: (Colors.surface_container)
+    Behavior on cardColor { CA {} }
     property color backgroundColor: (Colors.surface)
+    Behavior on backgroundColor { CA {} }
     property color textColor: (Colors.on_surface)
+    Behavior on textColor { CA {} }
 
     radius: Settings.radius
     property int edge: (Settings.edge)
@@ -65,8 +69,8 @@ Rectangle {
         _IsTop ? anchors.topMargin:
         _IsBottom ? parent.height - implicitHeight - anchors.bottomMargin: (parent.height - implicitHeight) / 2
     )
-    Behavior on x { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
-    Behavior on y { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
+    Behavior on x { NA {} }
+    Behavior on y { NA {} }
 
     property bool isTop: (_IsTop)
     property bool isLeft: (_IsLeft)
@@ -94,8 +98,8 @@ Rectangle {
 
     width: implicitWidth
     height: implicitHeight
-    Behavior on width { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
-    Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
+    Behavior on width { NA {} }
+    Behavior on height { NA {} }
 
     RoundCorner {
         anchors.left: _.left

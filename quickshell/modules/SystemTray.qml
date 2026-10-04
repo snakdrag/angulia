@@ -39,13 +39,7 @@ Custom.Rectangle {
             model: SystemTray.items
             orientation: _.systemtrayIsVertical ? ListView.Vertical: ListView.Horizontal
             interactive: false
-            displaced: Transition {
-                NumberAnimation {
-                    properties: "x, y"
-                    duration: 300
-                    easing.type: Easing.OutCubic
-                }
-            }
+            displaced: Transition { Custom.NA { properties: "x, y" } }
             delegate: Rectangle {
                 id: _card
                 required property var modelData

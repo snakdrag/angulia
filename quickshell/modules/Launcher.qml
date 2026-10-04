@@ -63,7 +63,7 @@ Custom.Rectangle {
         anchors.right: parent.right
         anchors.margins: _.space
         implicitHeight: _.show ? _.launcherInputHeight: 0
-        Behavior on implicitHeight { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
+        Behavior on implicitHeight { Custom.NA {} }
         radius: _.radius
         color: _.cardColor
         visible: _.show
@@ -96,10 +96,7 @@ Custom.Rectangle {
                 _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
             }}
             Keys.onReturnPressed: {
-                if (_list.count > 0) {
-                    _list.currentItem.modelData.execute()
-                    _ipc.close()
-                }
+                if (_list.count > 0) { _list.currentItem.modelData.execute(); _ipc.close() }
                 else {_ipc.close()}
             }
             Text {
