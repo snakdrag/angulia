@@ -13,7 +13,9 @@ Singleton {
     readonly property int barWidth: (Angulia.data.bar.width)
     readonly property int barHeight: (Angulia.data.bar.height)
 
-    readonly property int exclusiveZones: (edge + (Angulia.data.gaps_out))
+    readonly property int gaps_out: (Angulia.data.gaps_out)
+
+    readonly property int exclusiveZones: (edge)
     readonly property int topExclusiveZone: (exclusiveZones + (_top ? barHeight + float: 0))
     readonly property int leftExclusiveZone: (exclusiveZones + (_left ? barWidth + float: 0))
     readonly property int rightExclusiveZone: (exclusiveZones + (_right ? barWidth + float: 0))
@@ -21,19 +23,23 @@ Singleton {
 
     readonly property bool _top: (
         (_clock._IsTop && !clockIsVertical) ||
-        (_systemtray._IsTop && !systemtrayIsVertical)
+        (_systemtray._IsTop && !systemtrayIsVertical) ||
+        false
     )
     readonly property bool _left: (
         (_clock._IsLeft && clockIsVertical) ||
-        (_systemtray._IsLeft && systemtrayIsVertical)
+        (_systemtray._IsLeft && systemtrayIsVertical) ||
+        false
     )
     readonly property bool _right: (
         (_clock._IsRight && clockIsVertical) ||
-        (_systemtray._IsRight && systemtrayIsVertical)
+        (_systemtray._IsRight && systemtrayIsVertical) ||
+        false
     )
     readonly property bool _bottom: (
         (_clock._IsBottom && !clockIsVertical) ||
-        (_systemtray._IsBottom && !systemtrayIsVertical)
+        (_systemtray._IsBottom && !systemtrayIsVertical) ||
+        false
     )
 
     readonly property int notificationDirection: (Angulia.data.notification.direction % 8)

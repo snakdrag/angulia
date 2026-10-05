@@ -4,6 +4,7 @@ import Quickshell
 import Quickshell.Io
 
 Singleton {
+    readonly property var data: (JSON.parse(_colors.text()))
 
     FileView {
         id: _colors
@@ -13,7 +14,6 @@ Singleton {
         onFileChanged: reload()
     }
 
-    readonly property var data: (JSON.parse(_colors.text()))
     readonly property var base16: (data.base16)
     readonly property var colors: (data.colors)
     readonly property var palettes: (data.palettes)

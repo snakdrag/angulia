@@ -8,6 +8,7 @@ import "../services" as Services
 Custom.Rectangle {
     id: _
 
+    exclusionModeIgnore: false
     readonly property int contentWidth: (Math.min(
         _list.contentWidth,
         (

@@ -1,8 +1,6 @@
 import QtQuick
 
-Item {
-    id: _
-
+QtObject {
     property int direction: (1)
 
     readonly property bool _IsTop: ( direction % 9 === 0 || direction % 9 === 1 || direction % 9 === 2 )

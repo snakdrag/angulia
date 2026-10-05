@@ -4,7 +4,7 @@ import Quickshell
 import Quickshell.Io
 
 Singleton {
-
+    readonly property var data: (JSON.parse(colorsFile.text()))
     FileView {
         id: colorsFile
         path: Quickshell.env("HOME") + "/.config/angulia/settings.json"
@@ -12,6 +12,4 @@ Singleton {
         watchChanges: true
         onFileChanged: reload()
     }
-
-    readonly property var data: (JSON.parse(colorsFile.text()))
 }

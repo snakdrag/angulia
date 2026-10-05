@@ -5,6 +5,7 @@ import "../settings" as S
 
 ShellRoot {
     Layers.ExclusiveZones {
+        gaps_out: S.Settings.gaps_out
         topExclusiveZone: S.Settings.topExclusiveZone
         leftExclusiveZone: S.Settings.leftExclusiveZone
         rightExclusiveZone: S.Settings.rightExclusiveZone
