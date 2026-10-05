@@ -7,8 +7,8 @@ Item {
     property real radius: (0)
     property color color: ("#ffffff")
 
-    implicitWidth: radius
-    implicitHeight: radius
+    width: radius
+    height: radius
 
     Loader {
         active: _.visible || _.opacity > 0

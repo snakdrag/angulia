@@ -1,36 +1,29 @@
-import Quickshell
-import Quickshell.Wayland
+import Quickshell // for ShellRoot and Region
 import "modules" as Modules
 import "layers" as Layers
-import "../settings"
-import "../theme"
+import "../settings" as S
 
 ShellRoot {
     Layers.ExclusiveZones {
-        exclusiveZones: Settings.exclusiveZones
-        topExclusiveZone: Settings.topExclusiveZone
-        leftExclusiveZone: Settings.leftExclusiveZone
-        rightExclusiveZone: Settings.rightExclusiveZone
-        bottomExclusiveZone: Settings.bottomExclusiveZone
+        topExclusiveZone: S.Settings.topExclusiveZone
+        leftExclusiveZone: S.Settings.leftExclusiveZone
+        rightExclusiveZone: S.Settings.rightExclusiveZone
+        bottomExclusiveZone: S.Settings.bottomExclusiveZone
     }
-    Layers.Overlay {
+    Layers.Layer {
         id: _overlay
+        layer: layers.Overlay
         mask: Region { regions: [_notifications.region,] }
-        WlrLayershell.keyboardFocus: _launcher.show ? WlrKeyboardFocus.Exclusive: WlrKeyboardFocus.None
-        Modules.Notifications { id: _notifications; direction: Settings.notificationDirection % 8 }
-        Modules.Launcher { id: _launcher; direction: Settings.launcherDirection }
+        keyboardFocus: _launcher.show
+        Modules.Notifications { id: _notifications; direction: S.Settings.notificationDirection % 8 }
+        Modules.Launcher { id: _launcher; direction: S.Settings.launcherDirection }
     }
-    Layers.Top {
+    Layers.Layer {
         id: _top
+        layer: layers.Top
         mask: Region { regions: [_systemtray.region,] }
         Modules.Edge {}
-        Modules.Clock { direction: Settings.clockDirection }
-        Modules.SystemTray { id: _systemtray; direction: Settings.systemtrayDirection; cardColor: "transparent" }
+        Modules.Clock { direction: S.Settings.clockDirection }
+        Modules.SystemTray { id: _systemtray; direction: S.Settings.systemtrayDirection; cardColor: "transparent" }
     }
-    // Layers.Bottom {
-    //     mask: Region {}
-    // }
-    // Layers.Background {
-    //     mask: Region {}
-    // }
 }
