@@ -8,29 +8,22 @@ import "../services" as Services
 Custom.Rectangle {
     id: _
 
+    property int notificationCardWidth: (Custom.Data.settings.notificationCardWidth)
+    property int notificationCardHeight: (Custom.Data.settings.notificationCardHeight)
+    property int notificationImageSize: (Custom.Data.settings.notificationImageSize)
+    property bool notificationIsVertical: (Custom.Data.settings.notificationIsVertical)
+    property font notificationSummaryFont: (Custom.Data.settings.notificationSummaryFont)
+    property font notificationBodyFont: (Custom.Data.settings.notificationBodyFont)
+
     exclusionModeIgnore: false
-    readonly property int contentWidth: (Math.min(
-        _list.contentWidth,
-        (
-            _IsTopBottom ?
-            parent.width / 2 - edge - space * 2:
-            parent.width / 2 - edge - space * 2 - float
-        )
-    ))
-    readonly property int contentHeight: (Math.min(
-        _list.contentHeight,
-        (
-            _IsLeftRight ?
-            parent.height / 2 - edge - space * 2:
-            parent.height / 2 - edge - space * 2 - float
-        )
-    ))
+    _contentWidth: _list.contentWidth
+    _contentHeight: _list.contentHeight
 
-    implicitWidth: contentHeight ===0 || contentWidth === 0 ? 0: Math.max(contentWidth, notificationCardWidth) + space * 2
-    implicitHeight: contentHeight ===0 || contentWidth === 0 ? 0: Math.max(contentHeight, notificationCardHeight) + space * 2
+    implicitWidth: noContent ? 0: Math.max(contentWidth, notificationCardWidth) + space * 2
+    implicitHeight: noContent ? 0: Math.max(contentHeight, notificationCardHeight) + space * 2
 
-    show: !(contentHeight ===0 || contentWidth === 0
-)
+    show: !noContent
+
     ClippingRectangle {
         anchors.fill: parent
         anchors.margins: _.space
@@ -74,22 +67,17 @@ Custom.Rectangle {
                         font: _.notificationBodyFont
                         opacity: (
                             _.notificationIsVertical ?
-                            (_main.x - _.space - _card.width / 8) / _card.width * 8:
-                            (_main.y - _.space - _card.height / 8) / _card.height * 8
+                            ((_main.x - _.space - _card.width / 8) / _card.width * 8):
+                            ((_main.y - _.space - _card.height / 8) / _card.height * 8)
                         )
                     }
                     Custom.Cover {
                         show: (
-                            _.notificationIsVertical ?
+                            _action.hovered &&
                             (
-                                _action.hovered &&
-                                _main.x - _.space >= _card.width / 4 ||
-                                _main.x - _.space > _card.width / 2
-                            ):
-                            (
-                                _action.hovered &&
-                                _main.y - _.space >= _card.height / 4 ||
-                                _main.y - _.space > _card.height / 2
+                                _.notificationIsVertical ?
+                                (_main.x - _.space >= _card.width / 4 || _main.x - _.space > _card.width / 2):
+                                (_main.y - _.space >= _card.height / 4 || _main.y - _.space > _card.height / 2)
                             )
                         )
                         color: _.textColor
@@ -100,8 +88,13 @@ Custom.Rectangle {
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
                         onClicked: {
-                            if (_card.haveAction) {_card.modelData.actions[0].invoke()}
-                            else {_card.modelData.dismiss()}
+                            if (_card.haveAction)
+                            {
+                                _card.modelData.actions[0].invoke()
+                            }
+                            else {
+                                _card.modelData.dismiss()
+                            }
                         }
                         onEntered: _action.hovered = true
                         onExited: _action.hovered = false
@@ -132,22 +125,17 @@ Custom.Rectangle {
                         font: _.notificationBodyFont
                         opacity: (
                             _.notificationIsVertical ?
-                            (-_main.x - _.space - _card.width / 8) / _card.width * 8:
-                            (-_main.y - _.space - _card.height / 8) / _card.height * 8
+                            ((-_main.x - _.space - _card.width / 8) / _card.width * 8):
+                            ((-_main.y - _.space - _card.height / 8) / _card.height * 8)
                         )
                     }
                     Custom.Cover {
                         show: (
-                            _.notificationIsVertical ?
+                            _clear.hovered &&
                             (
-                                _clear.hovered &&
-                                -_main.x - _.space >= _card.width / 4 ||
-                                -_main.x - _.space > _card.width / 2
-                            ):
-                            (
-                                _clear.hovered &&
-                                -_main.y - _.space >= _card.height / 4 ||
-                                -_main.y - _.space > _card.height / 2
+                                _.notificationIsVertical ?
+                                (-_main.x - _.space >= _card.width / 4 || -_main.x - _.space > _card.width / 2):
+                                (-_main.y - _.space >= _card.height / 4 || -_main.y - _.space > _card.height / 2)
                             )
                         )
                         color: _.textColor
@@ -236,19 +224,36 @@ Custom.Rectangle {
                         onEntered: _main.hovered = true
                         onExited: _main.hovered = false
                         onClicked: mouse => {
-                            if (_.notificationIsVertical)
+                        if (_.notificationIsVertical)
+                        {
+                            if (mouse.button === Qt.LeftButton)
                             {
-                                if (mouse.button === Qt.LeftButton) {parent.x = _card.width / 4 + _.space} 
-                                else if (mouse.button === Qt.RightButton) {parent.x = -_card.width / 4 - _.space}
-                                else if (mouse.button === Qt.MiddleButton) {parent.x = 0}
+                                parent.x = _card.width / 4 + _.space
                             }
-                            else
+                            else if (mouse.button === Qt.RightButton)
                             {
-                                if (mouse.button === Qt.LeftButton) {parent.y = _card.height / 4 + _.space} 
-                                else if (mouse.button === Qt.RightButton) {parent.y = -_card.height / 4 - _.space}
-                                else if (mouse.button === Qt.MiddleButton) {parent.y = 0}
+                                parent.x = -_card.width / 4 - _.space
+                            }
+                            else if (mouse.button === Qt.MiddleButton)
+                            {
+                                parent.x = 0
                             }
                         }
+                        else
+                        {
+                            if (mouse.button === Qt.LeftButton)
+                            {
+                                parent.y = _card.height / 4 + _.space
+                            }
+                            else if (mouse.button === Qt.RightButton)
+                            {
+                                parent.y = -_card.height / 4 - _.space
+                            }
+                            else if (mouse.button === Qt.MiddleButton)
+                            {
+                                parent.y = 0
+                            }
+                        }}
                     }
                     DragHandler {
                         xAxis.enabled: _.notificationIsVertical
@@ -256,31 +261,57 @@ Custom.Rectangle {
                         onActiveChanged: {
                             if (_.notificationIsVertical)
                             {
-                                if (parent.x < -_card.width / 2 - _.space) {_card.modelData.dismiss()} 
-                                else if (parent.x < -_card.width / 4) {parent.x = -_card.width / 4 - _.space}
-                                else if (parent.x > _card.width / 2 + _.space) 
+                                if (parent.x < -_card.width / 2 - _.space)
+                                {
+                                    _card.modelData.dismiss()
+                                }
+                                else if (parent.x < -_card.width / 4)
+                                {
+                                    parent.x = -_card.width / 4 - _.space
+                                }
+                                else if (parent.x > _card.width / 2 + _.space)
                                 {
                                     if (_card.haveAction)
-                                    {_card.modelData.actions[0].invoke()}
-                                    else {_card.modelData.dismiss()}
+                                    {
+                                        _card.modelData.actions[0].invoke()
+                                    }
+                                    else {_card.modelData.dismiss()
+                                    }
                                 }
-                                else if (parent.x > _card.width / 4) 
-                                {parent.x = _card.width / 4 + _.space}
-                                else {parent.x = 0}
+                                else if (parent.x > _card.width / 4)
+                                {
+                                    parent.x = _card.width / 4 + _.space
+                                }
+                                else {
+                                    parent.x = 0
+                                }
                             }
                             else
                             {
-                                if (parent.y < -_card.height / 2 - _.space) {_card.modelData.dismiss()} 
-                                else if (parent.y < -_card.height / 4) {parent.y = -_card.height / 4 - _.space}
-                                else if (parent.y > _card.height / 2 + _.space) 
+                                if (parent.y < -_card.height / 2 - _.space)
+                                {
+                                    _card.modelData.dismiss()
+                                }
+                                else if (parent.y < -_card.height / 4)
+                                {
+                                    parent.y = -_card.height / 4 - _.space
+                                }
+                                else if (parent.y > _card.height / 2 + _.space)
                                 {
                                     if (_card.haveAction)
-                                    {_card.modelData.actions[0].invoke()}
+                                    {
+                                        _card.modelData.actions[0].invoke()
+                                    }
                                     else {_card.modelData.dismiss()}
                                 }
-                                else if (parent.y > _card.height / 4) 
-                                {parent.y = _card.height / 4 + _.space}
-                                else {parent.y = 0}
+                                else if (parent.y > _card.height / 4)
+                                {
+                                    parent.y = _card.height / 4 + _.space
+                                }
+                                else
+                                {
+                                    parent.y = 0
+                                }
                             }
                         }
                     }

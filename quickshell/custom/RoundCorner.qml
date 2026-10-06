@@ -1,5 +1,5 @@
-import QtQuick
-import QtQuick.Shapes
+import QtQuick // for Item and Loader and color
+import QtQuick.Shapes // for Shape, ShapePath, PathLine, PathArc
 
 Item {
     id: _

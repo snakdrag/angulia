@@ -1,12 +1,11 @@
 pragma Singleton
-import QtQuick
-import Quickshell
-import Quickshell.Io
+import Quickshell // for Singleton and Quickshell.env
+import Quickshell.Io // for FileView and JSON.parse
 
 Singleton {
-    readonly property var data: (JSON.parse(colorsFile.text()))
+    readonly property var data: (JSON.parse(_angulia.text()))
     FileView {
-        id: colorsFile
+        id: _angulia
         path: Quickshell.env("HOME") + "/.config/angulia/settings.json"
         blockLoading: true
         watchChanges: true

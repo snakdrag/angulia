@@ -15,6 +15,10 @@ PanelWindow {
     property bool keyboardFocus: (false)
     WlrLayershell.keyboardFocus: keyboardFocus ? WlrKeyboardFocus.Exclusive: WlrKeyboardFocus.None
 
+    property bool enableBlur: (true)
+    Item { id: _item; anchors.fill: parent }
+    BackgroundEffect.blurRegion: Region { item: enableBlur ? _item: null }
+
     anchors.top: true
     anchors.left: true
     anchors.right: true
@@ -24,7 +28,4 @@ PanelWindow {
     exclusionMode: ExclusionMode.Ignore
 
     mask: Region {}
-
-    Item { id: _item; anchors.fill: parent }
-    BackgroundEffect.blurRegion: Region { item: _item }
 }

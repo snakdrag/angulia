@@ -57,7 +57,7 @@ Singleton {
     readonly property color surface_tint: (colors.surface_tint[mode].color)
 
     readonly property color on_surface: (colors.on_surface[mode].color)
-    
+
     readonly property color inverse_surface: (colors.inverse_surface[mode].color)
     readonly property color inverse_on_surface: (colors.inverse_on_surface[mode].color)
 

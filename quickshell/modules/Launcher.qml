@@ -7,31 +7,26 @@ import "../custom" as Custom
 Custom.Rectangle {
     id: _
 
-    readonly property int contentWidth: (Math.min(
-        _list.contentWidth,
-        (
-            _IsTopBottom ?
-            parent.width / 2 - edge - space * 2:
-            parent.width / 2 - edge - space * 2 - float
-        )
-    ))
-    readonly property int contentHeight: (Math.min(
-        _list.contentHeight,
-        (
-            _IsLeftRight ?
-            parent.height / 2 - edge - space - _.launcherInputHeight - space * 2:
-            parent.height / 2 - edge - space - float - _.launcherInputHeight - space * 2
-        )
-    ))
+    property int launcherCardWidth: (Custom.Data.settings.launcherCardWidth)
+    property int launcherCardHeight: (Custom.Data.settings.launcherCardHeight)
+    property int launcherInputHeight: (Custom.Data.settings.launcherInputHeight)
+    property int launcherImageSize: (Custom.Data.settings.launcherImageSize)
+    property bool launcherInputAtTop: (Custom.Data.settings.launcherInputAtTop)
+    property bool launcherIsVertical: (Custom.Data.settings.launcherIsVertical)
+    property font launcherNameFont: (Custom.Data.settings.launcherNameFont)
+    property font launcherCommentFont: (Custom.Data.settings.launcherCommentFont)
+
+    _contentWidth: _list.contentWidth
+    _contentHeight: _list.contentHeight
     property int selectedIndex: (0)
 
     implicitWidth: show ? Math.max(contentWidth, launcherCardWidth) + space * 2: 0
     implicitHeight: (
-        show ? 
+        show ?
         (
-            contentHeight === 0 || contentWidth === 0 ?
+            noContent ?
             _.launcherInputHeight:
-            Math.max(contentHeight, launcherCardHeight) + space + _.launcherInputHeight
+            Math.max(contentHeight - space - _.launcherInputHeight, launcherCardHeight) + space + _.launcherInputHeight
         ) + space * 2:
         0
     )
@@ -41,15 +36,25 @@ Custom.Rectangle {
     IpcHandler {
         id: _ipc
         target: "launcher"
-        function open() {
+        function open()
+        {
             _.show = true
             _search.text = ""
             _search.forceActiveFocus()
         }
-        function close() { _.show = false }
-        function toggle() {
-            if(_.show){ close() }
-            else { open() }
+        function close()
+        {
+            _.show = false
+        }
+        function toggle()
+        {
+            if (_.show)
+            {
+                close()
+            }
+            else {
+                open()
+            }
         }
     }
     Rectangle {
@@ -79,24 +84,40 @@ Custom.Rectangle {
             clip: true
             onTextChanged: {_.selectedIndex = 0}
             Keys.onEscapePressed: {_ipc.close()}
-            Keys.onUpPressed: {if (_list.count > 0) {
-                _.selectedIndex = Math.max(_.selectedIndex - 1, 0)
-                _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
-            }}
-            Keys.onDownPressed: {if (_list.count > 0) {
-                _.selectedIndex = Math.min(_.selectedIndex + 1, _list.count - 1)
-                _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
-            }}
-            Keys.onLeftPressed: {if (_list.count > 0) {
-                _.selectedIndex = Math.max(_.selectedIndex - 1, 0)
-                _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
-            }}
-            Keys.onRightPressed: {if (_list.count > 0) {
-                _.selectedIndex = Math.min(_.selectedIndex + 1, _list.count - 1)
-                _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
-            }}
+            Keys.onUpPressed: {
+                if (_list.count > 0)
+                {
+                    _.selectedIndex = Math.max(_.selectedIndex - 1, 0)
+                    _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
+                }
+            }
+            Keys.onDownPressed: {
+                if (_list.count > 0)
+                {
+                    _.selectedIndex = Math.min(_.selectedIndex + 1, _list.count - 1)
+                    _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
+                }
+            }
+            Keys.onLeftPressed: {
+                if (_list.count > 0)
+                {
+                    _.selectedIndex = Math.max(_.selectedIndex - 1, 0)
+                    _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
+                }
+            }
+            Keys.onRightPressed: {
+                if (_list.count > 0)
+                {
+                    _.selectedIndex = Math.min(_.selectedIndex + 1, _list.count - 1)
+                    _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
+                }
+            }
             Keys.onReturnPressed: {
-                if (_list.count > 0) { _list.currentItem.modelData.execute(); _ipc.close() }
+                if (_list.count > 0)
+                {
+                    _list.currentItem.modelData.execute()
+                    _ipc.close()
+                }
                 else {_ipc.close()}
             }
             Text {
@@ -108,7 +129,7 @@ Custom.Rectangle {
                 opacity: 0.5
                 visible: _search.text === ""
             }
-        } 
+        }
     }
     ClippingRectangle {
         anchors.fill: parent
@@ -127,11 +148,10 @@ Custom.Rectangle {
             model: ScriptModel {
                 values: _search.text === "" ? []: DesktopEntries.applications.values.filter(
                     entry => {
-                        let i = 0;
-                        return [..._search.text.toLowerCase()].every(
-                            char => (i = entry.name.toLowerCase().indexOf(char, i)) !== -1 && i++ >= 0
-                        );
-                    }
+                    let i = 0;
+                    return [..._search.text.toLowerCase()].every(
+                        char => (i = entry.name.toLowerCase().indexOf(char, i)) !== -1 && i++ >= 0
+                    );}
                 ).sort((a, b) => a.name.localeCompare(b.name))
             }
             delegate: Rectangle {

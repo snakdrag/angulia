@@ -14,15 +14,15 @@ ShellRoot {
     Layers.Layer {
         id: _overlay
         layer: layers.Overlay
-        mask: Region { regions: [_notifications.region,] }
+        mask: Region { regions: [Region { item: _notifications }, ] }
         keyboardFocus: _launcher.show
-        Modules.Notifications { id: _notifications; direction: S.Settings.notificationDirection % 8 }
+        Modules.Notifications { id: _notifications; direction: S.Settings.notificationDirection }
         Modules.Launcher { id: _launcher; direction: S.Settings.launcherDirection }
     }
     Layers.Layer {
         id: _top
         layer: layers.Top
-        mask: Region { regions: [_systemtray.region,] }
+        mask: Region { regions: [Region { item: _systemtray }, ] }
         Modules.Edge {}
         Modules.Clock { direction: S.Settings.clockDirection }
         Modules.SystemTray { id: _systemtray; direction: S.Settings.systemtrayDirection; cardColor: "transparent" }
