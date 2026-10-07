@@ -1,12 +1,20 @@
 pragma Singleton
 import QtQuick
-import Quickshell
-import "../theme" as T
+import Quickshell // for Singleton and Quickshell.env
+import Quickshell.Io // for FileView and JSON.parse
 
 Singleton {
 
-    readonly property var colors: (T.Colors)
-    readonly property var data: (Angulia.data)
+    readonly property var data: (JSON.parse(_angulia.text()))
+    FileView {
+        id: _angulia
+        path: Quickshell.env("HOME") + "/.config/angulia/settings.json"
+        blockLoading: true
+        watchChanges: true
+        onFileChanged: reload()
+    }
+
+    readonly property var colors: (Colors)
     readonly property var fonts: (data.fonts)
 
     readonly property real radius: (data.radius)
@@ -43,6 +51,7 @@ Singleton {
         (_systemtray.isBottom && !systemtrayIsVertical)
     )
 
+    // notification
     readonly property var notification: (data.notification)
 
     readonly property int notificationDirection: (notification.direction)
@@ -53,7 +62,7 @@ Singleton {
     readonly property font notificationSummaryFont: (fonts.summary)
     readonly property font notificationBodyFont: (fonts.body)
 
-
+    // launcher
     readonly property var launcher: (data.launcher)
 
     readonly property int launcherDirection: (launcher.direction)
@@ -66,6 +75,7 @@ Singleton {
     readonly property int launcherInputHeight: (bar.height - space * 2)
     readonly property bool launcherInputAtTop: (launcher.inputAtTop)
 
+    // clock
     readonly property var clock: (data.clock)
     Direction { id: _clock; direction: clock.direction}
 
@@ -75,8 +85,10 @@ Singleton {
     readonly property int clcokHeight: (clockIsVertical ? clock.height: bar.height)
     readonly property font clockFont: (fonts.body)
 
+    // systemtray
     readonly property var systemtray: (data.systemtray)
     Direction { id: _systemtray; direction: systemtray.direction}
+
     readonly property int systemtrayDirection: (systemtray.direction)
     readonly property bool systemtrayIsVertical: (systemtray.isVertical)
     readonly property int systemtrayCardWidth: ((systemtrayIsVertical ? bar.width: bar.height) - space * 2)

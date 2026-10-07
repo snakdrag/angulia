@@ -8,5 +8,5 @@ awww img "$WALLPAPER" \
     --transition-type=random
 matugen image "$WALLPAPER" \
     --source-color-index 0 \
-    --json hex > ~/.config/quickshell/angulia/theme/colors.json
+    --json hex > ~/.config/quickshell/angulia/settings/colors.json
 hyprctl reload

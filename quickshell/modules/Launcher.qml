@@ -4,7 +4,7 @@ import Quickshell.Io
 import Quickshell.Widgets
 import "../custom" as Custom
 
-Custom.Rectangle {
+Custom.Angulia {
     id: _
 
     property int launcherCardWidth: (Custom.Data.settings.launcherCardWidth)
@@ -154,10 +154,12 @@ Custom.Rectangle {
                     );}
                 ).sort((a, b) => a.name.localeCompare(b.name))
             }
-            delegate: Rectangle {
+            delegate:
+            Custom.Rectangle {
                 id: _card
                 required property var modelData
                 required property int index
+                active: _card.index === _.selectedIndex
                 implicitWidth: _.launcherCardWidth
                 implicitHeight: _.launcherCardHeight
                 color: _.cardColor
@@ -212,10 +214,6 @@ Custom.Rectangle {
                         wrapMode: Text.WrapAnywhere
                         maximumLineCount: 1
                     }
-                }
-                Custom.Cover {
-                    show: _card.index === _.selectedIndex
-                    color: _.textColor
                 }
                 MouseArea {
                     anchors.fill: parent

@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell
 import "../custom" as Custom
 
-Custom.Rectangle {
+Custom.Angulia {
     id: _
 
     property int clcokWidth: (Custom.Data.settings.clcokWidth)

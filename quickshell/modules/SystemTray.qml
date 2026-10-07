@@ -4,7 +4,7 @@ import Quickshell.Widgets
 import Quickshell.Services.SystemTray
 import "../custom" as Custom
 
-Custom.Rectangle {
+Custom.Angulia {
     id: _
 
     property int systemtrayCardWidth: (Custom.Data.settings.systemtrayCardWidth)
@@ -31,10 +31,12 @@ Custom.Rectangle {
             orientation: _.systemtrayIsVertical ? ListView.Vertical: ListView.Horizontal
             interactive: false
             displaced: Transition { Custom.NA { properties: "x, y" } }
-            delegate: Rectangle {
+            delegate:
+            Custom.Rectangle {
                 id: _card
                 required property var modelData
                 property bool hovered: (false)
+                active: _card.hovered
                 implicitWidth: _.systemtrayCardWidth
                 implicitHeight: _.systemtrayCardHeight
                 radius: _.radius
@@ -45,10 +47,6 @@ Custom.Rectangle {
                     height: _.systemtrayIconSize
                     source: _card.modelData.icon || ""
                     fillMode: Image.PreserveAspectFit
-                }
-                Custom.Cover {
-                    show: _card.hovered
-                    color: _.textColor
                 }
                 MouseArea {
                     anchors.fill: parent

@@ -2,8 +2,8 @@
 ---- LOOK AND FEEL ----
 -----------------------
 
-local theme = "~/.config/quickshell/angulia/theme/"
-local colors = require(theme .. "colors")
+local theme = "angulia"
+local settings = require("~/.config/quickshell/" .. theme .. "/settings/settings")
 
 -- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
 hl.config({
@@ -14,8 +14,8 @@ hl.config({
         border_size      = 2,
 
         col              = {
-            active_border   = { colors = { colors.primary }, angle = 45 },
-            inactive_border = colors.outline,
+            active_border   = { colors = { settings.colors.primary }, angle = 45 },
+            inactive_border = settings.colors.outline,
         },
 
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps

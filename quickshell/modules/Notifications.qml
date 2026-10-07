@@ -5,7 +5,7 @@ import Quickshell.Services.Notifications
 import "../custom" as Custom
 import "../services" as Services
 
-Custom.Rectangle {
+Custom.Angulia {
     id: _
 
     property int notificationCardWidth: (Custom.Data.settings.notificationCardWidth)
@@ -42,13 +42,19 @@ Custom.Rectangle {
                 readonly property bool haveAction: (modelData.actions.length > 0)
                 implicitWidth: _.notificationCardWidth
                 implicitHeight: Math.max(_.notificationCardHeight, _summary.height + _body.height + _.space * 2)
-                Rectangle {
+                Custom.Rectangle {
                     id: _action
                     property bool hovered: (false)
+                    textColor: _.textColor
                     anchors.top: parent.top
                     anchors.left: parent.left
                     radius: _.radius
                     color: _.cardColor
+                    active: (
+                        _.notificationIsVertical ?
+                        (_action.hovered && _main.x - _.space >= _card.width / 4 || _main.x - _.space > _card.width / 2):
+                        (_action.hovered && _main.y - _.space >= _card.height / 4 || _main.y - _.space > _card.height / 2)
+                    )
                     implicitWidth: (
                         _.notificationIsVertical ?
                         Math.min(_card.width, Math.max(_main.x - _.space, _card.width / 4)):
@@ -71,17 +77,6 @@ Custom.Rectangle {
                             ((_main.y - _.space - _card.height / 8) / _card.height * 8)
                         )
                     }
-                    Custom.Cover {
-                        show: (
-                            _action.hovered &&
-                            (
-                                _.notificationIsVertical ?
-                                (_main.x - _.space >= _card.width / 4 || _main.x - _.space > _card.width / 2):
-                                (_main.y - _.space >= _card.height / 4 || _main.y - _.space > _card.height / 2)
-                            )
-                        )
-                        color: _.textColor
-                    }
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
@@ -100,13 +95,19 @@ Custom.Rectangle {
                         onExited: _action.hovered = false
                     }
                 }
-                Rectangle {
+                Custom.Rectangle {
                     id: _clear
                     property bool hovered: (false)
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
                     radius: _.radius
                     color: _.cardColor
+                    textColor: _.textColor
+                    active: (
+                        _.notificationIsVertical ?
+                        ( _clear.hovered && -_main.x - _.space >= _card.width / 4 || -_main.x - _.space > _card.width / 2):
+                        ( _clear.hovered && -_main.y - _.space >= _card.height / 4 || -_main.y - _.space > _card.height / 2)
+                    )
                     implicitWidth: (
                         _.notificationIsVertical ?
                         Math.min(_card.width, Math.max(-_main.x - _.space, _card.width / 4)):
@@ -129,17 +130,6 @@ Custom.Rectangle {
                             ((-_main.y - _.space - _card.height / 8) / _card.height * 8)
                         )
                     }
-                    Custom.Cover {
-                        show: (
-                            _clear.hovered &&
-                            (
-                                _.notificationIsVertical ?
-                                (-_main.x - _.space >= _card.width / 4 || -_main.x - _.space > _card.width / 2):
-                                (-_main.y - _.space >= _card.height / 4 || -_main.y - _.space > _card.height / 2)
-                            )
-                        )
-                        color: _.textColor
-                    }
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
@@ -150,13 +140,14 @@ Custom.Rectangle {
                         onExited: _clear.hovered = false
                     }
                 }
-                Rectangle {
+                Custom.Rectangle {
                     id: _main
-                    property bool hovered: (false)
                     implicitWidth: _card.width
                     implicitHeight: _card.height
                     radius: _.radius
                     color: _.cardColor
+                    textColor: _.textColor
+                    active: false
                     Behavior on x { Custom.NA {} }
                     Behavior on y { Custom.NA {} }
                     IconImage {
@@ -213,16 +204,12 @@ Custom.Rectangle {
                             maximumLineCount: _card.modelData.urgency === NotificationUrgency.Critical ? 0: 3
                         }
                     }
-                    Custom.Cover {
-                        show: _main.hovered
-                        color: _.textColor
-                    }
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
                         hoverEnabled: true
-                        onEntered: _main.hovered = true
-                        onExited: _main.hovered = false
+                        onEntered: _main.active = true
+                        onExited: _main.active = false
                         onClicked: mouse => {
                         if (_.notificationIsVertical)
                         {
