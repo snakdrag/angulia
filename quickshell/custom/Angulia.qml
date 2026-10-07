@@ -37,29 +37,29 @@ Rectangle {
     readonly property bool noContent: (contentWidth === 0 || contentHeight === 0)
 
     // colors
-    color: Data.colors.surface
-    property color cardColor: (Data.colors.surface_container)
-    property color backgroundColor: (Data.colors.surface)
-    property color textColor: (Data.colors.on_surface)
+    color: S.Colors.surface
+    property color cardColor: (S.Colors.surface_container)
+    property color backgroundColor: (S.Colors.surface)
+    property color textColor: (S.Colors.on_surface)
 
     // fonts
-    readonly property var fonts: (Data.settings.fonts)
+    readonly property var fonts: (S.Settings.fonts)
 
     // settings
-    radius: Data.settings.radius
-    property int edge: (Data.settings.edge)
-    property int float: (Data.settings.float)
-    property int space: (Data.settings.space)
+    radius: S.Settings.radius
+    property int edge: (S.Settings.edge)
+    property int float: (S.Settings.float)
+    property int space: (S.Settings.space)
     property bool show: (true)
-    property bool isVertical: (true)
+    property bool isVertical: (false)
 
     // margins
     property bool exclusionModeIgnore: (true)
     anchors.margins: edge + float
-    anchors.topMargin: anchors.margins + (exclusionModeIgnore ? 0: Data.settings.topExclusiveZone - edge)
-    anchors.leftMargin: anchors.margins + (exclusionModeIgnore ? 0: Data.settings.leftExclusiveZone - edge)
-    anchors.rightMargin: anchors.margins + (exclusionModeIgnore ? 0: Data.settings.rightExclusiveZone - edge)
-    anchors.bottomMargin: anchors.margins + (exclusionModeIgnore ? 0: Data.settings.bottomExclusiveZone - edge)
+    anchors.topMargin: anchors.margins + (exclusionModeIgnore ? 0: S.Settings.topExclusiveZone - edge)
+    anchors.leftMargin: anchors.margins + (exclusionModeIgnore ? 0: S.Settings.leftExclusiveZone - edge)
+    anchors.rightMargin: anchors.margins + (exclusionModeIgnore ? 0: S.Settings.rightExclusiveZone - edge)
+    anchors.bottomMargin: anchors.margins + (exclusionModeIgnore ? 0: S.Settings.bottomExclusiveZone - edge)
 
     // place
     x: (

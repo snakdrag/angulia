@@ -29,13 +29,11 @@ Custom.Angulia {
         anchors.margins: _.space
         radius: _.radius
         color: _.backgroundColor
-        ListView {
+        Custom.ListView {
             id: _list
-            anchors.fill: parent
             spacing: _.space
-            orientation: _.notificationIsVertical ? ListView.Vertical: ListView.Horizontal
+            isVertical: _.notificationIsVertical
             model: Services.Notifications.server.trackedNotifications
-            displaced: Transition { Custom.NA { properties: "x, y" } }
             delegate: Item {
                 id: _card
                 required property var modelData
@@ -148,8 +146,6 @@ Custom.Angulia {
                     color: _.cardColor
                     textColor: _.textColor
                     active: false
-                    Behavior on x { Custom.NA {} }
-                    Behavior on y { Custom.NA {} }
                     IconImage {
                         id: _image
                         x: (

@@ -23,14 +23,13 @@ Custom.Angulia {
         anchors.margins: _.space
         color: _.backgroundColor
         radius: _.radius
-        ListView {
+        Custom.ListView {
             id: _list
             anchors.fill: parent
             spacing: _.space
             model: SystemTray.items
-            orientation: _.systemtrayIsVertical ? ListView.Vertical: ListView.Horizontal
+            isVertical: _.systemtrayIsVertical
             interactive: false
-            displaced: Transition { Custom.NA { properties: "x, y" } }
             delegate:
             Custom.Rectangle {
                 id: _card

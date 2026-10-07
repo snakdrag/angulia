@@ -68,7 +68,6 @@ Custom.Angulia {
         anchors.right: parent.right
         anchors.margins: _.space
         implicitHeight: _.show ? _.launcherInputHeight: 0
-        Behavior on implicitHeight { Custom.NA {} }
         radius: _.radius
         color: _.cardColor
         visible: _.show
@@ -139,12 +138,12 @@ Custom.Angulia {
         radius: _.radius
         color: _.backgroundColor
         visible: _.show
-        ListView {
+        Custom.ListView {
             id: _list
-            anchors.fill: parent
             spacing: _.space
-            orientation: _.launcherIsVertical ? ListView.Vertical: ListView.Horizontal
+            isVertical: _.launcherIsVertical
             currentIndex: _.selectedIndex
+            displaced: null
             model: ScriptModel {
                 values: _search.text === "" ? []: DesktopEntries.applications.values.filter(
                     entry => {

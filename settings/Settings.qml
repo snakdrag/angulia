@@ -14,7 +14,6 @@ Singleton {
         onFileChanged: reload()
     }
 
-    readonly property var colors: (Colors)
     readonly property var fonts: (data.fonts)
 
     readonly property real radius: (data.radius)
