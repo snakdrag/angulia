@@ -1,7 +1,7 @@
 pragma Singleton
-import QtQuick
 import Quickshell // for Singleton and Quickshell.env
 import Quickshell.Io // for FileView and JSON.parse
+import "colors" // for Colors
 
 Singleton {
 
@@ -14,6 +14,7 @@ Singleton {
         onFileChanged: reload()
     }
 
+    readonly property var colors: (Colors)
     readonly property var fonts: (data.fonts)
 
     readonly property real radius: (data.radius)
@@ -58,8 +59,8 @@ Singleton {
     readonly property int notificationCardWidth: (notification.card.width)
     readonly property int notificationCardHeight: (notification.card.height)
     readonly property int notificationImageSize: (notification.card.image)
-    readonly property font notificationSummaryFont: (fonts.summary)
-    readonly property font notificationBodyFont: (fonts.body)
+    readonly property var notificationSummaryFont: (fonts.summary)
+    readonly property var notificationBodyFont: (fonts.body)
 
     // launcher
     readonly property var launcher: (data.launcher)
@@ -69,8 +70,8 @@ Singleton {
     readonly property int launcherCardWidth: (launcher.card.width)
     readonly property int launcherCardHeight: (launcher.card.height)
     readonly property int launcherImageSize: (launcher.card.image)
-    readonly property font launcherNameFont: (fonts.name)
-    readonly property font launcherCommentFont: (fonts.comment)
+    readonly property var launcherNameFont: (fonts.name)
+    readonly property var launcherCommentFont: (fonts.comment)
     readonly property int launcherInputHeight: (bar.height - space * 2)
     readonly property bool launcherInputAtTop: (launcher.inputAtTop)
 
@@ -82,7 +83,7 @@ Singleton {
     readonly property bool clockIsVertical: (clock.isVertical)
     readonly property int clcokWidth: (clockIsVertical ? bar.width: clock.width)
     readonly property int clcokHeight: (clockIsVertical ? clock.height: bar.height)
-    readonly property font clockFont: (fonts.body)
+    readonly property var clockFont: (fonts.body)
 
     // systemtray
     readonly property var systemtray: (data.systemtray)

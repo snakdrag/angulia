@@ -1,8 +1,8 @@
 import QtQuick
-import Quickshell
+import Quickshell // for Quickshell.iconPath
 import Quickshell.Widgets
-import Quickshell.Services.Notifications
 import "../custom" as Custom
+import "../angulia"
 import "../services" as Services
 
 Custom.Angulia {
@@ -14,7 +14,7 @@ Custom.Angulia {
     property bool notificationIsVertical: (Custom.Data.settings.notificationIsVertical)
     property font notificationSummaryFont: (Custom.Data.settings.notificationSummaryFont)
     property font notificationBodyFont: (Custom.Data.settings.notificationBodyFont)
-
+    isTop: true
     exclusionModeIgnore: false
     _contentWidth: _list.contentWidth
     _contentHeight: _list.contentHeight
@@ -40,10 +40,10 @@ Custom.Angulia {
                 readonly property bool haveAction: (modelData.actions.length > 0)
                 implicitWidth: _.notificationCardWidth
                 implicitHeight: Math.max(_.notificationCardHeight, _summary.height + _body.height + _.space * 2)
-                Custom.Rectangle {
+                CustomRectangle {
                     id: _action
                     property bool hovered: (false)
-                    textColor: _.textColor
+                    activeColor: _.textColor
                     anchors.top: parent.top
                     anchors.left: parent.left
                     radius: _.radius
@@ -185,7 +185,7 @@ Custom.Angulia {
                             font: _.notificationSummaryFont
                             elide: Text.ElideRight
                             wrapMode: Text.WrapAnywhere
-                            maximumLineCount: _card.modelData.urgency === NotificationUrgency.Critical ? 0: 2
+                            maximumLineCount: _card.modelData.urgency === Services.Notifications.critical ? 0: 2
                         }
                         Text {
                             id: _body
@@ -197,7 +197,7 @@ Custom.Angulia {
                             font: _.notificationBodyFont
                             elide: Text.ElideRight
                             wrapMode: Text.WrapAnywhere
-                            maximumLineCount: _card.modelData.urgency === NotificationUrgency.Critical ? 0: 3
+                            maximumLineCount: _card.modelData.urgency === Services.Notifications.critical ? 0: 3
                         }
                     }
                     MouseArea {

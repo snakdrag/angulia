@@ -10,14 +10,19 @@ Rectangle {
     S.Direction { id: _direction; direction: _.direction}
     readonly property var directions: (_direction)
 
-    property bool isTopLeft: (directions.isLeft && (anchors.margins === anchors.leftMargin))
-    property bool isTopRight: (directions.isRight && (anchors.margins === anchors.rightMargin))
-    property bool isLeftTop: (directions.isTop && (anchors.margins === anchors.topMargin))
-    property bool isLeftBottom: (directions.isBottom && (anchors.margins === anchors.bottomMargin))
-    property bool isRightTop: (directions.isTop && (anchors.margins === anchors.topMargin))
-    property bool isRightBottom: (directions.isBottom && (anchors.margins === anchors.bottomMargin))
-    property bool isBottomLeft: (directions.isLeft && (anchors.margins === anchors.leftMargin))
-    property bool isBottomRight: (directions.isRight && (anchors.margins === anchors.rightMargin))
+    property bool isTop: (directions.isTop)
+    property bool isLeft: (directions.isLeft)
+    property bool isRight: (directions.isRight)
+    property bool isBottom: (directions.isBottom)
+
+    property bool isTopLeft: (isLeft && (anchors.margins === anchors.leftMargin))
+    property bool isTopRight: (isRight && (anchors.margins === anchors.rightMargin))
+    property bool isLeftTop: (isTop && (anchors.margins === anchors.topMargin))
+    property bool isLeftBottom: (isBottom && (anchors.margins === anchors.bottomMargin))
+    property bool isRightTop: (isTop && (anchors.margins === anchors.topMargin))
+    property bool isRightBottom: (isBottom && (anchors.margins === anchors.bottomMargin))
+    property bool isBottomLeft: (isLeft && (anchors.margins === anchors.leftMargin))
+    property bool isBottomRight: (isRight && (anchors.margins === anchors.rightMargin))
 
     // animations
     Behavior on x { NA {} }
@@ -37,10 +42,10 @@ Rectangle {
     readonly property bool noContent: (contentWidth === 0 || contentHeight === 0)
 
     // colors
-    color: S.Colors.surface
-    property color cardColor: (S.Colors.surface_container)
-    property color backgroundColor: (S.Colors.surface)
-    property color textColor: (S.Colors.on_surface)
+    color: S.Settings.colors.surface
+    property color cardColor: (S.Settings.colors.surface_container)
+    property color backgroundColor: (S.Settings.colors.surface)
+    property color textColor: (S.Settings.colors.on_surface)
 
     // fonts
     readonly property var fonts: (S.Settings.fonts)

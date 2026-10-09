@@ -27,5 +27,5 @@ PanelWindow {
 
     exclusionMode: ExclusionMode.Ignore
 
-    mask: Region {}
+    mask: Region { item: _item }
 }
