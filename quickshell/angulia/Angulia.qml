@@ -44,8 +44,8 @@ Rectangle {
     property bool forceBottomRight: (false)
 
     // behavior
-    Behavior on width { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
-    Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
+    // Behavior on width { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
+    // Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
 
     // color
     color: Settings.colors.surface

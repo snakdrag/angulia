@@ -13,8 +13,8 @@ Angulia {
     implicitWidth: noContent ? 0: Math.max(contentWidth, cardWidth) + space * 2
     implicitHeight: noContent ? 0: Math.max(contentHeight, cardHeight) + space * 2
 
-    cardWidth: (isVertical ? bar.width: bar.height) - space * 2
-    cardHeight: (isVertical ? bar.height: bar.width) - space * 2
+    cardWidth: (isVertical ? bar.height: bar.width) - space * 2
+    cardHeight: (isVertical ? bar.width: bar.height) - space * 2
 
     imageSize: (systemtray.iconSize)
 
