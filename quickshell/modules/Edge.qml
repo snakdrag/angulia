@@ -1,45 +1,34 @@
 import QtQuick
-import "../custom" as Custom
+import "../angulia"
 
-Rectangle {
-    id: _
+Item {
     anchors.fill: parent
-
-    Custom.Angulia { id: _angulia; show: false }
-    color: "transparent"
-    border.color: _angulia.color
-    border.width: _angulia.edge
-
-    Custom.RoundCorner {
+    Angulia {
         anchors.top: parent.top
         anchors.left: parent.left
-        anchors.margins: _angulia.edge
-        radius: _angulia.radius
-        color: _angulia.color
-        rotation: 0
-    }
-    Custom.RoundCorner {
-        anchors.top: parent.top
         anchors.right: parent.right
-        anchors.margins: _angulia.edge
-        radius: _angulia.radius
-        color: _angulia.color
-        rotation: 90
+        anchors.leftMargin: edge
+        anchors.rightMargin: edge
     }
-    Custom.RoundCorner {
+    Angulia {
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.leftMargin: edge
+        anchors.rightMargin: edge
+    }
+    Angulia {
+        anchors.top: parent.top
         anchors.left: parent.left
         anchors.bottom: parent.bottom
-        anchors.margins: _angulia.edge
-        radius: _angulia.radius
-        color: _angulia.color
-        rotation: 270
+        forceLeftTop: true
+        forceLeftBottom: true
     }
-    Custom.RoundCorner {
+    Angulia {
+        anchors.top: parent.top
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.margins: _angulia.edge
-        radius: _angulia.radius
-        color: _angulia.color
-        rotation: 180
+        forceRightTop: true
+        forceRightBottom: true
     }
 }

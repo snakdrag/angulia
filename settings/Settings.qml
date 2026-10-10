@@ -28,26 +28,25 @@ Singleton {
     // exclusiveZones
     readonly property int gaps_out: (data.gaps_out)
 
-    readonly property int exclusiveZones: (edge)
-    readonly property int topExclusiveZone: (exclusiveZones + (_top ? float + bar.height: 0))
-    readonly property int leftExclusiveZone: (exclusiveZones + (_left ? float + bar.width: 0))
-    readonly property int rightExclusiveZone: (exclusiveZones + (_right ? float + bar.width: 0))
-    readonly property int bottomExclusiveZone: (exclusiveZones + (_bottom ? float + bar.height: 0))
+    readonly property int topExclusiveZone: (_top ? float + bar.height: 0)
+    readonly property int leftExclusiveZone: (_left ? float + bar.width: 0)
+    readonly property int rightExclusiveZone: (_right ? float + bar.width: 0)
+    readonly property int bottomExclusiveZone: (_bottom ? float + bar.height: 0)
 
     readonly property bool _top: (
-        (_clock.isTop && !clockIsVertical) ||
+        (_clock.isTop && !clock.isVertical) ||
         (_systemtray.isTop && !systemtrayIsVertical)
     )
     readonly property bool _left: (
-        (_clock.isLeft && clockIsVertical) ||
+        (_clock.isLeft && clock.isVertical) ||
         (_systemtray.isLeft && systemtrayIsVertical)
     )
     readonly property bool _right: (
-        (_clock.isRight && clockIsVertical) ||
+        (_clock.isRight && clock.isVertical) ||
         (_systemtray.isRight && systemtrayIsVertical)
     )
     readonly property bool _bottom: (
-        (_clock.isBottom && !clockIsVertical) ||
+        (_clock.isBottom && !clock.isVertical) ||
         (_systemtray.isBottom && !systemtrayIsVertical)
     )
 
@@ -79,11 +78,6 @@ Singleton {
     readonly property var clock: (data.clock)
     Direction { id: _clock; direction: clock.direction}
 
-    readonly property int clockDirection: (clock.direction)
-    readonly property bool clockIsVertical: (clock.isVertical)
-    readonly property int clcokWidth: (clockIsVertical ? bar.width: clock.width)
-    readonly property int clcokHeight: (clockIsVertical ? clock.height: bar.height)
-    readonly property var clockFont: (fonts.body)
 
     // systemtray
     readonly property var systemtray: (data.systemtray)

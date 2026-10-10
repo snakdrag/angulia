@@ -5,28 +5,28 @@ import "layers"
 import "angulia"
 import "../settings" as S
 
-ShellRoot {
-    ExclusiveZones {
-        gaps_out: S.Settings.gaps_out
-        topExclusiveZone: S.Settings.topExclusiveZone
-        leftExclusiveZone: S.Settings.leftExclusiveZone
-        rightExclusiveZone: S.Settings.rightExclusiveZone
-        bottomExclusiveZone: S.Settings.bottomExclusiveZone
-    }
+Root {
+    childrens: ([..._top.children, ..._edge.children, ])
+    modules: ([_clock, ])
     Layer {
-        id: _overlay
         layer: layers.Overlay
         mask: Region { regions: [Region { item: _notifications }, ] }
         keyboardFocus: _launcher.show
-        Modules.Notifications { id: _notifications; direction: S.Settings.notificationDirection }
-        Modules.Launcher { id: _launcher; direction: S.Settings.launcherDirection }
+        Item {
+            id: _overlay
+            anchors.fill: parent
+            Modules.Notifications { id: _notifications; direction: S.Settings.notificationDirection }
+            Modules.Launcher { id: _launcher; direction: S.Settings.launcherDirection }
+        }
     }
     Layer {
-        id: _top
         layer: layers.Top
-        mask: Region { regions: [Region { item: _systemtray }, ] }
-        Modules.SystemTray { id: _systemtray; direction: S.Settings.systemtrayDirection; cardColor: "transparent" }
+        mask: Region { regions: [Region { item: _clock }, ] }
+        Item {
+            id: _top
+            anchors.fill: parent
+            Modules.Clock { id: _clock }
+            Modules.Edge { id: _edge }
+        }
     }
-    Top {}
-
 }

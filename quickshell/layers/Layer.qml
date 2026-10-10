@@ -28,4 +28,6 @@ PanelWindow {
     exclusionMode: ExclusionMode.Ignore
 
     mask: Region { item: _item }
+
+
 }
