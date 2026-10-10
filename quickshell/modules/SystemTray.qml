@@ -1,8 +1,6 @@
 import QtQuick
-import Quickshell
 import Quickshell.Widgets
 import Quickshell.Services.SystemTray
-import "../custom" as Custom
 import "../angulia"
 import "../../settings"
 
@@ -18,14 +16,14 @@ Angulia {
     cardWidth: (isVertical ? bar.width: bar.height) - space * 2
     cardHeight: (isVertical ? bar.height: bar.width) - space * 2
 
+    imageSize: (systemtray.iconSize)
+
     customX: parent.width
     customY: parent.height
 
-    imageSize: (systemtray.iconSize)
 
     _contentWidth: _list.contentWidth
     _contentHeight: _list.contentHeight
-
 
     ClippingRectangle {
         anchors.fill: parent
