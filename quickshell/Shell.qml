@@ -25,7 +25,6 @@ ShellRoot {
         id: _top
         layer: layers.Top
         mask: Region { regions: [Region { item: _systemtray }, ] }
-        Modules.Clock { direction: S.Settings.clockDirection }
         Modules.SystemTray { id: _systemtray; direction: S.Settings.systemtrayDirection; cardColor: "transparent" }
     }
     Top {}

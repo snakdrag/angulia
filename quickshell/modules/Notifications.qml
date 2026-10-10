@@ -14,7 +14,7 @@ Custom.Angulia {
     property bool notificationIsVertical: (Custom.Data.settings.notificationIsVertical)
     property font notificationSummaryFont: (Custom.Data.settings.notificationSummaryFont)
     property font notificationBodyFont: (Custom.Data.settings.notificationBodyFont)
-    isTop: true
+
     exclusionModeIgnore: false
     _contentWidth: _list.contentWidth
     _contentHeight: _list.contentHeight
