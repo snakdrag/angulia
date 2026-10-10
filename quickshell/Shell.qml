@@ -1,16 +1,16 @@
 import QtQuick
-import Quickshell // for ShellRoot and Region
+import Quickshell // for Region
 import "modules" as Modules
-import "layers"
 import "angulia"
 import "../settings" as S
 
 Root {
     childrens: ([..._top.children, ..._edge.children, ])
-    modules: ([_clock, ])
+    modules: ([..._top.children, ..._overlay.children, ])
     Layer {
+        id: _Overlay
         layer: layers.Overlay
-        mask: Region { regions: [Region { item: _notifications }, ] }
+        modules: [..._overlay.children, ]
         keyboardFocus: _launcher.show
         Item {
             id: _overlay
@@ -20,12 +20,14 @@ Root {
         }
     }
     Layer {
+        id: _Top
         layer: layers.Top
-        mask: Region { regions: [Region { item: _clock }, ] }
+        modules: [..._top.children, ]
         Item {
             id: _top
             anchors.fill: parent
-            Modules.Clock { id: _clock }
+            Modules.Clock {}
+            Modules.SystemTray {}
             Modules.Edge { id: _edge }
         }
     }

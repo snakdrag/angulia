@@ -22,6 +22,10 @@ Custom.Angulia {
     implicitWidth: noContent ? 0: Math.max(contentWidth, notificationCardWidth) + space * 2
     implicitHeight: noContent ? 0: Math.max(contentHeight, notificationCardHeight) + space * 2
 
+    property Region region: (_region)
+    Region { id: _region; item: _ }
+    readonly property string _itemName: ("Angulia")
+
     show: !noContent
 
     ClippingRectangle {

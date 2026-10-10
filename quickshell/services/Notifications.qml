@@ -1,6 +1,6 @@
 pragma Singleton
 import Quickshell // for Singleton
-import Quickshell.Services.Notifications // for NotificationServer
+import Quickshell.Services.Notifications // for NotificationServer and NotificationUrgency
 
 Singleton {
     readonly property NotificationServer server: (_server)

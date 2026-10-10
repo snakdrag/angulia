@@ -3,55 +3,57 @@ import Quickshell
 import Quickshell.Widgets
 import Quickshell.Services.SystemTray
 import "../custom" as Custom
+import "../angulia"
+import "../../settings"
 
-Custom.Angulia {
+Angulia {
     id: _
 
-    property int systemtrayCardWidth: (Custom.Data.settings.systemtrayCardWidth)
-    property int systemtrayCardHeight: (Custom.Data.settings.systemtrayCardHeight)
-    property int systemtrayIconSize: (Custom.Data.settings.systemtrayIconSize)
-    property bool systemtrayIsVertical: (Custom.Data.settings.systemtrayIsVertical)
+    property var systemtray: (Settings.systemtray)
+    readonly property var bar: (Settings.bar)
 
-    implicitWidth: noContent ? 0: Math.max(contentWidth, systemtrayCardWidth) + _.space * 2
-    implicitHeight: noContent ? 0: Math.max(contentHeight, systemtrayCardHeight) + _.space * 2
+    implicitWidth: noContent ? 0: Math.max(contentWidth, cardWidth) + space * 2
+    implicitHeight: noContent ? 0: Math.max(contentHeight, cardHeight) + space * 2
+
+    cardWidth: (isVertical ? bar.width: bar.height) - space * 2
+    cardHeight: (isVertical ? bar.height: bar.width) - space * 2
+
+    customX: parent.width
+    customY: parent.height
+
+    imageSize: (systemtray.iconSize)
 
     _contentWidth: _list.contentWidth
     _contentHeight: _list.contentHeight
+
 
     ClippingRectangle {
         anchors.fill: parent
         anchors.margins: _.space
         color: _.backgroundColor
         radius: _.radius
-        Custom.ListView {
+        CustomListView {
             id: _list
-            anchors.fill: parent
             spacing: _.space
             model: SystemTray.items
-            isVertical: _.systemtrayIsVertical
+            isVertical: _.isVertical
             interactive: false
-            delegate:
-            Custom.Rectangle {
+            delegate: CustomRectangle {
                 id: _card
                 required property var modelData
-                property bool hovered: (false)
-                active: _card.hovered
-                implicitWidth: _.systemtrayCardWidth
-                implicitHeight: _.systemtrayCardHeight
-                radius: _.radius
+                implicitWidth: _.cardWidth
+                implicitHeight: _.cardHeight
                 color: _.cardColor
+                activeColor: _.textColor
+                radius: _.radius
                 Image {
                     anchors.centerIn: parent
-                    width: _.systemtrayIconSize
-                    height: _.systemtrayIconSize
+                    width: _.imageSize
+                    height: _.imageSize
                     source: _card.modelData.icon || ""
                     fillMode: Image.PreserveAspectFit
                 }
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
+                CustomMouseArea {
                     onClicked: mouse => {
                     if (mouse.button === Qt.LeftButton)
                     {
@@ -63,10 +65,10 @@ Custom.Angulia {
                     }
                     else if (mouse.button === Qt.RightButton && _card.modelData.hasMenu)
                     {
-                        _card.modelData.display(_top, _.x + _card.x, _.y + _card.y)
+                        _card.modelData.display(_Top, _.x + _card.x, _.y + _card.y)
                     }}
-                    onEntered: _card.hovered = true
-                    onExited: _card.hovered = false
+                    onEntered: _card.active = true
+                    onExited: _card.active = false
                 }
             }
         }

@@ -28,28 +28,6 @@ Singleton {
     // exclusiveZones
     readonly property int gaps_out: (data.gaps_out)
 
-    readonly property int topExclusiveZone: (_top ? float + bar.height: 0)
-    readonly property int leftExclusiveZone: (_left ? float + bar.width: 0)
-    readonly property int rightExclusiveZone: (_right ? float + bar.width: 0)
-    readonly property int bottomExclusiveZone: (_bottom ? float + bar.height: 0)
-
-    readonly property bool _top: (
-        (_clock.isTop && !clock.isVertical) ||
-        (_systemtray.isTop && !systemtrayIsVertical)
-    )
-    readonly property bool _left: (
-        (_clock.isLeft && clock.isVertical) ||
-        (_systemtray.isLeft && systemtrayIsVertical)
-    )
-    readonly property bool _right: (
-        (_clock.isRight && clock.isVertical) ||
-        (_systemtray.isRight && systemtrayIsVertical)
-    )
-    readonly property bool _bottom: (
-        (_clock.isBottom && !clock.isVertical) ||
-        (_systemtray.isBottom && !systemtrayIsVertical)
-    )
-
     // notification
     readonly property var notification: (data.notification)
 
@@ -78,14 +56,7 @@ Singleton {
     readonly property var clock: (data.clock)
     Direction { id: _clock; direction: clock.direction}
 
-
     // systemtray
     readonly property var systemtray: (data.systemtray)
     Direction { id: _systemtray; direction: systemtray.direction}
-
-    readonly property int systemtrayDirection: (systemtray.direction)
-    readonly property bool systemtrayIsVertical: (systemtray.isVertical)
-    readonly property int systemtrayCardWidth: ((systemtrayIsVertical ? bar.width: bar.height) - space * 2)
-    readonly property int systemtrayCardHeight: ((systemtrayIsVertical ? bar.width: bar.height) - space * 2)
-    readonly property int systemtrayIconSize: (systemtray.card.image)
 }
