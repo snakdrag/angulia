@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Widgets
+import "../services"
 import "../angulia"
 import "../../settings"
 
@@ -11,12 +12,13 @@ Angulia {
     _data: Settings.launcher
 
     implicitWidth: Math.max(contentWidth, cardWidth) + space * 2
-    implicitHeight: _input.height + space * 2 + (noContent ? 0: Math.max(contentHeight - _input.height - space, cardHeight) + space)
+    implicitHeight: Math.min(tempHeight, parent.height / 2 - edge - space * 2 - (isLeft || isRight ? 0: float))
 
     _contentWidth: _list.contentWidth
     _contentHeight: _list.contentHeight
 
     property int selectedIndex: (0)
+    readonly property int tempHeight: _input.height + space * 2 + (noContent ? 0: Math.max(contentHeight, cardHeight) + space)
 
     show: false
 
@@ -124,21 +126,13 @@ Angulia {
         radius: _.radius
         color: _.backgroundColor
         visible: _.show
-        CustomListView {
+        List {
             id: _list
             spacing: _.space
             isVertical: _.isVertical
             currentIndex: _.selectedIndex
             displaced: null
-            model: ScriptModel {
-                values: _search.text === "" ? []: DesktopEntries.applications.values.filter(
-                    entry => {
-                    let i = 0;
-                    return [..._search.text.toLowerCase()].every(
-                        char => (i = entry.name.toLowerCase().indexOf(char, i)) !== -1 && i++ >= 0
-                    );}
-                ).sort((a, b) => a.name.localeCompare(b.name))
-            }
+            model: ScriptModel { values: Launcher.search(_search.text).sort((a, b) => a.name.localeCompare(b.name)) }
             delegate: Card {
                 id: _card
                 required property var modelData

@@ -3,6 +3,7 @@ import QtQuick
 CustomRectangle {
     id: _
     property bool isVertical: (false)
+    property bool centerIn: (false)
     property int space: (0)
 
     property int iconSize: (0)
@@ -26,12 +27,12 @@ CustomRectangle {
     Image {
         id: _image
         x: (
-            _.isVertical ?
+            _.isVertical && !_.centerIn ?
             anchors.leftMargin:
             Math.max((parent.width - width) / 2, anchors.leftMargin)
         )
         y: (
-            _.isVertical ?
+            _.isVertical || centerIn ?
             Math.max((parent.height - height) / 2, anchors.topMargin):
             anchors.topMargin
         )

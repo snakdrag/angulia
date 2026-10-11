@@ -23,7 +23,7 @@ Angulia {
         anchors.margins: _.space
         radius: _.radius
         color: _.backgroundColor
-        CustomListView {
+        List {
             id: _list
             spacing: _.space
             isVertical: _.isVertical
@@ -35,7 +35,6 @@ Angulia {
                 implicitWidth: _.cardWidth
                 implicitHeight: Math.max(_.cardHeight, _main.textHeight + _.space * 2)
                 CustomRectangle {
-                    id: _action
                     property bool hovered: (false)
                     activeColor: _.textColor
                     anchors.top: parent.top
@@ -44,8 +43,8 @@ Angulia {
                     color: _.cardColor
                     active: (
                         _.isVertical ?
-                        (_action.hovered && _main.x - _.space >= _card.width / 4 || _main.x - _.space > _card.width / 2):
-                        (_action.hovered && _main.y - _.space >= _card.height / 4 || _main.y - _.space > _card.height / 2)
+                        (hovered && _main.x - _.space >= _card.width / 4 || _main.x - _.space > _card.width / 2):
+                        (hovered && _main.y - _.space >= _card.height / 4 || _main.y - _.space > _card.height / 2)
                     )
                     implicitWidth: (
                         _.isVertical ?
@@ -69,26 +68,22 @@ Angulia {
                             ((_main.y - _.space - _card.height / 8) / _card.height * 8)
                         )
                     }
-                    MouseArea {
-                        anchors.fill: parent
-                        acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
+                    CustomMouseArea {
                         onClicked: {
                             if (_card.haveAction)
                             {
                                 _card.modelData.actions[0].invoke()
                             }
-                            else {
+                            else
+                            {
                                 _card.modelData.dismiss()
                             }
                         }
-                        onEntered: _action.hovered = true
-                        onExited: _action.hovered = false
+                        onEntered: parent.hovered = true
+                        onExited: parent.hovered = false
                     }
                 }
                 CustomRectangle {
-                    id: _clear
                     property bool hovered: (false)
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
@@ -97,8 +92,8 @@ Angulia {
                     activeColor: _.textColor
                     active: (
                         _.isVertical ?
-                        ( _clear.hovered && -_main.x - _.space >= _card.width / 4 || -_main.x - _.space > _card.width / 2):
-                        ( _clear.hovered && -_main.y - _.space >= _card.height / 4 || -_main.y - _.space > _card.height / 2)
+                        (hovered && -_main.x - _.space >= _card.width / 4 || -_main.x - _.space > _card.width / 2):
+                        (hovered && -_main.y - _.space >= _card.height / 4 || -_main.y - _.space > _card.height / 2)
                     )
                     implicitWidth: (
                         _.isVertical ?
@@ -122,14 +117,10 @@ Angulia {
                             ((-_main.y - _.space - _card.height / 8) / _card.height * 8)
                         )
                     }
-                    MouseArea {
-                        anchors.fill: parent
-                        acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
+                    CustomMouseArea {
                         onClicked: _card.modelData.dismiss()
-                        onEntered: _clear.hovered = true
-                        onExited: _clear.hovered = false
+                        onEntered: parent.hovered = true
+                        onExited: parent.hovered = false
                     }
                 }
                 Card {
@@ -139,7 +130,6 @@ Angulia {
                     radius: _.radius
                     color: _.cardColor
                     activeColor: _.textColor
-                    active: false
                     space: _.space
                     isVertical: _.isVertical
 
@@ -154,10 +144,8 @@ Angulia {
                     bottomFont: _._data.bodyFont
                     bottomMaximumLineCount: _card.modelData.urgency === Notifications.critical ? 0: 3
 
-                    MouseArea {
-                        anchors.fill: parent
-                        acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-                        hoverEnabled: true
+                    CustomMouseArea {
+                        cursorShape: Qt.ArrowCursor
                         onEntered: _main.active = true
                         onExited: _main.active = false
                         onClicked: mouse => {

@@ -23,13 +23,13 @@ Angulia {
         anchors.margins: _.space
         color: _.backgroundColor
         radius: _.radius
-        CustomListView {
+        List {
             id: _list
             spacing: _.space
             model: SystemTray.items
             isVertical: _.isVertical
             interactive: false
-            delegate: CustomRectangle {
+            delegate: Card {
                 id: _card
                 required property var modelData
                 implicitWidth: _.cardWidth
@@ -37,13 +37,9 @@ Angulia {
                 activeColor: _.textColor
                 color: _.cardColor
                 radius: _.radius
-                Image {
-                    anchors.centerIn: parent
-                    width: _.iconSize
-                    height: _.iconSize
-                    source: _card.modelData.icon || ""
-                    fillMode: Image.PreserveAspectFit
-                }
+                iconSize: _.iconSize
+                iconSource: modelData.icon
+                centerIn: true
                 CustomMouseArea {
                     onClicked: mouse => {
                     if (mouse.button === Qt.LeftButton)

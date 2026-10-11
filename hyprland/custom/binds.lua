@@ -74,8 +74,8 @@ return {
         moves = {
             next = "SUPER + SHIFT + CTRL + RIGHT",
             last = "SUPER + SHIFT + CTRL + LEFT",
-            normal = { "SUPER + SHIFT + N", "SUPER + CTRL + SHIFT + down" },
-            special = { "SUPER + SHIFT + S", "SUPER + CTRL + SHIFT + up" },
+            normal = { "SUPER + CTRL + SHIFT + N", "SUPER + CTRL + SHIFT + down" },
+            special = { "SUPER + CTRL + SHIFT + S", "SUPER + CTRL + SHIFT + up" },
             _1 = "SUPER + SHIFT + 1",
             _2 = "SUPER + SHIFT + 2",
             _3 = "SUPER + SHIFT + 3",
