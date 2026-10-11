@@ -64,7 +64,8 @@ Rectangle {
     height: show ? implicitHeight: 0
     property int cardWidth: (_data.cardWidth || 0)
     property int cardHeight: (_data.cardHeight || 0)
-    property int iconSize: (_data.iconSize || 0)
+    property int imageWidth: (_data.imageWidth || _data.iconSize || 0)
+    property int imageHeight: (_data.imageHeight || _data.iconSize || 0)
 
     // content
     property int _contentWidth: (0)

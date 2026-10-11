@@ -37,8 +37,9 @@ Angulia {
                 activeColor: _.textColor
                 color: _.cardColor
                 radius: _.radius
-                iconSize: _.iconSize
-                iconSource: modelData.icon
+                imageWidth: _.imageWidth
+                imageHeight: _.imageHeight
+                imageSource: modelData.icon
                 centerIn: true
                 CustomMouseArea {
                     onClicked: mouse => {

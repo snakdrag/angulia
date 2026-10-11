@@ -1,4 +1,5 @@
 import QtQuick
+import Quickshell.Widgets
 
 CustomRectangle {
     id: _
@@ -6,8 +7,10 @@ CustomRectangle {
     property bool centerIn: (false)
     property int space: (0)
 
-    property int iconSize: (0)
-    property string iconSource: ("")
+    property int imageWidth: (0)
+    property int imageHeight: (0)
+    property string imageSource: ("")
+    property int imageFillMode: (Image.PreserveAspectFit)
 
     property string topText: ("")
     property int topMaximumLineCount: (0)
@@ -24,63 +27,77 @@ CustomRectangle {
 
     readonly property int textHeight: (_top.height + _bottom.height + _.space / 2)
 
-    Image {
-        id: _image
-        x: (
-            _.isVertical && !_.centerIn ?
-            anchors.leftMargin:
-            Math.max((parent.width - width) / 2, anchors.leftMargin)
-        )
-        y: (
-            _.isVertical || centerIn ?
-            Math.max((parent.height - height) / 2, anchors.topMargin):
-            anchors.topMargin
-        )
-        anchors.margins: _.space
-        width: _.iconSize
-        height: _.iconSize
-        source: iconSource || ""
-        fillMode: Image.PreserveAspectFit
-        visible: status === Image.Ready && source != ""
-    }
-    Item {
-        y: (
-            _.isVertical ?
-            Math.max((parent.height - height) / 2, anchors.topMargin):
-            anchors.topMargin
-        )
-        anchors.left: parent.left
-        anchors.right: parent.right
-        implicitHeight: _bottom.text === "" ? _top.height: _top.height + _bottom.height + _.space / 2
-        anchors.topMargin: _image.visible && !_.isVertical ? _image.height + _.space * 2: _.space
-        anchors.leftMargin: _image.visible && _.isVertical ? _image.width + _.space * 2: _.space
-        anchors.margins: _.space
-        Text {
-            id: _top
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.right: parent.right
-            text: _.topText
-            font: _.topFont
-            color: _.activeColor
-            elide: Text.ElideRight
-            horizontalAlignment: _.horizontalAlignment
-            wrapMode: _.isVertical ? Text.WrapAnywhere: Text.NoWrap
-            maximumLineCount: _.topMaximumLineCount
+    ClippingRectangle {
+        anchors.fill: parent
+
+        topLeftRadius: _.topLeftRadius
+        topRightRadius: _.topRightRadius
+        bottomLeftRadius: _.bottomLeftRadius
+        bottomRightRadius: _.bottomRightRadius
+
+        color: "transparent"
+
+        Image {
+            id: _image
+            x: (
+                _.isVertical && !_.centerIn ?
+                (anchors.leftMargin):
+                ((parent.width - width) / 2)
+            )
+            y: (
+                _.isVertical || centerIn ?
+                ((parent.height - height) / 2):
+                (anchors.topMargin)
+            )
+            anchors.margins: _.space
+            width: _.imageWidth
+            height: _.imageHeight
+            sourceSize.width: _.imageWidth
+            sourceSize.height: _.imageHeight
+            asynchronous: true
+            source: _.imageSource || ""
+            fillMode: _.imageFillMode
+            visible: status === Image.Ready && source != ""
         }
-        Text {
-            id: _bottom
-            anchors.top: _top.bottom
+        Item {
+            y: (
+                _.isVertical ?
+                Math.max((parent.height - height) / 2, anchors.topMargin):
+                anchors.topMargin
+            )
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.topMargin: _.space / 2
-            text: _.bottomText
-            font: _.bottomFont
-            color: _.activeColor
-            elide: Text.ElideRight
-            horizontalAlignment: _.horizontalAlignment
-            wrapMode: Text.WrapAnywhere
-            maximumLineCount: _.bottomMaximumLineCount
+            implicitHeight: _bottom.text === "" ? _top.height: _top.height + _bottom.height + _.space / 2
+            anchors.topMargin: _image.visible && !_.isVertical ? _image.height + _.space * 2: _.space
+            anchors.leftMargin: _image.visible && _.isVertical ? _image.width + _.space * 2: _.space
+            anchors.margins: _.space
+            Text {
+                id: _top
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                text: _.topText
+                font: _.topFont
+                color: _.activeColor
+                elide: Text.ElideRight
+                horizontalAlignment: _.horizontalAlignment
+                wrapMode: _.isVertical ? Text.WrapAnywhere: Text.NoWrap
+                maximumLineCount: _.topMaximumLineCount
+            }
+            Text {
+                id: _bottom
+                anchors.top: _top.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.topMargin: _.space / 2
+                text: _.bottomText
+                font: _.bottomFont
+                color: _.activeColor
+                elide: Text.ElideRight
+                horizontalAlignment: _.horizontalAlignment
+                wrapMode: Text.WrapAnywhere
+                maximumLineCount: _.bottomMaximumLineCount
+            }
         }
     }
 }

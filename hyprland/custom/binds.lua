@@ -31,6 +31,7 @@ return {
     quickshell = {
         launcher = "SUPER + R",
         lock = "SUPER + L",
+        wallpaperswitcher = "SUPER + S",
     },
     session = {
         logout = "SUPER + M",
@@ -58,8 +59,8 @@ return {
         focuses = {
             next = { "SUPER + " .. mouse_action.down, "SUPER + CTRL + RIGHT" },
             last = { "SUPER + " .. mouse_action.up, "SUPER + CTRL + LEFT" },
-            normal = { "SUPER + N", "SUPER + CTRL + down" },
-            special = { "SUPER + S", "SUPER + CTRL + up" },
+            normal = "SUPER + CTRL + down",
+            special = "SUPER + CTRL + up",
             _1 = "SUPER + 1",
             _2 = "SUPER + 2",
             _3 = "SUPER + 3",
@@ -74,8 +75,8 @@ return {
         moves = {
             next = "SUPER + SHIFT + CTRL + RIGHT",
             last = "SUPER + SHIFT + CTRL + LEFT",
-            normal = { "SUPER + CTRL + SHIFT + N", "SUPER + CTRL + SHIFT + down" },
-            special = { "SUPER + CTRL + SHIFT + S", "SUPER + CTRL + SHIFT + up" },
+            normal = "SUPER + CTRL + SHIFT + down",
+            special = "SUPER + CTRL + SHIFT + up",
             _1 = "SUPER + SHIFT + 1",
             _2 = "SUPER + SHIFT + 2",
             _3 = "SUPER + SHIFT + 3",

@@ -16,20 +16,22 @@ Singleton {
     Command {
         icon: "system-reboot"
         name: "Reboot"
-        comment: "Reboot system"
         command: ["systemctl", "reboot"]
     },
     Command {
         icon: "system-shutdown"
         name: "Shutdown"
-        comment: "Shutdown system"
         command: ["systemctl", "poweroff"]
     },
     Command {
         icon: "system-log-out"
         name: "Logout"
-        comment: "Logout system"
         command: ["sh", "-c", "command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"]
+    },
+    Command {
+        icon: "image"
+        name: "Wallpaper switcher"
+        command: ["sh", "-c", "qs ipc call wallpaperswitcher open"]
     }]
     function search(text)
     {

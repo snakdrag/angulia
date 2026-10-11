@@ -28,6 +28,7 @@ Angulia {
         function open()
         {
             _.show = true
+            _.selectedIndex = 0
             _search.text = ""
             _search.forceActiveFocus()
         }
@@ -149,8 +150,9 @@ Angulia {
                 radius: _.radius
                 isVertical: _.isVertical
 
-                iconSize: _.iconSize
-                iconSource: Quickshell.iconPath(modelData.icon, true)
+                imageWidth: _.imageWidth
+                imageHeight: _.imageHeight
+                imageSource: Quickshell.iconPath(modelData.icon, true)
 
                 topText: modelData.name
                 topFont: _._data.nameFont

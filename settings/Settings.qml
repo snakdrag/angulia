@@ -29,4 +29,5 @@ Singleton {
     readonly property var launcher: (data.launcher)
     readonly property var clock: (data.clock)
     readonly property var systemtray: (data.systemtray)
+    readonly property var wallpaperswitcher: (data.wallpaperswitcher)
 }

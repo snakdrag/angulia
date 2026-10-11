@@ -133,8 +133,9 @@ Angulia {
                     space: _.space
                     isVertical: _.isVertical
 
-                    iconSize: _.iconSize
-                    iconSource: _card.modelData.image || Quickshell.iconPath(_card.modelData.appIcon, true)
+                    imageWidth: _.imageWidth
+                    imageHeight: _.imageHeight
+                    imageSource: _card.modelData.image || Quickshell.iconPath(_card.modelData.appIcon, true)
 
                     topText: _card.modelData.summary
                     topFont: _._data.summaryFont

@@ -11,11 +11,12 @@ Root {
         id: _Overlay
         modules: _overlay
         layer: layers.Overlay
-        keyboardFocus: _launcher.show
+        keyboardFocus: _launcher.show || _wallpaperswitcher.show
         Item {
             id: _overlay
             anchors.fill: parent
             Modules.Notifications {}
+            Modules.WallpaperSwitcher { id: _wallpaperswitcher }
             Modules.Launcher { id: _launcher }
         }
     }

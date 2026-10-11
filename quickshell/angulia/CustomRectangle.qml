@@ -16,5 +16,6 @@ Rectangle {
 
         opacity: _.active ? 0.1: 0
         color: _.activeColor
+        z: 1
     }
 }

@@ -22,7 +22,10 @@ PanelWindow {
 
     exclusionMode: ExclusionMode.Ignore
     mask: Region { id: _region }
-    Item { id: _item; anchors.fill: parent }
+    Item {
+        id: _item
+        anchors.fill: parent
+    }
 
     WlrLayershell.keyboardFocus: keyboardFocus ? WlrKeyboardFocus.Exclusive: WlrKeyboardFocus.None
     WlrLayershell.layer: (
