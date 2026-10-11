@@ -20,7 +20,7 @@ Singleton {
     },
     Command {
         icon: "system-shutdown"
-        name: "Shutdown"
+        name: "Poweroff"
         command: ["systemctl", "poweroff"]
     },
     Command {
