@@ -3,11 +3,47 @@ import QtQuick
 import Quickshell
 
 Singleton {
+    component Command: Item {
+    property string icon: ("")
+    property string name: ("")
+    property string comment: ("")
+    property list<string> command: ([])
+    function execute()
+    {
+        Quickshell.execDetached(command)
+    }}
+    property list<Command> commands: [
+    Command {
+        icon: "system-reboot"
+        name: "Reboot"
+        comment: "Reboot system"
+        command: ["systemctl", "reboot"]
+    },
+    Command {
+        icon: "system-shutdown"
+        name: "Shutdown"
+        comment: "Shutdown system"
+        command: ["systemctl", "poweroff"]
+    },
+    Command {
+        icon: "system-log-out"
+        name: "Logout"
+        comment: "Logout system"
+        command: ["sh", "-c", "command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"]
+    }]
     function search(text)
     {
         if (text === "")
         {
             return []
+        }
+        if (text[0] === ">")
+        {
+            return [...commands].filter(entry => {
+            let i = 0;
+            return [...text.slice(1).toLowerCase()].every(
+                char => (i = entry.name.toLowerCase().indexOf(char, i)) !== -1 && i++ >= 0
+            )})
         }
         else
         {
