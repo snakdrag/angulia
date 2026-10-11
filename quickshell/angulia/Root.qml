@@ -79,7 +79,8 @@ ShellRoot {
     function check()
     {
         Qt.callLater(() => {
-        let radius = Settings.radius
+        // let radius = Settings.radius
+        let radius = 0
         let angulia = []
         for (let i = 0; i < childrens.length; i++) {
             let child = childrens[i]

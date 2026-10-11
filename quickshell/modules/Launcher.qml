@@ -12,7 +12,7 @@ Angulia {
     _data: Settings.launcher
 
     implicitWidth: Math.max(contentWidth, cardWidth) + space * 2
-    implicitHeight: Math.min(tempHeight, parent.height / 2 - edge - space * 2 - (isLeft || isRight ? 0: float))
+    implicitHeight: Math.min(tempHeight, parent.height / 2 - edge - (isLeft || isRight ? 0: float))
 
     _contentWidth: _list.contentWidth
     _contentHeight: _list.contentHeight
