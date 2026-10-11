@@ -5,25 +5,26 @@ import "../../settings"
 Rectangle {
     id: _
 
+    property var _data: ({})
+    readonly property var bar: (Settings.bar)
     readonly property string _itemName: ("Angulia")
     readonly property Region region: (_region)
     Region { id: _region; item: _ }
 
     property bool show: (true)
 
-    property real customX: (0)
-    property real customY: (0)
+    property real customX: (_data.x || 0)
+    property real customY: (_data.y || 0)
 
     anchors.margins: edge + float
-    x: Math.max(anchors.leftMargin, Math.min(parent.width - implicitWidth - anchors.rightMargin, customX - implicitWidth / 2))
-    y: Math.max(anchors.topMargin, Math.min(parent.height - implicitHeight - anchors.bottomMargin, customY - implicitHeight / 2))
+    x: Math.max(anchors.leftMargin, Math.min(parent.width - width - anchors.rightMargin, customX - width / 2))
+    y: Math.max(anchors.topMargin, Math.min(parent.height - height - anchors.bottomMargin, customY - height / 2))
 
-    property bool isVertical: (false)
+    property bool isVertical: (_data.isVertical || false)
     readonly property bool isTop: (y <= anchors.topMargin && !isVertical)
     readonly property bool isLeft: (x <= anchors.leftMargin && isVertical)
     readonly property bool isRight: (x + implicitWidth >= parent.width - anchors.rightMargin && isVertical)
     readonly property bool isBottom: (y + implicitHeight >= parent.height - anchors.bottomMargin && !isVertical)
-    property int textRotation: (0)
 
     property bool isTopLeft: (false)
     property bool isTopRight: (false)
@@ -44,8 +45,8 @@ Rectangle {
     property bool forceBottomRight: (false)
 
     // behavior
-    // Behavior on width { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
-    // Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
+    Behavior on width { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
+    Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
 
     // color
     color: Settings.colors.surface
@@ -57,13 +58,13 @@ Rectangle {
     property int edge: (Settings.edge)
     property int space: (Settings.space)
     property int float: (Settings.float)
-    implicitWidth: show ? edge: 0
-    implicitHeight: show ? edge: 0
-    width: implicitWidth
-    height: implicitHeight
-    property int cardWidth: (edge)
-    property int cardHeight: (edge)
-    property int iconSize: (edge)
+    implicitWidth: edge
+    implicitHeight: edge
+    width: show ? implicitWidth: 0
+    height: show ? implicitHeight: 0
+    property int cardWidth: (_data.cardWidth || 0)
+    property int cardHeight: (_data.cardHeight || 0)
+    property int iconSize: (_data.iconSize || 0)
 
     // content
     property int _contentWidth: (0)
@@ -85,11 +86,20 @@ Rectangle {
 
     // signal
     signal positionChanged()
-    // onXChanged: positionChanged()
-    // onYChanged: positionChanged()
-    onImplicitWidthChanged: positionChanged()
-    onImplicitHeightChanged: positionChanged()
-    onPositionChanged: {check(); set()}
+
+    onXChanged: positionChanged()
+    onYChanged: positionChanged()
+    onWidthChanged: positionChanged()
+    onHeightChanged: positionChanged()
+    onPositionChanged: check()
+
+    signal directionChanged()
+
+    onIsTopChanged: directionChanged()
+    onIsLeftChanged: directionChanged()
+    onIsRightChanged: directionChanged()
+    onIsBottomChanged: directionChanged()
+    onDirectionChanged: set()
 
     RoundCorners {}
 }

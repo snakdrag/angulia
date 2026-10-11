@@ -9,8 +9,8 @@ Root {
     modules: ([..._top.children, ])
     Layer {
         id: _Overlay
-        layer: layers.Overlay
         modules: _overlay
+        layer: layers.Overlay
         keyboardFocus: _launcher.show
         Item {
             id: _overlay
@@ -21,8 +21,8 @@ Root {
     }
     Layer {
         id: _Top
-        layer: layers.Top
         modules: _top
+        layer: layers.Top
         Item {
             id: _top
             anchors.fill: parent

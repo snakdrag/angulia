@@ -18,7 +18,10 @@ CustomRectangle {
 
     property int horizontalAlignment: (isVertical ? Text.AlignLeft: Text.AlignHCenter)
 
-    readonly property int textHeight: (_top.height + _bottom.height + _.space)
+    Behavior on x { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
+    Behavior on y { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
+
+    readonly property int textHeight: (_top.height + _bottom.height + _.space / 2)
 
     Image {
         id: _image
@@ -47,7 +50,7 @@ CustomRectangle {
         )
         anchors.left: parent.left
         anchors.right: parent.right
-        implicitHeight: _bottom.text === "" ? _top.height: _top.height + _bottom.height + _.space
+        implicitHeight: _bottom.text === "" ? _top.height: _top.height + _bottom.height + _.space / 2
         anchors.topMargin: _image.visible && !_.isVertical ? _image.height + _.space * 2: _.space
         anchors.leftMargin: _image.visible && _.isVertical ? _image.width + _.space * 2: _.space
         anchors.margins: _.space
@@ -69,7 +72,7 @@ CustomRectangle {
             anchors.top: _top.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.topMargin: _.space
+            anchors.topMargin: _.space / 2
             text: _.bottomText
             font: _.bottomFont
             color: _.activeColor

@@ -6,22 +6,16 @@ import "../../settings"
 Angulia {
     id: _
 
-    property var clock: (Settings.clock)
-    readonly property var bar: (Settings.bar)
-    property font textFont: (_.clock.font)
+    _data: Settings.clock
 
-    implicitWidth: isVertical ? bar.width: clock.width
-    implicitHeight: isVertical ? clock.height: bar.height
-
-    customX: parent.width / 2
-    customY: parent.height
+    implicitWidth: isVertical ? bar.width: _data.width
+    implicitHeight: isVertical ? _data.height: bar.height
 
     Text {
         anchors.centerIn: parent
-        rotation: _.textRotation
         text: Qt.formatDateTime(_clock.date, "hh:mm")
         color: _.textColor
-        font: _.textFont
+        font: _._data.font
         SystemClock {
             id: _clock
             precision: SystemClock.Minutes

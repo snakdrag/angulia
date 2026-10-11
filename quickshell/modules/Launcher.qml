@@ -2,40 +2,21 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Widgets
-import "../custom" as Custom
 import "../angulia"
 import "../../settings"
 
 Angulia {
     id: _
 
-    customX: parent.width / 2
+    _data: Settings.launcher
 
-    property var launcher: (Settings.launcher)
-    readonly property var bar: (Settings.bar)
-    cardWidth: launcher.card.width
-    cardHeight: launcher.card.height
-    iconSize: launcher.iconSize
-    property int inputHeight: (bar.height - space * 2)
-    property bool launcherInputAtTop: (Settings.launcherInputAtTop)
-    property font launcherNameFont: (Settings.launcherNameFont)
-    property font launcherCommentFont: (Settings.launcherCommentFont)
+    implicitWidth: Math.max(contentWidth, cardWidth) + space * 2
+    implicitHeight: _input.height + space * 2 + (noContent ? 0: Math.max(contentHeight - _input.height - space, cardHeight) + space)
 
-    isVertical: false
     _contentWidth: _list.contentWidth
     _contentHeight: _list.contentHeight
-    property int selectedIndex: (0)
 
-    implicitWidth: show ? Math.max(contentWidth, cardWidth) + space * 2: 0
-    implicitHeight: (
-        show ?
-        (
-            noContent ?
-            _input.height:
-            Math.max(contentHeight - space - _input.height, cardHeight) + space + _input.height
-        ) + space * 2:
-        0
-    )
+    property int selectedIndex: (0)
 
     show: false
 
@@ -66,14 +47,14 @@ Angulia {
     Rectangle {
         id: _input
         y: (
-            _.launcherInputAtTop ?
+            _._data.inputAtTop ?
             anchors.topMargin:
             Math.max(parent.height - implicitHeight - anchors.bottomMargin, anchors.topMargin)
         )
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.margins: _.space
-        implicitHeight: _.show ? _.inputHeight: 0
+        implicitHeight: _.show ? _.bar.height - _.space * 2: 0
         radius: _.radius
         color: _.cardColor
         visible: _.show
@@ -83,7 +64,7 @@ Angulia {
             anchors.leftMargin: _.space
             anchors.rightMargin: _.space
             verticalAlignment: TextInput.AlignVCenter
-            font: _.launcherNameFont
+            font: _._data.nameFont
             color: _.textColor
             clip: true
             onTextChanged: {_.selectedIndex = 0}
@@ -138,8 +119,8 @@ Angulia {
     ClippingRectangle {
         anchors.fill: parent
         anchors.margins: _.space
-        anchors.topMargin: _.launcherInputAtTop ? _input.height + _.space * 2: _.space
-        anchors.bottomMargin: _.launcherInputAtTop ? _.space: _input.height + _.space * 2
+        anchors.topMargin: _._data.inputAtTop ? _input.height + _.space * 2: _.space
+        anchors.bottomMargin: _._data.inputAtTop ? _.space: _input.height + _.space * 2
         radius: _.radius
         color: _.backgroundColor
         visible: _.show
@@ -178,11 +159,11 @@ Angulia {
                 iconSource: Quickshell.iconPath(modelData.icon, true)
 
                 topText: modelData.name
-                topFont: _.launcherNameFont
+                topFont: _._data.nameFont
                 topMaximumLineCount: 1
 
                 bottomText: modelData.comment
-                bottomFont: _.launcherCommentFont
+                bottomFont: _._data.commentFont
                 bottomMaximumLineCount: 1
 
                 MouseArea {

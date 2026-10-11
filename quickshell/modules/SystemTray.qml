@@ -7,20 +7,13 @@ import "../../settings"
 Angulia {
     id: _
 
-    property var systemtray: (Settings.systemtray)
-    readonly property var bar: (Settings.bar)
+    _data: Settings.systemtray
 
     implicitWidth: noContent ? 0: Math.max(contentWidth, cardWidth) + space * 2
     implicitHeight: noContent ? 0: Math.max(contentHeight, cardHeight) + space * 2
 
     cardWidth: (isVertical ? bar.height: bar.width) - space * 2
     cardHeight: (isVertical ? bar.width: bar.height) - space * 2
-
-    iconSize: (systemtray.iconSize)
-
-    customX: parent.width
-    customY: parent.height
-
 
     _contentWidth: _list.contentWidth
     _contentHeight: _list.contentHeight
@@ -41,8 +34,8 @@ Angulia {
                 required property var modelData
                 implicitWidth: _.cardWidth
                 implicitHeight: _.cardHeight
-                color: _.cardColor
                 activeColor: _.textColor
+                color: _.cardColor
                 radius: _.radius
                 Image {
                     anchors.centerIn: parent

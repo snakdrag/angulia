@@ -115,7 +115,7 @@ ShellRoot {
                 let a2_Right = a1.x - a2XWidth <= radius && a2XWidth - a1XWidth <= radius
                 let a2_Bottom = a1.y - a2YHeight <= radius && a2YHeight - a1YHeight <= radius
 
-                if (-radius <= (a1.y - a2YHeight) && (a1.y - a2YHeight) <= 0)
+                if (-radius * 2 <= (a1.y - a2YHeight) && (a1.y - a2YHeight) <= 0)
                 {
                     if (a1_Left) a1.isTopLeft = true
                     if (a1_Right) a1.isTopRight = true
@@ -126,7 +126,7 @@ ShellRoot {
                     if (a2_Left && !a1_Left) a2.isLeftBottom = true
                     if (a2_Right && !a1_Right) a2.isRightBottom = true
                 }
-                if (-radius <= (a1.x - a2XWidth) && (a1.x - a2XWidth) <= 0)
+                if (-radius * 2 <= (a1.x - a2XWidth) && (a1.x - a2XWidth) <= 0)
                 {
                     if (a1_Top) a1.isLeftTop = true
                     if (a1_Bottom) a1.isLeftBottom = true
@@ -137,7 +137,7 @@ ShellRoot {
                     if (a2_Top && !a1_Top) a2.isTopRight = true
                     if (a2_Bottom && !a1_Bottom) a2.isBottomRight = true
                 }
-                if (0 <= (a1XWidth - a2.x) && (a1XWidth - a2.x) <= radius)
+                if (0 <= (a1XWidth - a2.x) && (a1XWidth - a2.x) <= radius * 2)
                 {
                     if (a1_Top) a1.isRightTop = true
                     if (a1_Bottom) a1.isRightBottom = true
@@ -148,7 +148,7 @@ ShellRoot {
                     if (a2_Top && !a1_Top) a2.isTopLeft = true
                     if (a2_Bottom && !a1_Bottom) a2.isBottomLeft = true
                 }
-                if (0 <= (a1YHeight - a2.y) && (a1YHeight - a2.y) <= radius)
+                if (0 <= (a1YHeight - a2.y) && (a1YHeight - a2.y) <= radius * 2)
                 {
                     if (a1_Left) a1.isBottomLeft = true
                     if (a1_Right) a1.isBottomRight = true

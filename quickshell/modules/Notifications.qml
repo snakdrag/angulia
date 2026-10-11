@@ -8,23 +8,13 @@ import "../../settings"
 Angulia {
     id: _
 
-    property var notification: (Settings.notification)
-    property int notificationCardWidth: (Settings.notificationCardWidth)
-    property int notificationCardHeight: (Settings.notificationCardHeight)
-    property int notificationImageSize: (Settings.notificationImageSize)
-    property bool notificationIsVertical: (Settings.notificationIsVertical)
-    property font notificationSummaryFont: (Settings.notificationSummaryFont)
-    property font notificationBodyFont: (Settings.notificationBodyFont)
+    _data: Settings.notification
+
+    implicitWidth: noContent ? 0: Math.max(contentWidth, cardWidth) + space * 2
+    implicitHeight: noContent ? 0: Math.max(contentHeight, cardHeight) + space * 2
 
     _contentWidth: _list.contentWidth
     _contentHeight: _list.contentHeight
-
-    implicitWidth: noContent ? 0: Math.max(contentWidth, notificationCardWidth) + space * 2
-    implicitHeight: noContent ? 0: Math.max(contentHeight, notificationCardHeight) + space * 2
-
-    property Region region: (_region)
-    Region { id: _region; item: _ }
-    readonly property string _itemName: ("Angulia")
 
     show: !noContent
 
@@ -42,8 +32,8 @@ Angulia {
                 id: _card
                 required property var modelData
                 readonly property bool haveAction: (modelData.actions.length > 0)
-                implicitWidth: _.notificationCardWidth
-                implicitHeight: Math.max(_.notificationCardHeight, _main.textHeight + _.space * 2)
+                implicitWidth: _.cardWidth
+                implicitHeight: Math.max(_.cardHeight, _main.textHeight + _.space * 2)
                 CustomRectangle {
                     id: _action
                     property bool hovered: (false)
@@ -53,28 +43,28 @@ Angulia {
                     radius: _.radius
                     color: _.cardColor
                     active: (
-                        _.notificationIsVertical ?
+                        _.isVertical ?
                         (_action.hovered && _main.x - _.space >= _card.width / 4 || _main.x - _.space > _card.width / 2):
                         (_action.hovered && _main.y - _.space >= _card.height / 4 || _main.y - _.space > _card.height / 2)
                     )
                     implicitWidth: (
-                        _.notificationIsVertical ?
+                        _.isVertical ?
                         Math.min(_card.width, Math.max(_main.x - _.space, _card.width / 4)):
                         _card.width
                     )
                     implicitHeight: (
-                        _.notificationIsVertical ?
+                        _.isVertical ?
                         _card.height:
                         Math.min(_card.height, Math.max(_main.y - _.space, _card.height / 4))
                     )
-                    visible: _.notificationIsVertical ? -_main.x < 0: -_main.y < 0
+                    visible: _.isVertical ? -_main.x < 0: -_main.y < 0
                     Text {
                         anchors.centerIn: parent
                         text: _card.haveAction ? "Open": "Clear"
                         color: _.textColor
-                        font: _.notificationBodyFont
+                        font: _._data.bodyFont
                         opacity: (
-                            _.notificationIsVertical ?
+                            _.isVertical ?
                             ((_main.x - _.space - _card.width / 8) / _card.width * 8):
                             ((_main.y - _.space - _card.height / 8) / _card.height * 8)
                         )
@@ -106,28 +96,28 @@ Angulia {
                     color: _.cardColor
                     activeColor: _.textColor
                     active: (
-                        _.notificationIsVertical ?
+                        _.isVertical ?
                         ( _clear.hovered && -_main.x - _.space >= _card.width / 4 || -_main.x - _.space > _card.width / 2):
                         ( _clear.hovered && -_main.y - _.space >= _card.height / 4 || -_main.y - _.space > _card.height / 2)
                     )
                     implicitWidth: (
-                        _.notificationIsVertical ?
+                        _.isVertical ?
                         Math.min(_card.width, Math.max(-_main.x - _.space, _card.width / 4)):
                         _card.width
                     )
                     implicitHeight: (
-                        _.notificationIsVertical ?
+                        _.isVertical ?
                         _card.height:
                         Math.min(_card.height, Math.max(-_main.y - _.space, _card.height / 4))
                     )
-                    visible: _.notificationIsVertical ? _main.x < 0: _main.y < 0
+                    visible: _.isVertical ? _main.x < 0: _main.y < 0
                     Text {
                         anchors.centerIn: parent
                         text: "Clear"
                         color: _.textColor
-                        font: _.notificationBodyFont
+                        font: _._data.bodyFont
                         opacity: (
-                            _.notificationIsVertical ?
+                            _.isVertical ?
                             ((-_main.x - _.space - _card.width / 8) / _card.width * 8):
                             ((-_main.y - _.space - _card.height / 8) / _card.height * 8)
                         )
@@ -153,15 +143,15 @@ Angulia {
                     space: _.space
                     isVertical: _.isVertical
 
-                    iconSize: notification.iconSize
+                    iconSize: _.iconSize
                     iconSource: _card.modelData.image || Quickshell.iconPath(_card.modelData.appIcon, true)
 
                     topText: _card.modelData.summary
-                    topFont: _.notificationSummaryFont
+                    topFont: _._data.summaryFont
                     topMaximumLineCount: _card.modelData.urgency === Notifications.critical ? 0: 2
 
                     bottomText: _card.modelData.body
-                    bottomFont: _.notificationBodyFont
+                    bottomFont: _._data.bodyFont
                     bottomMaximumLineCount: _card.modelData.urgency === Notifications.critical ? 0: 3
 
                     MouseArea {
@@ -171,7 +161,7 @@ Angulia {
                         onEntered: _main.active = true
                         onExited: _main.active = false
                         onClicked: mouse => {
-                        if (_.notificationIsVertical)
+                        if (_.isVertical)
                         {
                             if (mouse.button === Qt.LeftButton)
                             {
@@ -203,10 +193,10 @@ Angulia {
                         }}
                     }
                     DragHandler {
-                        xAxis.enabled: _.notificationIsVertical
-                        yAxis.enabled: !_.notificationIsVertical
+                        xAxis.enabled: _.isVertical
+                        yAxis.enabled: !_.isVertical
                         onActiveChanged: {
-                            if (_.notificationIsVertical)
+                            if (_.isVertical)
                             {
                                 if (parent.x < -_card.width / 2 - _.space)
                                 {
