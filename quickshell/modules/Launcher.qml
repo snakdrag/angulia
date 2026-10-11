@@ -3,30 +3,36 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Widgets
 import "../custom" as Custom
+import "../angulia"
+import "../../settings"
 
-Custom.Angulia {
+Angulia {
     id: _
 
-    property int launcherCardWidth: (Custom.Data.settings.launcherCardWidth)
-    property int launcherCardHeight: (Custom.Data.settings.launcherCardHeight)
-    property int launcherInputHeight: (Custom.Data.settings.launcherInputHeight)
-    property int launcherImageSize: (Custom.Data.settings.launcherImageSize)
-    property bool launcherInputAtTop: (Custom.Data.settings.launcherInputAtTop)
-    property bool launcherIsVertical: (Custom.Data.settings.launcherIsVertical)
-    property font launcherNameFont: (Custom.Data.settings.launcherNameFont)
-    property font launcherCommentFont: (Custom.Data.settings.launcherCommentFont)
+    customX: parent.width / 2
 
+    property var launcher: (Settings.launcher)
+    readonly property var bar: (Settings.bar)
+    cardWidth: launcher.card.width
+    cardHeight: launcher.card.height
+    iconSize: launcher.iconSize
+    property int inputHeight: (bar.height - space * 2)
+    property bool launcherInputAtTop: (Settings.launcherInputAtTop)
+    property font launcherNameFont: (Settings.launcherNameFont)
+    property font launcherCommentFont: (Settings.launcherCommentFont)
+
+    isVertical: false
     _contentWidth: _list.contentWidth
     _contentHeight: _list.contentHeight
     property int selectedIndex: (0)
 
-    implicitWidth: show ? Math.max(contentWidth, launcherCardWidth) + space * 2: 0
+    implicitWidth: show ? Math.max(contentWidth, cardWidth) + space * 2: 0
     implicitHeight: (
         show ?
         (
             noContent ?
-            _.launcherInputHeight:
-            Math.max(contentHeight - space - _.launcherInputHeight, launcherCardHeight) + space + _.launcherInputHeight
+            _input.height:
+            Math.max(contentHeight - space - _input.height, cardHeight) + space + _input.height
         ) + space * 2:
         0
     )
@@ -67,7 +73,7 @@ Custom.Angulia {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.margins: _.space
-        implicitHeight: _.show ? _.launcherInputHeight: 0
+        implicitHeight: _.show ? _.inputHeight: 0
         radius: _.radius
         color: _.cardColor
         visible: _.show
@@ -79,7 +85,6 @@ Custom.Angulia {
             verticalAlignment: TextInput.AlignVCenter
             font: _.launcherNameFont
             color: _.textColor
-            cursorVisible: activeFocus
             clip: true
             onTextChanged: {_.selectedIndex = 0}
             Keys.onEscapePressed: {_ipc.close()}
@@ -133,15 +138,15 @@ Custom.Angulia {
     ClippingRectangle {
         anchors.fill: parent
         anchors.margins: _.space
-        anchors.topMargin: _.launcherInputAtTop ? _.launcherInputHeight + _.space * 2: _.space
-        anchors.bottomMargin: _.launcherInputAtTop ? _.space: _.launcherInputHeight + _.space * 2
+        anchors.topMargin: _.launcherInputAtTop ? _input.height + _.space * 2: _.space
+        anchors.bottomMargin: _.launcherInputAtTop ? _.space: _input.height + _.space * 2
         radius: _.radius
         color: _.backgroundColor
         visible: _.show
-        Custom.ListView {
+        CustomListView {
             id: _list
             spacing: _.space
-            isVertical: _.launcherIsVertical
+            isVertical: _.isVertical
             currentIndex: _.selectedIndex
             displaced: null
             model: ScriptModel {
@@ -153,67 +158,33 @@ Custom.Angulia {
                     );}
                 ).sort((a, b) => a.name.localeCompare(b.name))
             }
-            delegate:
-            Custom.Rectangle {
+            delegate: Card {
                 id: _card
                 required property var modelData
                 required property int index
+
                 active: _card.index === _.selectedIndex
-                implicitWidth: _.launcherCardWidth
-                implicitHeight: _.launcherCardHeight
+                activeColor: _.textColor
                 color: _.cardColor
+
+                implicitWidth: _.cardWidth
+                implicitHeight: _.cardHeight
+
+                space: _.space
                 radius: _.radius
-                IconImage {
-                    id: _image
-                    x: (
-                        _.launcherIsVertical ?
-                        anchors.leftMargin:
-                        Math.max((parent.width - width) / 2, anchors.leftMargin)
-                    )
-                    anchors.top: parent.top
-                    anchors.margins: _.space
-                    implicitSize: _.launcherImageSize
-                    source: Quickshell.iconPath(_card.modelData.icon, true) || ""
-                    visible: status === Image.Ready && source != ""
-                }
-                Item {
-                    y: (
-                        _.launcherIsVertical ?
-                        Math.max((parent.height - height) / 2, anchors.topMargin):
-                        anchors.topMargin
-                    )
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    implicitHeight: _comment.text === "" ? _name.height: _name.height + _comment.height
-                    anchors.topMargin: _image.visible && !_.launcherIsVertical ? _image.height + _.space * 2: _.space
-                    anchors.leftMargin: _image.visible && _.launcherIsVertical ? _image.width + _.space * 2: _.space
-                    anchors.margins: _.space
-                    Text {
-                        id: _name
-                        anchors.top: parent.top
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        text: _card.modelData.name
-                        font: _.launcherNameFont
-                        color: _.textColor
-                        elide: Text.ElideRight
-                        horizontalAlignment: _.launcherIsVertical ? Text.AlignLeft: Text.AlignHCenter
-                        wrapMode: _.launcherIsVertical ? Text.WrapAnywhere: Text.NoWrap
-                        maximumLineCount: 1
-                    }
-                    Text {
-                        id: _comment
-                        anchors.top: _name.bottom
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        text: _.launcherIsVertical ? _card.modelData.comment: ""
-                        font: _.launcherCommentFont
-                        color: _.textColor
-                        elide: Text.ElideRight
-                        wrapMode: Text.WrapAnywhere
-                        maximumLineCount: 1
-                    }
-                }
+                isVertical: _.isVertical
+
+                iconSize: _.iconSize
+                iconSource: Quickshell.iconPath(modelData.icon, true)
+
+                topText: modelData.name
+                topFont: _.launcherNameFont
+                topMaximumLineCount: 1
+
+                bottomText: modelData.comment
+                bottomFont: _.launcherCommentFont
+                bottomMaximumLineCount: 1
+
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton

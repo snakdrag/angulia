@@ -13,39 +13,43 @@ ShellRoot {
     property bool _right: (false)
     property bool _bottom: (false)
 
+    readonly property int topExclusiveZone: (
+        Settings.gaps_out + Settings.edge +
+        (_top ? Settings.float + Settings.bar.height: 0)
+    )
+    readonly property int leftExclusiveZone: (
+        Settings.gaps_out + Settings.edge +
+        (_left ? Settings.float + Settings.bar.width: 0)
+    )
+    readonly property int rightExclusiveZone: (
+        Settings.gaps_out + Settings.edge +
+        (_right ? Settings.float + Settings.bar.width: 0)
+    )
+    readonly property int bottomExclusiveZone: (
+        Settings.gaps_out + Settings.edge +
+        (_bottom ? Settings.float + Settings.bar.height: 0)
+    )
     PanelWindow {
         anchors.top: true
-        exclusiveZone: (
-            Settings.gaps_out + Settings.edge +
-            (_top ? Settings.float + Settings.bar.height: 0)
-        )
+        exclusiveZone: _.topExclusiveZone
         implicitWidth: 0
         implicitHeight: 0
     }
     PanelWindow {
         anchors.left: true
-        exclusiveZone: (
-            Settings.gaps_out + Settings.edge +
-            (_left ? Settings.float + Settings.bar.width: 0)
-        )
+        exclusiveZone: _.leftExclusiveZone
         implicitWidth: 0
         implicitHeight: 0
     }
     PanelWindow {
         anchors.right: true
-        exclusiveZone: (
-            Settings.gaps_out + Settings.edge +
-            (_right ? Settings.float + Settings.bar.width: 0)
-        )
+        exclusiveZone: _.rightExclusiveZone
         implicitWidth: 0
         implicitHeight: 0
     }
     PanelWindow {
         anchors.bottom: true
-        exclusiveZone: (
-            Settings.gaps_out + Settings.edge +
-            (_bottom ? Settings.float + Settings.bar.height: 0)
-        )
+        exclusiveZone: _.bottomExclusiveZone
         implicitWidth: 0
         implicitHeight: 0
     }

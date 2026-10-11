@@ -46,7 +46,6 @@ Singleton {
     readonly property bool launcherIsVertical: (launcher.isVertical)
     readonly property int launcherCardWidth: (launcher.card.width)
     readonly property int launcherCardHeight: (launcher.card.height)
-    readonly property int launcherImageSize: (launcher.card.image)
     readonly property var launcherNameFont: (fonts.name)
     readonly property var launcherCommentFont: (fonts.comment)
     readonly property int launcherInputHeight: (bar.height - space * 2)

@@ -16,7 +16,7 @@ Angulia {
     cardWidth: (isVertical ? bar.height: bar.width) - space * 2
     cardHeight: (isVertical ? bar.width: bar.height) - space * 2
 
-    imageSize: (systemtray.iconSize)
+    iconSize: (systemtray.iconSize)
 
     customX: parent.width
     customY: parent.height
@@ -46,8 +46,8 @@ Angulia {
                 radius: _.radius
                 Image {
                     anchors.centerIn: parent
-                    width: _.imageSize
-                    height: _.imageSize
+                    width: _.iconSize
+                    height: _.iconSize
                     source: _card.modelData.icon || ""
                     fillMode: Image.PreserveAspectFit
                 }

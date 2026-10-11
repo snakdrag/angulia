@@ -10,7 +10,7 @@ PanelWindow {
     readonly property var layers: ({ Overlay: 0, Top: 1, Bottom: 2, Background: 3 })
     property int layer: (layers.Top)
 
-    property list<Item> modules: ([])
+    property Item modules: (_item)
     property bool keyboardFocus: (false)
     property bool enableBlur: (true)
 
@@ -36,8 +36,8 @@ PanelWindow {
     function setRegions()
     {
         _region.regions = [];
-        for (let i = 0; i < modules.length; i++) {
-            let module = modules[i];
+        for (let i = 0; i < modules.children.length; i++) {
+            let module = modules.children[i];
             if (module && module._itemName === "Angulia")
             {
                 _region.regions.push(module.region);

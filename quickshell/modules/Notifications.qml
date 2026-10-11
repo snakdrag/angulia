@@ -1,21 +1,21 @@
 import QtQuick
 import Quickshell // for Quickshell.iconPath
 import Quickshell.Widgets
-import "../custom" as Custom
+import "../services"
 import "../angulia"
-import "../services" as Services
+import "../../settings"
 
-Custom.Angulia {
+Angulia {
     id: _
 
-    property int notificationCardWidth: (Custom.Data.settings.notificationCardWidth)
-    property int notificationCardHeight: (Custom.Data.settings.notificationCardHeight)
-    property int notificationImageSize: (Custom.Data.settings.notificationImageSize)
-    property bool notificationIsVertical: (Custom.Data.settings.notificationIsVertical)
-    property font notificationSummaryFont: (Custom.Data.settings.notificationSummaryFont)
-    property font notificationBodyFont: (Custom.Data.settings.notificationBodyFont)
+    property var notification: (Settings.notification)
+    property int notificationCardWidth: (Settings.notificationCardWidth)
+    property int notificationCardHeight: (Settings.notificationCardHeight)
+    property int notificationImageSize: (Settings.notificationImageSize)
+    property bool notificationIsVertical: (Settings.notificationIsVertical)
+    property font notificationSummaryFont: (Settings.notificationSummaryFont)
+    property font notificationBodyFont: (Settings.notificationBodyFont)
 
-    exclusionModeIgnore: false
     _contentWidth: _list.contentWidth
     _contentHeight: _list.contentHeight
 
@@ -33,17 +33,17 @@ Custom.Angulia {
         anchors.margins: _.space
         radius: _.radius
         color: _.backgroundColor
-        Custom.ListView {
+        CustomListView {
             id: _list
             spacing: _.space
-            isVertical: _.notificationIsVertical
-            model: Services.Notifications.server.trackedNotifications
+            isVertical: _.isVertical
+            model: Notifications.server.trackedNotifications
             delegate: Item {
                 id: _card
                 required property var modelData
                 readonly property bool haveAction: (modelData.actions.length > 0)
                 implicitWidth: _.notificationCardWidth
-                implicitHeight: Math.max(_.notificationCardHeight, _summary.height + _body.height + _.space * 2)
+                implicitHeight: Math.max(_.notificationCardHeight, _main.textHeight + _.space * 2)
                 CustomRectangle {
                     id: _action
                     property bool hovered: (false)
@@ -97,14 +97,14 @@ Custom.Angulia {
                         onExited: _action.hovered = false
                     }
                 }
-                Custom.Rectangle {
+                CustomRectangle {
                     id: _clear
                     property bool hovered: (false)
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
                     radius: _.radius
                     color: _.cardColor
-                    textColor: _.textColor
+                    activeColor: _.textColor
                     active: (
                         _.notificationIsVertical ?
                         ( _clear.hovered && -_main.x - _.space >= _card.width / 4 || -_main.x - _.space > _card.width / 2):
@@ -142,68 +142,28 @@ Custom.Angulia {
                         onExited: _clear.hovered = false
                     }
                 }
-                Custom.Rectangle {
+                Card {
                     id: _main
                     implicitWidth: _card.width
                     implicitHeight: _card.height
                     radius: _.radius
                     color: _.cardColor
-                    textColor: _.textColor
+                    activeColor: _.textColor
                     active: false
-                    IconImage {
-                        id: _image
-                        x: (
-                            _.notificationIsVertical ?
-                            anchors.leftMargin:
-                            Math.max((parent.width - width) / 2, anchors.leftMargin)
-                        )
-                        y: (
-                            _.notificationIsVertical ?
-                            Math.max((parent.height - height) / 2, anchors.topMargin):
-                            anchors.topMargin
-                        )
-                        anchors.margins: _.space
-                        implicitSize: _.notificationImageSize
-                        source: _card.modelData.image || Quickshell.iconPath(_card.modelData.appIcon, true) || ""
-                        visible: status === Image.Ready && source != ""
-                    }
-                    Item {
-                        y: (
-                            _.notificationIsVertical ?
-                            Math.max((parent.height - height) / 2, anchors.topMargin):
-                            anchors.topMargin
-                        )
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        implicitHeight: _body.text === "" ? _summary.height: _summary.height + _body.height
-                        anchors.topMargin: _image.visible && !_.notificationIsVertical ? _image.height + _.space * 2: _.space
-                        anchors.leftMargin: _image.visible && _.notificationIsVertical ? _image.width + _.space * 2: _.space
-                        anchors.margins: _.space
-                        Text {
-                            id: _summary
-                            anchors.top: parent.top
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            text: _card.modelData.summary
-                            color: _.textColor
-                            font: _.notificationSummaryFont
-                            elide: Text.ElideRight
-                            wrapMode: Text.WrapAnywhere
-                            maximumLineCount: _card.modelData.urgency === Services.Notifications.critical ? 0: 2
-                        }
-                        Text {
-                            id: _body
-                            anchors.top: _summary.bottom
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            text: _card.modelData.body
-                            color: _.textColor
-                            font: _.notificationBodyFont
-                            elide: Text.ElideRight
-                            wrapMode: Text.WrapAnywhere
-                            maximumLineCount: _card.modelData.urgency === Services.Notifications.critical ? 0: 3
-                        }
-                    }
+                    space: _.space
+                    isVertical: _.isVertical
+
+                    iconSize: notification.iconSize
+                    iconSource: _card.modelData.image || Quickshell.iconPath(_card.modelData.appIcon, true)
+
+                    topText: _card.modelData.summary
+                    topFont: _.notificationSummaryFont
+                    topMaximumLineCount: _card.modelData.urgency === Notifications.critical ? 0: 2
+
+                    bottomText: _card.modelData.body
+                    bottomFont: _.notificationBodyFont
+                    bottomMaximumLineCount: _card.modelData.urgency === Notifications.critical ? 0: 3
+
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton

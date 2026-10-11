@@ -8,11 +8,12 @@ Angulia {
 
     property var clock: (Settings.clock)
     readonly property var bar: (Settings.bar)
+    property font textFont: (_.clock.font)
 
     implicitWidth: isVertical ? bar.width: clock.width
     implicitHeight: isVertical ? clock.height: bar.height
 
-    customX: parent.width / 2 - implicitWidth / 2
+    customX: parent.width / 2
     customY: parent.height
 
     Text {
@@ -20,7 +21,7 @@ Angulia {
         rotation: _.textRotation
         text: Qt.formatDateTime(_clock.date, "hh:mm")
         color: _.textColor
-        font: _.clock.font
+        font: _.textFont
         SystemClock {
             id: _clock
             precision: SystemClock.Minutes

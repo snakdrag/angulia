@@ -7,22 +7,22 @@ Rectangle {
 
     readonly property string _itemName: ("Angulia")
     readonly property Region region: (_region)
-    Region {
-        id: _region
-        item: _
-    }
+    Region { id: _region; item: _ }
+
+    property bool show: (true)
 
     property real customX: (0)
     property real customY: (0)
 
-    x: Math.max(edge + float, Math.min(parent.width - edge - float - implicitWidth, customX))
-    y: Math.max(edge + float, Math.min(parent.height - edge - float - implicitHeight, customY))
+    anchors.margins: edge + float
+    x: Math.max(anchors.leftMargin, Math.min(parent.width - implicitWidth - anchors.rightMargin, customX - implicitWidth / 2))
+    y: Math.max(anchors.topMargin, Math.min(parent.height - implicitHeight - anchors.bottomMargin, customY - implicitHeight / 2))
 
     property bool isVertical: (false)
-    readonly property bool isTop: (y <= edge + float && !isVertical)
-    readonly property bool isLeft: (x <= edge + float && isVertical)
-    readonly property bool isRight: (x + implicitWidth >= parent.width - edge - float && isVertical)
-    readonly property bool isBottom: (y + implicitHeight >= parent.height - edge - float && !isVertical)
+    readonly property bool isTop: (y <= anchors.topMargin && !isVertical)
+    readonly property bool isLeft: (x <= anchors.leftMargin && isVertical)
+    readonly property bool isRight: (x + implicitWidth >= parent.width - anchors.rightMargin && isVertical)
+    readonly property bool isBottom: (y + implicitHeight >= parent.height - anchors.bottomMargin && !isVertical)
     property int textRotation: (0)
 
     property bool isTopLeft: (false)
@@ -57,13 +57,13 @@ Rectangle {
     property int edge: (Settings.edge)
     property int space: (Settings.space)
     property int float: (Settings.float)
-    implicitWidth: edge
-    implicitHeight: edge
+    implicitWidth: show ? edge: 0
+    implicitHeight: show ? edge: 0
     width: implicitWidth
     height: implicitHeight
     property int cardWidth: (edge)
     property int cardHeight: (edge)
-    property int imageSize: (edge)
+    property int iconSize: (edge)
 
     // content
     property int _contentWidth: (0)
@@ -85,8 +85,10 @@ Rectangle {
 
     // signal
     signal positionChanged()
-    onXChanged: positionChanged()
-    onYChanged: positionChanged()
+    // onXChanged: positionChanged()
+    // onYChanged: positionChanged()
+    onImplicitWidthChanged: positionChanged()
+    onImplicitHeightChanged: positionChanged()
     onPositionChanged: {check(); set()}
 
     RoundCorners {}
