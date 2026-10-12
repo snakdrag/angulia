@@ -25,6 +25,11 @@ PanelWindow {
     Item {
         id: _item
         anchors.fill: parent
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
+            onClicked: ipcCloseAll()
+        }
     }
 
     WlrLayershell.keyboardFocus: keyboardFocus ? WlrKeyboardFocus.Exclusive: WlrKeyboardFocus.None

@@ -58,10 +58,13 @@ Rectangle {
     property int edge: (Settings.edge)
     property int space: (Settings.space)
     property int float: (Settings.float)
+
     implicitWidth: edge
     implicitHeight: edge
+
     width: show ? Math.min(implicitWidth, parent.width / 2 - edge - space * 2 - (isTop || isBottom ? 0: float)): 0
     height: show ? Math.min(implicitHeight, parent.height / 2 - edge - space * 2 - (isLeft || isRight ? 0: float)): 0
+
     property int cardWidth: (_data.cardWidth || 0)
     property int cardHeight: (_data.cardHeight || 0)
     property int imageWidth: (_data.imageWidth || _data.iconSize || 0)
@@ -77,8 +80,8 @@ Rectangle {
     // signal
     signal positionChanged()
 
-    onXChanged: positionChanged()
-    onYChanged: positionChanged()
+    // onXChanged: positionChanged()
+    // onYChanged: positionChanged()
     onWidthChanged: positionChanged()
     onHeightChanged: positionChanged()
     onPositionChanged: check()

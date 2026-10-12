@@ -17,7 +17,7 @@ installation
 
 ```bash
 cd ~/.config/quickshell && git clone https://github.com/snakdrag/angulia
-cd angulia
+cd angulia/script
 chmod +x setup.sh
 ./setup.sh
 ```

@@ -52,7 +52,7 @@ Angulia {
                     }
                     else if (mouse.button === Qt.RightButton && _card.modelData.hasMenu)
                     {
-                        _card.modelData.display(_Top, _.x + _card.x, _.y + _card.y)
+                        // _card.modelData.display(_Top, _.x + _card.x, _.y + _card.y)
                     }}
                     onEntered: _card.active = true
                     onExited: _card.active = false

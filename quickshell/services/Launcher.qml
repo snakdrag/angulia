@@ -29,7 +29,7 @@ Singleton {
         command: ["sh", "-c", "command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"]
     },
     Command {
-        icon: "image"
+        icon: "preferences-desktop-wallpaper"
         name: "Wallpaper switcher"
         command: ["sh", "-c", "qs ipc call wallpaperswitcher open"]
     }]
