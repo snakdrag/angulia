@@ -9,14 +9,13 @@ Angulia {
 
     _data: Settings.systemtray
 
-    implicitWidth: noContent ? 0: Math.max(contentWidth, cardWidth) + space * 2
-    implicitHeight: noContent ? 0: Math.max(contentHeight, cardHeight) + space * 2
+    implicitWidth: Math.max(_list.contentWidth, cardWidth) + space * 2
+    implicitHeight: Math.max(_list.contentHeight, cardHeight) + space * 2
 
     cardWidth: (isVertical ? bar.height: bar.width) - space * 2
     cardHeight: (isVertical ? bar.width: bar.height) - space * 2
 
-    _contentWidth: _list.contentWidth
-    _contentHeight: _list.contentHeight
+    show: _list.contentWidth !== 0 && _list.contentHeight !== 0
 
     ClippingRectangle {
         anchors.fill: parent

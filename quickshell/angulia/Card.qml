@@ -54,7 +54,6 @@ CustomRectangle {
             height: _.imageHeight
             sourceSize.width: _.imageWidth
             sourceSize.height: _.imageHeight
-            asynchronous: true
             source: _.imageSource || ""
             fillMode: _.imageFillMode
             visible: status === Image.Ready && source != ""

@@ -60,23 +60,12 @@ Rectangle {
     property int float: (Settings.float)
     implicitWidth: edge
     implicitHeight: edge
-    width: show ? implicitWidth: 0
-    height: show ? implicitHeight: 0
+    width: show ? Math.min(implicitWidth, parent.width / 2 - edge - space * 2 - (isTop || isBottom ? 0: float)): 0
+    height: show ? Math.min(implicitHeight, parent.height / 2 - edge - space * 2 - (isLeft || isRight ? 0: float)): 0
     property int cardWidth: (_data.cardWidth || 0)
     property int cardHeight: (_data.cardHeight || 0)
     property int imageWidth: (_data.imageWidth || _data.iconSize || 0)
     property int imageHeight: (_data.imageHeight || _data.iconSize || 0)
-
-    // content
-    property int _contentWidth: (0)
-    property int _contentHeight: (0)
-    readonly property int contentWidth: (
-        Math.min(_contentWidth, parent.width / 2 - edge - space * 2 - (isTop || isBottom ? 0: float))
-    )
-    readonly property int contentHeight: (
-        Math.min(_contentHeight, parent.height / 2 - edge - space * 2 - (isLeft || isRight ? 0: float))
-    )
-    readonly property bool noContent: (contentWidth === 0 || contentHeight === 0)
 
     // radius
     radius: Settings.radius

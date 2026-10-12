@@ -4,26 +4,32 @@ import "../angulia"
 Item {
     anchors.fill: parent
     Angulia {
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
         anchors.margins: edge
         anchors.topMargin: 0
-        implicitWidth: parent.width - edge * 2
     }
     Angulia {
-        customY: parent.height
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
         anchors.margins: edge
         anchors.bottomMargin: 0
-        implicitWidth: parent.width - edge * 2
     }
     Angulia {
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
         anchors.margins: 0
-        implicitHeight: parent.height
         forceLeftTop: true
         forceLeftBottom: true
     }
     Angulia {
-        customX: parent.width
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
         anchors.margins: 0
-        implicitHeight: parent.height
         forceRightTop: true
         forceRightBottom: true
     }

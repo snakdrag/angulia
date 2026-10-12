@@ -11,22 +11,22 @@ Angulia {
 
     _data: Settings.launcher
 
-    implicitWidth: Math.max(contentWidth, cardWidth) + space * 2
-    implicitHeight: Math.min(tempHeight, parent.height / 2 - edge - (isLeft || isRight ? 0: float))
+    implicitWidth: Math.max(_list.contentWidth, cardWidth) + space * 2
+    implicitHeight: (noContent ? 0: Math.max(_list.contentHeight, (isVertical ? 0: cardHeight)) + space) + _input.height + space * 2
 
-    _contentWidth: _list.contentWidth
-    _contentHeight: _list.contentHeight
+    property bool noContent: (_list.contentWidth === 0 || _list.contentHeight === 0)
 
     property int selectedIndex: (0)
-    readonly property int tempHeight: _input.height + space * 2 + (noContent ? 0: Math.max(contentHeight, cardHeight) + space)
 
     show: false
+    readonly property IpcHandler ipc: (_ipc)
 
     IpcHandler {
         id: _ipc
         target: "launcher"
         function open()
         {
+            ipcCloseAll()
             _.show = true
             _.selectedIndex = 0
             _search.text = ""
