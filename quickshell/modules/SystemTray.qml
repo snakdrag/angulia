@@ -40,7 +40,7 @@ Angulia {
                 imageHeight: _.imageHeight
                 imageSource: modelData.icon
                 centerIn: true
-                CustomMouseArea {
+                Mouse {
                     onClicked: mouse => {
                     if (mouse.button === Qt.LeftButton)
                     {

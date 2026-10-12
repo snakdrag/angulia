@@ -31,7 +31,7 @@ Angulia {
                 readonly property bool haveAction: (modelData.actions.length > 0)
                 implicitWidth: _.cardWidth
                 implicitHeight: Math.max(_.cardHeight, _main.textHeight + _.space * 2)
-                CustomRectangle {
+                Button {
                     property bool hovered: (false)
                     activeColor: _.textColor
                     anchors.top: parent.top
@@ -65,7 +65,7 @@ Angulia {
                             ((_main.y - _.space - _card.height / 8) / _card.height * 8)
                         )
                     }
-                    CustomMouseArea {
+                    Mouse {
                         onClicked: {
                             if (_card.haveAction)
                             {
@@ -80,7 +80,7 @@ Angulia {
                         onExited: parent.hovered = false
                     }
                 }
-                CustomRectangle {
+                Button {
                     property bool hovered: (false)
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
@@ -114,7 +114,7 @@ Angulia {
                             ((-_main.y - _.space - _card.height / 8) / _card.height * 8)
                         )
                     }
-                    CustomMouseArea {
+                    Mouse {
                         onClicked: _card.modelData.dismiss()
                         onEntered: parent.hovered = true
                         onExited: parent.hovered = false
@@ -142,7 +142,7 @@ Angulia {
                     bottomFont: _._data.bodyFont
                     bottomMaximumLineCount: _card.modelData.urgency === Notifications.critical ? 0: 3
 
-                    CustomMouseArea {
+                    Mouse {
                         cursorShape: Qt.ArrowCursor
                         onEntered: _main.active = true
                         onExited: _main.active = false

@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell.Widgets
 
-CustomRectangle {
+Button {
     id: _
     property bool isVertical: (false)
     property bool centerIn: (false)

@@ -157,11 +157,7 @@ Angulia {
                 imageSource: modelData.path
                 imageFillMode: Image.PreserveAspectCrop
 
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
+                Mouse {
                     onClicked: {
                         _card.modelData.execute()
                         _ipc.close()

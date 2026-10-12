@@ -16,6 +16,7 @@ Rectangle {
 
         opacity: _.active ? 0.1: 0
         color: _.activeColor
+        Behavior on opacity { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
         z: 1
     }
 }
