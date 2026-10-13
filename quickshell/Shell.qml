@@ -37,4 +37,5 @@ Root {
             Modules.Edge { id: _edge }
         }
     }
+    LockScreen {}
 }

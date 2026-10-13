@@ -12,7 +12,7 @@ Angulia {
     _data: Settings.wallpaperswitcher
 
     implicitWidth: Math.max(_list.contentWidth, cardWidth) + space * 2
-    implicitHeight: (noContent ? 0: Math.max(_list.contentHeight, (isVertical ? 0: cardHeight)) + space) + _input.height + space * 2
+    implicitHeight: (noContent ? 0: Math.max(_list.contentHeight, (isVertical ? 0: cardHeight)) + space) + _field.height
 
     property bool noContent: (_list.contentWidth === 0 || _list.contentHeight === 0)
 
@@ -29,8 +29,8 @@ Angulia {
             ipcCloseAll()
             _.show = true
             _.selectedIndex = 0
-            _search.text = ""
-            _search.forceActiveFocus()
+            _field.searchText = ""
+            _field.forceActiveFocus()
         }
         function close()
         {
@@ -48,83 +48,63 @@ Angulia {
         }
     }
 
-    Rectangle {
-        id: _input
-        y: (
-            _._data.inputAtTop ?
-            anchors.topMargin:
-            Math.max(parent.height - implicitHeight - anchors.bottomMargin, anchors.topMargin)
-        )
+    TextField {
+        id: _field
+        y: _._data.inputAtTop ? 0: Math.max(parent.height - height - anchors.bottomMargin, 0)
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.margins: _.space
-        implicitHeight: _.show ? _.bar.height - _.space * 2: 0
+        implicitHeight: _.bar.height
         radius: _.radius
-        color: _.cardColor
+        space: _.space
+        textColor: _.textColor
+        inputColor: _.cardColor
+        clearText: "Search..."
         visible: _.show
-        TextInput {
-            id: _search
-            anchors.fill: parent
-            anchors.leftMargin: _.space
-            anchors.rightMargin: _.space
-            verticalAlignment: TextInput.AlignVCenter
-            font: _._data.font
-            color: _.textColor
-            clip: true
-            onTextChanged: {_.selectedIndex = 0}
-            Keys.onEscapePressed: {_ipc.close()}
-            Keys.onUpPressed: {
-                if (_list.count > 0)
-                {
-                    _.selectedIndex = Math.max(_.selectedIndex - 1, 0)
-                    _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
-                }
+        font: _._data.font
+        onTextChanged: {_.selectedIndex = 0}
+        onEscapePressed: {_ipc.close()}
+        onUpPressed: {
+            if (_list.count > 0)
+            {
+                _.selectedIndex = Math.max(_.selectedIndex - 1, 0)
+                _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
             }
-            Keys.onDownPressed: {
-                if (_list.count > 0)
-                {
-                    _.selectedIndex = Math.min(_.selectedIndex + 1, _list.count - 1)
-                    _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
-                }
+        }
+        onDownPressed: {
+            if (_list.count > 0)
+            {
+                _.selectedIndex = Math.min(_.selectedIndex + 1, _list.count - 1)
+                _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
             }
-            Keys.onLeftPressed: {
-                if (_list.count > 0)
-                {
-                    _.selectedIndex = Math.max(_.selectedIndex - 1, 0)
-                    _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
-                }
+        }
+        onLeftPressed: {
+            if (_list.count > 0)
+            {
+                _.selectedIndex = Math.max(_.selectedIndex - 1, 0)
+                _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
             }
-            Keys.onRightPressed: {
-                if (_list.count > 0)
-                {
-                    _.selectedIndex = Math.min(_.selectedIndex + 1, _list.count - 1)
-                    _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
-                }
+        }
+        onRightPressed: {
+            if (_list.count > 0)
+            {
+                _.selectedIndex = Math.min(_.selectedIndex + 1, _list.count - 1)
+                _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
             }
-            Keys.onReturnPressed: {
-                if (_list.count > 0)
-                {
-                    _list.currentItem.modelData.execute()
-                    _ipc.close()
-                }
-                else {_ipc.close()}
+        }
+        onReturnPressed: {
+            if (_list.count > 0)
+            {
+                _list.currentItem.modelData.execute()
+                _ipc.close()
             }
-            Text {
-                anchors.fill: parent
-                verticalAlignment: Text.AlignVCenter
-                text: "Search..."
-                font: _search.font
-                color: _.textColor
-                opacity: 0.5
-                visible: _search.text === ""
-            }
+            else {_ipc.close()}
         }
     }
     ClippingRectangle {
         anchors.fill: parent
         anchors.margins: _.space
-        anchors.topMargin: _._data.inputAtTop ? _input.height + _.space * 2: _.space
-        anchors.bottomMargin: _._data.inputAtTop ? _.space: _input.height + _.space * 2
+        anchors.topMargin: _._data.inputAtTop ? _field.height: _.space
+        anchors.bottomMargin: _._data.inputAtTop ? _.space: _field.height
         radius: _.radius
         color: _.backgroundColor
         visible: _.show
@@ -134,7 +114,7 @@ Angulia {
             isVertical: _.isVertical
             currentIndex: _.selectedIndex
             displaced: null
-            model: ScriptModel { values: WallpaperSwitcher.search(_search.text).sort((a, b) => a.name.localeCompare(b.name)) }
+            model: ScriptModel { values: WallpaperSwitcher.search(_field.searchText).sort((a, b) => a.name.localeCompare(b.name)) }
             delegate: Card {
                 id: _card
                 required property var modelData
