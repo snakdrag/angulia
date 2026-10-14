@@ -1,7 +1,7 @@
 pragma Singleton
 import QtQuick
-import Quickshell
 import Qt.labs.folderlistmodel
+import Quickshell
 
 Singleton {
     readonly property string wallpaperFile: ("~/Pictures/Wallpapers")
@@ -37,6 +37,10 @@ Singleton {
 
     function search(text)
     {
+        // if (text === "")
+        // {
+        //     return []
+        // }
         return [...wallpapers].filter(entry => {
         let i = 0;
         return [...text.toLowerCase()].every(

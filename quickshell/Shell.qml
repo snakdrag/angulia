@@ -7,11 +7,6 @@ Root {
     id: root
     childrens: ([..._edge.children, ..._overlay.children, ..._top.children, ])
     modules: ([..._top.children, ])
-    function ipcCloseAll()
-    {
-        _launcher.ipc.close()
-        _wallpaperswitcher.ipc.close()
-    }
     Layer {
         id: _Overlay
         modules: _overlay

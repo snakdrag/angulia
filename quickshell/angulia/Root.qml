@@ -54,6 +54,16 @@ ShellRoot {
         implicitHeight: 0
     }
 
+    function ipcCloseAll()
+    {
+        for (let i = 0; i < childrens.length; i++) {
+            let child = childrens[i]
+            if (child && child.ipc !== undefined)
+            {
+                child.ipc.close()
+            }
+        }
+    }
     function set()
     {
         Qt.callLater(() => {

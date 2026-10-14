@@ -2,12 +2,13 @@ import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import "angulia"
-import "services"
+import "states"
 import "../settings"
 
 ShellRoot {
     id: _
     WlSessionLock {
+        id: _lock
         locked: LockScreen.open
         WlSessionLockSurface {
             Image {
@@ -17,19 +18,22 @@ ShellRoot {
                 sourceSize.height: parent.height
                 fillMode: Image.PreserveAspectCrop
             }
-            TextField {
-                x: parent.width / 2 - width / 2
-                y: parent.height - height - Settings.edge
-                echoMode: TextInput.Password
+            Angulia {
+                customX: parent.width / 2
+                customY: parent.height
                 implicitWidth: 300
-                implicitHeight: Settings.bar.height
-                space: Settings.space
-                radius: Settings.radius
-                color: Settings.colors.surface
-                textColor: Settings.colors.on_surface
-                inputColor: Settings.colors.surface_container
-                horizontalAlignment: TextInput.AlignHCenter
-                onReturnPressed: LockScreen.authenticate(this.searchText)
+                implicitHeight: bar.height
+                TextField {
+                    anchors.fill: parent
+                    echoMode: TextInput.Password
+                    space: parent.space
+                    color: parent.textColor
+                    backgroundColor: parent.cardColor
+                    radius: parent.radius
+                    verticalAlignment: TextInput.AlignVCenter
+                    horizontalAlignment: TextInput.AlignHCenter
+                    Keys.onReturnPressed: {LockScreen.authenticate(this.text); this.text = ""}
+                }
             }
         }
     }
