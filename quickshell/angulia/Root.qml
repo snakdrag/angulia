@@ -13,51 +13,41 @@ ShellRoot {
     property bool _right: (false)
     property bool _bottom: (false)
 
-    readonly property int topExclusiveZone: (
-        Settings.gaps_out + Settings.edge +
-        (_top ? Settings.float + Settings.bar.height: 0)
-    )
-    readonly property int leftExclusiveZone: (
-        Settings.gaps_out + Settings.edge +
-        (_left ? Settings.float + Settings.bar.width: 0)
-    )
-    readonly property int rightExclusiveZone: (
-        Settings.gaps_out + Settings.edge +
-        (_right ? Settings.float + Settings.bar.width: 0)
-    )
-    readonly property int bottomExclusiveZone: (
-        Settings.gaps_out + Settings.edge +
-        (_bottom ? Settings.float + Settings.bar.height: 0)
-    )
+    readonly property int gaps_out: (Settings.gaps_out)
+    readonly property int topExclusiveZone: (Settings.edge + (this._top ? Settings.float + Settings.bar.height: 0))
+    readonly property int leftExclusiveZone: (Settings.edge + (this._left ? Settings.float + Settings.bar.width: 0))
+    readonly property int rightExclusiveZone: (Settings.edge + (this._right ? Settings.float + Settings.bar.width: 0))
+    readonly property int bottomExclusiveZone: (Settings.edge + (this._bottom ? Settings.float + Settings.bar.height: 0))
+
     PanelWindow {
         anchors.top: true
-        exclusiveZone: _.topExclusiveZone
+        exclusiveZone: _.gaps_out + _.topExclusiveZone
         implicitWidth: 0
         implicitHeight: 0
     }
     PanelWindow {
         anchors.left: true
-        exclusiveZone: _.leftExclusiveZone
+        exclusiveZone: _.gaps_out + _.leftExclusiveZone
         implicitWidth: 0
         implicitHeight: 0
     }
     PanelWindow {
         anchors.right: true
-        exclusiveZone: _.rightExclusiveZone
+        exclusiveZone: _.gaps_out + _.rightExclusiveZone
         implicitWidth: 0
         implicitHeight: 0
     }
     PanelWindow {
         anchors.bottom: true
-        exclusiveZone: _.bottomExclusiveZone
+        exclusiveZone: _.gaps_out + _.bottomExclusiveZone
         implicitWidth: 0
         implicitHeight: 0
     }
 
     function ipcCloseAll()
     {
-        for (let i = 0; i < childrens.length; i++) {
-            let child = childrens[i]
+        for (let i = 0; i < this.childrens.length; i++) {
+            let child =this. childrens[i]
             if (child && child.ipc !== undefined)
             {
                 child.ipc.close()
@@ -68,22 +58,22 @@ ShellRoot {
     {
         Qt.callLater(() => {
         let angulia = []
-        for (let i = 0; i < modules.length; i++) {
-            let module = modules[i]
+        for (let i = 0; i < this.modules.length; i++) {
+            let module = this.modules[i]
             if (module && module._itemName === "Angulia")
             {
                 angulia.push(module)
             }
         }
-        _top = false
-        _left = false
-        _right = false
-        _bottom = false
+        this._top = false
+        this._left = false
+        this._right = false
+        this._bottom = false
         for (let i = 0; i < angulia.length; i++) {
-            _top = _top || angulia[i].isTop
-            _left = _left || angulia[i].isLeft
-            _right = _right || angulia[i].isRight
-            _bottom = _bottom || angulia[i].isBottom
+            this._top = this._top || angulia[i].isTop
+            this._left = this._left || angulia[i].isLeft
+            this._right = this._right || angulia[i].isRight
+            this._bottom = this._bottom || angulia[i].isBottom
         }})
     }
     function check()
@@ -91,8 +81,8 @@ ShellRoot {
         Qt.callLater(() => {
         let tolerance = 0
         let angulia = []
-        for (let i = 0; i < childrens.length; i++) {
-            let child = childrens[i]
+        for (let i = 0; i < this.childrens.length; i++) {
+            let child = this.childrens[i]
             if (child && child._itemName === "Angulia")
             {
                 angulia.push(child)

@@ -13,18 +13,24 @@ Rectangle {
 
     property bool show: (true)
 
-    property real customX: (_data.x || 0)
-    property real customY: (_data.y || 0)
+    property real customX: (this._data.x || 0)
+    property real customY: (this._data.y || 0)
 
-    anchors.margins: edge + float
-    x: Math.max(anchors.leftMargin, Math.min(parent.width - width - anchors.rightMargin, customX - width / 2))
-    y: Math.max(anchors.topMargin, Math.min(parent.height - height - anchors.bottomMargin, customY - height / 2))
+    anchors.margins: this.edge + this.float
+    x: Math.max(
+        this.anchors.leftMargin,
+        Math.min(parent.width - this.width - this.anchors.rightMargin, this.customX - this.width / 2)
+    )
+    y: Math.max(
+        this.anchors.topMargin,
+        Math.min(parent.height - this.height - this.anchors.bottomMargin, this.customY - this.height / 2)
+    )
 
-    property bool isVertical: (_data.isVertical || false)
-    readonly property bool isTop: (y <= anchors.topMargin && !isVertical)
-    readonly property bool isLeft: (x <= anchors.leftMargin && isVertical)
-    readonly property bool isRight: (x + implicitWidth >= parent.width - anchors.rightMargin && isVertical)
-    readonly property bool isBottom: (y + implicitHeight >= parent.height - anchors.bottomMargin && !isVertical)
+    property bool isVertical: (this._data.isVertical || false)
+    readonly property bool isTop: (y <= this.anchors.topMargin && !isVertical)
+    readonly property bool isLeft: (x <= this.anchors.leftMargin && isVertical)
+    readonly property bool isRight: (x + this.width >= parent.width - this.anchors.rightMargin && this.isVertical)
+    readonly property bool isBottom: (y + this.height >= parent.height - this.anchors.bottomMargin && !this.isVertical)
 
     property bool isTopLeft: (false)
     property bool isTopRight: (false)
@@ -59,40 +65,46 @@ Rectangle {
     property int space: (Settings.space)
     property int float: (Settings.float)
 
-    implicitWidth: edge
-    implicitHeight: edge
+    implicitWidth: this.edge
+    implicitHeight: this.edge
 
-    width: show ? Math.min(implicitWidth, parent.width / 2 - edge - space * 2 - (isTop || isBottom ? 0: float)): 0
-    height: show ? Math.min(implicitHeight, parent.height / 2 - edge - space * 2 - (isLeft || isRight ? 0: float)): 0
+    width: this.show ? Math.min(
+        implicitWidth,
+        parent.width / 2 - this.edge - this.space * 2 - (this.isTop || this.isBottom ? 0: this.float)
+    ): 0
+    height: this.show ? Math.min(
+        implicitHeight,
+        parent.height / 2 - this.edge - this.space * 2 - (this.isLeft || this.isRight ? 0: this.float)
+    ): 0
 
-    property int cardWidth: (_data.cardWidth || 0)
-    property int cardHeight: (_data.cardHeight || 0)
-    property int imageWidth: (_data.imageWidth || _data.iconSize || 0)
-    property int imageHeight: (_data.imageHeight || _data.iconSize || 0)
+    property int cardWidth: (this._data.cardWidth || 0)
+    property int cardHeight: (this._data.cardHeight || 0)
+    property int imageWidth: (this._data.imageWidth || this._data.iconSize || 0)
+    property int imageHeight: (this._data.imageHeight || this._data.iconSize || 0)
 
     // radius
     radius: Settings.radius
-    topLeftRadius: (isTopLeft || isLeftTop || forceTopLeft || forceLeftTop) ? 0: radius
-    topRightRadius: (isTopRight || isRightTop || forceTopRight || forceRightTop) ? 0: radius
-    bottomLeftRadius: (isBottomLeft || isLeftBottom || forceBottomLeft || forceLeftBottom) ? 0: radius
-    bottomRightRadius: (isBottomRight || isRightBottom || forceBottomRight || forceRightBottom) ? 0: radius
+    topLeftRadius: (this.isTopLeft || this.isLeftTop || this.forceTopLeft || this.forceLeftTop) ? 0: this.radius
+    topRightRadius: (this.isTopRight || this.isRightTop || this.forceTopRight || this.forceRightTop) ? 0: this.radius
+    bottomLeftRadius: (this.isBottomLeft || this.isLeftBottom || this.forceBottomLeft || this.forceLeftBottom) ? 0: this.radius
+    bottomRightRadius: (this.isBottomRight || this.isRightBottom || this.forceBottomRight || this.forceRightBottom) ? 0: this.radius
 
     // signal
     signal positionChanged()
 
     // onXChanged: positionChanged()
     // onYChanged: positionChanged()
-    onWidthChanged: positionChanged()
-    onHeightChanged: positionChanged()
-    onPositionChanged: check()
+    onWidthChanged: this.positionChanged()
+    onHeightChanged: this.positionChanged()
+    onPositionChanged: root.check()
 
     signal directionChanged()
 
-    onIsTopChanged: directionChanged()
-    onIsLeftChanged: directionChanged()
-    onIsRightChanged: directionChanged()
-    onIsBottomChanged: directionChanged()
-    onDirectionChanged: set()
+    onIsTopChanged: this.directionChanged()
+    onIsLeftChanged: this.directionChanged()
+    onIsRightChanged: this.directionChanged()
+    onIsBottomChanged: this.directionChanged()
+    onDirectionChanged: root.set()
 
     RoundCorners {}
 }

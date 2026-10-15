@@ -1,7 +1,6 @@
 import Quickshell.Services.Pam
 
 PamContext {
-    id: _
     config: "login"
     property string text: ("")
     property bool lock: (false)

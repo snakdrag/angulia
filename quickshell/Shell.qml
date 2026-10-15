@@ -1,7 +1,7 @@
-import QtQuick
+import QtQuick // for Item
 import Quickshell // for Region
+import "angulia" // for Root
 import "modules" as Modules
-import "angulia"
 
 Root {
     id: root
@@ -10,7 +10,7 @@ Root {
     Layer {
         id: _Overlay
         modules: _overlay
-        layer: layers.Overlay
+        layer: this.layers.Overlay
         keyboardFocus: _launcher.show || _wallpaperswitcher.show
         Item {
             id: _overlay
@@ -23,7 +23,7 @@ Root {
     Layer {
         id: _Top
         modules: _top
-        layer: layers.Top
+        layer: this.layers.Top
         Item {
             id: _top
             anchors.fill: parent

@@ -20,7 +20,7 @@ Button {
     property int bottomMaximumLineCount: (0)
     property font bottomFont: ({ family: "Inter", bold: false, })
 
-    property int horizontalAlignment: (isVertical ? Text.AlignLeft: Text.AlignHCenter)
+    property int horizontalAlignment: (this.isVertical ? Text.AlignLeft: Text.AlignHCenter)
 
     Behavior on x { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
     Behavior on y { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
@@ -30,10 +30,10 @@ Button {
     ClippingRectangle {
         anchors.fill: parent
 
-        topLeftRadius: _.topLeftRadius
-        topRightRadius: _.topRightRadius
-        bottomLeftRadius: _.bottomLeftRadius
-        bottomRightRadius: _.bottomRightRadius
+        topLeftRadius: parent.topLeftRadius
+        topRightRadius: parent.topRightRadius
+        bottomLeftRadius: parent.bottomLeftRadius
+        bottomRightRadius: parent.bottomRightRadius
 
         color: "transparent"
 
@@ -41,13 +41,13 @@ Button {
             id: _image
             x: (
                 _.isVertical && !_.centerIn ?
-                (anchors.leftMargin):
-                ((parent.width - width) / 2)
+                (this.anchors.leftMargin):
+                ((parent.width - this.width) / 2)
             )
             y: (
-                _.isVertical || centerIn ?
-                ((parent.height - height) / 2):
-                (anchors.topMargin)
+                _.isVertical || _.centerIn ?
+                ((parent.height - this.height) / 2):
+                (this.anchors.topMargin)
             )
             anchors.margins: _.space
             width: _.imageWidth
@@ -56,13 +56,13 @@ Button {
             sourceSize.height: _.imageHeight
             source: _.imageSource || ""
             fillMode: _.imageFillMode
-            visible: status === Image.Ready && source != ""
+            visible: this.status === Image.Ready && this.source != ""
         }
         Item {
             y: (
                 _.isVertical ?
-                Math.max((parent.height - height) / 2, anchors.topMargin):
-                anchors.topMargin
+                Math.max((parent.height - this.height) / 2, this.anchors.topMargin):
+                this.anchors.topMargin
             )
             anchors.left: parent.left
             anchors.right: parent.right

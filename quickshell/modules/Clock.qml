@@ -8,8 +8,8 @@ Angulia {
 
     _data: Settings.clock
 
-    implicitWidth: isVertical ? bar.width: _data.width
-    implicitHeight: isVertical ? _data.height: bar.height
+    implicitWidth: this.isVertical ? this.bar.width: this._data.width
+    implicitHeight: this.isVertical ? this._data.height: this.bar.height
 
     Text {
         anchors.centerIn: parent

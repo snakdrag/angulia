@@ -41,7 +41,7 @@ Singleton {
         }
         if (text[0] === ">")
         {
-            return [...commands].filter(entry => {
+            return [...this.commands].filter(entry => {
             let i = 0;
             return [...text.slice(1).toLowerCase()].every(
                 char => (i = entry.name.toLowerCase().indexOf(char, i)) !== -1 && i++ >= 0

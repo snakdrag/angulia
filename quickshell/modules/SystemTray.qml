@@ -9,11 +9,11 @@ Angulia {
 
     _data: Settings.systemtray
 
-    implicitWidth: Math.max(_list.contentWidth, cardWidth) + space * 2
-    implicitHeight: Math.max(_list.contentHeight, cardHeight) + space * 2
+    implicitWidth: Math.max(_list.contentWidth, this.cardWidth) + this.space * 2
+    implicitHeight: Math.max(_list.contentHeight, this.cardHeight) + this.space * 2
 
-    cardWidth: (isVertical ? bar.height: bar.width) - space * 2
-    cardHeight: (isVertical ? bar.width: bar.height) - space * 2
+    cardWidth: (this.isVertical ? this.bar.height: this.bar.width) - this.space * 2
+    cardHeight: (this.isVertical ? this.bar.width: this.bar.height) - this.space * 2
 
     show: _list.contentWidth !== 0 && _list.contentHeight !== 0
 
@@ -29,7 +29,6 @@ Angulia {
             isVertical: _.isVertical
             interactive: false
             delegate: Card {
-                id: _card
                 required property var modelData
                 implicitWidth: _.cardWidth
                 implicitHeight: _.cardHeight
@@ -38,24 +37,24 @@ Angulia {
                 radius: _.radius
                 imageWidth: _.imageWidth
                 imageHeight: _.imageHeight
-                imageSource: modelData.icon
+                imageSource: this.modelData.icon
                 centerIn: true
                 Mouse {
                     onClicked: mouse => {
                     if (mouse.button === Qt.LeftButton)
                     {
-                        _card.modelData.activate()
+                        parent.modelData.activate()
                     }
                     else if (mouse.button === Qt.MiddleButton)
                     {
-                        _card.modelData.secondaryActivate()
+                        parent.modelData.secondaryActivate()
                     }
-                    else if (mouse.button === Qt.RightButton && _card.modelData.hasMenu)
+                    else if (mouse.button === Qt.RightButton && parent.modelData.hasMenu)
                     {
-                        // _card.modelData.display(_Top, _.x + _card.x, _.y + _card.y)
+                        // parent.modelData.display(_Top, _.x + parent.x, _.y + parent.y)
                     }}
-                    onEntered: _card.active = true
-                    onExited: _card.active = false
+                    onEntered: parent.active = true
+                    onExited: parent.active = false
                 }
             }
         }

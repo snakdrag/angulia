@@ -1,7 +1,6 @@
 import QtQuick
 
 Item {
-    id: _
     anchors.fill: parent
 
     property real radius: (parent.radius)
@@ -26,59 +25,59 @@ Item {
     property bool forceBottomRight: (parent.forceBottomRight)
 
     RoundCorner {
-        anchors.top: _.top
-        anchors.right: _.left
-        color: _.color
-        radius: _.isLeftTop || _.forceLeftTop ? Math.min(_.radius, _.height / 2): 0
+        anchors.top: parent.top
+        anchors.right: parent.left
+        color: parent.color
+        radius: parent.isLeftTop || parent.forceLeftTop ? Math.min(parent.radius, parent.height / 2): 0
         rotation: 90
     }
     RoundCorner {
-        anchors.top: _.top
-        anchors.left: _.right
-        color: _.color
-        radius: _.isRightTop || _.forceRightTop ? Math.min(_.radius, _.height / 2): 0
+        anchors.top: parent.top
+        anchors.left: parent.right
+        color: parent.color
+        radius: parent.isRightTop || parent.forceRightTop ? Math.min(parent.radius, parent.height / 2): 0
         rotation: 0
     }
     RoundCorner {
-        anchors.left: _.left
-        anchors.bottom: _.top
-        color: _.color
-        radius: _.isTopLeft || _.forceTopLeft ? Math.min(_.radius, _.width / 2): 0
+        anchors.left: parent.left
+        anchors.bottom: parent.top
+        color: parent.color
+        radius: parent.isTopLeft || parent.forceTopLeft ? Math.min(parent.radius, parent.width / 2): 0
         rotation: 270
     }
     RoundCorner {
-        anchors.right: _.left
-        anchors.bottom: _.bottom
-        color: _.color
-        radius: _.isLeftBottom || _.forceLeftBottom ? Math.min(_.radius, _.height / 2): 0
+        anchors.right: parent.left
+        anchors.bottom: parent.bottom
+        color: parent.color
+        radius: parent.isLeftBottom || parent.forceLeftBottom ? Math.min(parent.radius, parent.height / 2): 0
         rotation: 180
     }
     RoundCorner {
-        anchors.right: _.right
-        anchors.bottom: _.top
-        color: _.color
-        radius: _.isTopRight || _.forceTopRight ? Math.min(_.radius, _.width / 2): 0
+        anchors.right: parent.right
+        anchors.bottom: parent.top
+        color: parent.color
+        radius: parent.isTopRight || parent.forceTopRight ? Math.min(parent.radius, parent.width / 2): 0
         rotation: 180
     }
     RoundCorner {
-        anchors.left: _.right
-        anchors.bottom: _.bottom
-        color: _.color
-        radius: _.isRightBottom || _.forceRightBottom ? Math.min(_.radius, _.height / 2): 0
+        anchors.left: parent.right
+        anchors.bottom: parent.bottom
+        color: parent.color
+        radius: parent.isRightBottom || parent.forceRightBottom ? Math.min(parent.radius, parent.height / 2): 0
         rotation: 270
     }
     RoundCorner {
-        anchors.top: _.bottom
-        anchors.left: _.left
-        color: _.color
-        radius: _.isBottomLeft || _.forceBottomLeft ? Math.min(_.radius, _.width / 2): 0
+        anchors.top: parent.bottom
+        anchors.left: parent.left
+        color: parent.color
+        radius: parent.isBottomLeft || parent.forceBottomLeft ? Math.min(parent.radius, parent.width / 2): 0
         rotation: 0
     }
     RoundCorner {
-        anchors.top: _.bottom
-        anchors.right: _.right
-        color: _.color
-        radius: _.isBottomRight || _.forceBottomRight ? Math.min(_.radius, _.width / 2): 0
+        anchors.top: parent.bottom
+        anchors.right: parent.right
+        color: parent.color
+        radius: parent.isBottomRight || parent.forceBottomRight ? Math.min(parent.radius, parent.width / 2): 0
         rotation: 90
     }
 }

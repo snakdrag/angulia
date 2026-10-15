@@ -8,7 +8,7 @@ PanelWindow {
     Component.onCompleted: setRegions()
 
     readonly property var layers: ({ Overlay: 0, Top: 1, Bottom: 2, Background: 3 })
-    property int layer: (layers.Top)
+    property int layer: (this.layers.Top)
 
     property Item modules: (_item)
     property bool keyboardFocus: (false)
@@ -28,24 +28,24 @@ PanelWindow {
         MouseArea {
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-            onClicked: ipcCloseAll()
+            onClicked: root.ipcCloseAll()
         }
     }
 
-    WlrLayershell.keyboardFocus: keyboardFocus ? WlrKeyboardFocus.Exclusive: WlrKeyboardFocus.None
+    WlrLayershell.keyboardFocus: this.keyboardFocus ? WlrKeyboardFocus.Exclusive: WlrKeyboardFocus.None
     WlrLayershell.layer: (
-        layer === layers.Overlay ? WlrLayer.Overlay:
-        layer === layers.Top ? WlrLayer.Top:
-        layer === layers.Bottom ? WlrLayer.Bottom:
+        layer === this.layers.Overlay ? WlrLayer.Overlay:
+        layer === this.layers.Top ? WlrLayer.Top:
+        layer === this.layers.Bottom ? WlrLayer.Bottom:
         WlrLayer.Background
     )
-    BackgroundEffect.blurRegion: Region { item: enableBlur ? _item: null }
+    BackgroundEffect.blurRegion: Region { item: this.enableBlur ? _item: null }
 
     function setRegions()
     {
         _region.regions = [];
-        for (let i = 0; i < modules.children.length; i++) {
-            let module = modules.children[i];
+        for (let i = 0; i < this.modules.children.length; i++) {
+            let module = this.modules.children[i];
             if (module && module._itemName === "Angulia")
             {
                 _region.regions.push(module.region);

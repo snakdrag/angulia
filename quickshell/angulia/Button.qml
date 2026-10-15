@@ -1,21 +1,20 @@
 import QtQuick
 
 Rectangle {
-    id: _
 
     property bool active: (false)
     property color activeColor: ("#000000")
 
     Rectangle {
-        anchors.fill: _
+        anchors.fill: parent
 
-        topLeftRadius: _.topLeftRadius
-        topRightRadius: _.topRightRadius
-        bottomLeftRadius: _.bottomLeftRadius
-        bottomRightRadius: _.bottomRightRadius
+        topLeftRadius: parent.topLeftRadius
+        topRightRadius: parent.topRightRadius
+        bottomLeftRadius: parent.bottomLeftRadius
+        bottomRightRadius: parent.bottomRightRadius
 
-        opacity: _.active ? 0.1: 0
-        color: _.activeColor
+        opacity: parent.active ? 0.1: 0
+        color: parent.activeColor
         Behavior on opacity { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
         z: 1
     }

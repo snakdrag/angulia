@@ -1,35 +1,36 @@
 import QtQuick
-import QtQuick.Controls
 
 TextInput {
-    id: _
     property int space: (0)
     property real radius: (0)
     property color backgroundColor: ("#888888")
-    anchors.margins: space
-    leftPadding: space
-    rightPadding: space
+    anchors.margins: this.space
+    leftPadding: this.space
+    rightPadding: this.space
     clip: true
     focus: true
     enabled: true
 
     property string placeholderText: ("")
-    property color placeholderTextColor: Qt.rgba(color.r, color.g, color.b, 0.5)
+    property color placeholderTextColor: Qt.rgba(this.color.r, this.color.g, this.color.b, 0.5)
 
     Rectangle {
         anchors.fill: parent
-        radius: _.radius
-        color: _.backgroundColor
+        radius: parent.radius
+        color: parent.backgroundColor
         z: -1
     }
+
     Text {
         anchors.fill: parent
-        leftPadding: _.space
-        rightPadding: _.space
-        text: _.placeholderText
-        color: _.placeholderTextColor
-        verticalAlignment: _.verticalAlignment
-        horizontalAlignment: _.horizontalAlignment
-        visible: _.text === ""
+        topPadding: parent.topPadding
+        leftPadding: parent.leftPadding
+        rightPadding: parent.rightPadding
+        bottomPadding: parent.bottomPadding
+        text: parent.placeholderText
+        color: parent.placeholderTextColor
+        verticalAlignment: parent.verticalAlignment
+        horizontalAlignment: parent.horizontalAlignment
+        visible: parent.text === ""
     }
 }

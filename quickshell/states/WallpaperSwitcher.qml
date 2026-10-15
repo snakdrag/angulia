@@ -1,31 +1,32 @@
 pragma Singleton
-import QtQuick
 import Qt.labs.folderlistmodel
+import QtQuick
 import Quickshell
 
 Singleton {
+    id: _
     readonly property string wallpaperFile: ("~/Pictures/Wallpapers")
     property list<var> wallpapers: []
     property FolderListModel folderModel: FolderListModel {
-        folder: Qt.resolvedUrl(wallpaperFile.replace("~", Quickshell.env("HOME")))
+        folder: Qt.resolvedUrl(_.wallpaperFile.replace("~", Quickshell.env("HOME")))
         nameFilters: ["*.png", "*.jpg", "*.jpeg", "*.webp", ]
         showDirs: false
         sortField: FolderListModel.Name
         onStatusChanged: {
             if (FolderListModel.Ready === status)
             {
-                updateWallpapers()
+                _.updateWallpapers()
             }
         }
     }
     function updateWallpapers()
     {
-        wallpapers = []
-        for (let i = 0; i < folderModel.count; i++) {
-            let filePath = folderModel.get(i, "filePath")
-            let fileName = folderModel.get(i, "fileName")
+        this.wallpapers = []
+        for (let i = 0; i < this.folderModel.count; i++) {
+            let filePath = this.folderModel.get(i, "filePath")
+            let fileName = this.folderModel.get(i, "fileName")
 
-            wallpapers.push(
+            this.wallpapers.push(
             {
                 name: fileName,
                 path: filePath,
@@ -41,7 +42,7 @@ Singleton {
         // {
         //     return []
         // }
-        return [...wallpapers].filter(entry => {
+        return [...this.wallpapers].filter(entry => {
         let i = 0;
         return [...text.toLowerCase()].every(
             char => (i = entry.name.toLowerCase().indexOf(char, i)) !== -1 && i++ >= 0

@@ -11,10 +11,13 @@ Angulia {
 
     _data: Settings.wallpaperswitcher
 
-    implicitWidth: Math.max(_list.contentWidth, cardWidth) + space * 2
-    implicitHeight: (noContent ? 0: Math.max(_list.contentHeight, (isVertical ? 0: cardHeight)) + space) + _field.height + _.space * 2
-
-    property bool noContent: (_list.contentWidth === 0 || _list.contentHeight === 0)
+    implicitWidth: Math.max(_list.contentWidth, this.cardWidth) + this.space * 2
+    implicitHeight: (
+        _list.contentWidth === 0 || _list.contentHeight === 0 ? 0: Math.max(
+            _list.contentHeight,
+            (this.isVertical ? 0: this.cardHeight)
+        ) + this.space
+    ) + _field.height + this.space * 2
 
     property int selectedIndex: (0)
 
@@ -26,7 +29,7 @@ Angulia {
         target: "wallpaperswitcher"
         function open()
         {
-            ipcCloseAll()
+            root.ipcCloseAll()
             _.show = true
             _.selectedIndex = 0
             _field.text = ""
@@ -50,10 +53,13 @@ Angulia {
 
     TextField {
         id: _field
-        y: _._data.inputAtTop ? anchors.topMargin: Math.max(parent.height - height - anchors.bottomMargin, anchors.topMargin)
+        y: _._data.inputAtTop ? this.anchors.topMargin: Math.max(
+            parent.height - this.height - this.anchors.bottomMargin,
+            this.anchors.topMargin
+        )
         anchors.left: parent.left
         anchors.right: parent.right
-        height: _.bar.height - space * 2
+        height: _.bar.height - this.space * 2
         space: _.space
         radius: _.radius
         color: _.textColor
@@ -62,7 +68,7 @@ Angulia {
         verticalAlignment: TextInput.AlignVCenter
         visible: _.show
         font: _._data.font
-        onTextChanged: {_.selectedIndex = 0}
+        onTextChanged: _.selectedIndex = 0
         Keys.onUpPressed: {
             if (_list.count > 0)
             {
@@ -102,7 +108,7 @@ Angulia {
                 _ipc.close()
             }
         }
-        Keys.onEscapePressed: {_ipc.close()}
+        Keys.onEscapePressed: _ipc.close()
     }
     ClippingRectangle {
         anchors.fill: parent
@@ -120,11 +126,10 @@ Angulia {
             displaced: null
             model: ScriptModel { values: WallpaperSwitcher.search(_field.text).sort((a, b) => a.name.localeCompare(b.name)) }
             delegate: Card {
-                id: _card
                 required property var modelData
                 required property int index
 
-                active: _card.index === _.selectedIndex
+                active: this.index === _.selectedIndex
                 activeColor: _.textColor
                 color: _.cardColor
 
@@ -138,12 +143,12 @@ Angulia {
 
                 imageWidth: _.imageWidth
                 imageHeight: _.imageHeight
-                imageSource: modelData.path
+                imageSource: this.modelData.path
                 imageFillMode: Image.PreserveAspectCrop
 
                 Mouse {
                     onClicked: {
-                        _card.modelData.execute()
+                        parent.modelData.execute()
                         _ipc.close()
                     }
                 }

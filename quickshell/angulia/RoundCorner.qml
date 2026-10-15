@@ -7,11 +7,11 @@ Item {
     property real radius: (0)
     property color color: ("#ffffff")
 
-    width: radius
-    height: radius
+    width: this.radius
+    height: this.radius
 
     Loader {
-        active: _.visible || _.opacity > 0 && radius > 0
+        active: parent.radius > 0 && parent.visible && parent.opacity > 0
         sourceComponent: Shape {
             preferredRendererType: Shape.CurveRenderer
             ShapePath {

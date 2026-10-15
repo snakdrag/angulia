@@ -10,8 +10,8 @@ Angulia {
 
     _data: Settings.notification
 
-    implicitWidth: Math.max(_list.contentWidth, cardWidth) + space * 2
-    implicitHeight: Math.max(_list.contentHeight, cardHeight) + space * 2
+    implicitWidth: Math.max(_list.contentWidth, this.cardWidth) + this.space * 2
+    implicitHeight: Math.max(_list.contentHeight, this.cardHeight) + this.space * 2
 
     show: _list.contentWidth !== 0 && _list.contentHeight !== 0
 
@@ -28,7 +28,7 @@ Angulia {
             delegate: Item {
                 id: _card
                 required property var modelData
-                readonly property bool haveAction: (modelData.actions.length > 0)
+                readonly property bool haveAction: (this.modelData.actions.length > 0)
                 implicitWidth: _.cardWidth
                 implicitHeight: Math.max(_.cardHeight, _main.textHeight + _.space * 2)
                 Button {
@@ -40,18 +40,18 @@ Angulia {
                     color: _.cardColor
                     active: (
                         _.isVertical ?
-                        (hovered && _main.x - _.space >= _card.width / 4 || _main.x - _.space > _card.width / 2):
-                        (hovered && _main.y - _.space >= _card.height / 4 || _main.y - _.space > _card.height / 2)
+                        (this.hovered && _main.x - _.space >= parent.width / 4 || _main.x - _.space > parent.width / 2):
+                        (this.hovered && _main.y - _.space >= parent.height / 4 || _main.y - _.space > parent.height / 2)
                     )
                     implicitWidth: (
                         _.isVertical ?
-                        Math.min(_card.width, Math.max(_main.x - _.space, _card.width / 4)):
-                        _card.width
+                        Math.min(parent.width, Math.max(_main.x - _.space, parent.width / 4)):
+                        parent.width
                     )
                     implicitHeight: (
                         _.isVertical ?
-                        _card.height:
-                        Math.min(_card.height, Math.max(_main.y - _.space, _card.height / 4))
+                        parent.height:
+                        Math.min(parent.height, Math.max(_main.y - _.space, parent.height / 4))
                     )
                     visible: _.isVertical ? -_main.x < 0: -_main.y < 0
                     Text {
@@ -89,18 +89,18 @@ Angulia {
                     activeColor: _.textColor
                     active: (
                         _.isVertical ?
-                        (hovered && -_main.x - _.space >= _card.width / 4 || -_main.x - _.space > _card.width / 2):
-                        (hovered && -_main.y - _.space >= _card.height / 4 || -_main.y - _.space > _card.height / 2)
+                        (this.hovered && -_main.x - _.space >= parent.width / 4 || -_main.x - _.space > parent.width / 2):
+                        (this.hovered && -_main.y - _.space >= parent.height / 4 || -_main.y - _.space > parent.height / 2)
                     )
                     implicitWidth: (
                         _.isVertical ?
-                        Math.min(_card.width, Math.max(-_main.x - _.space, _card.width / 4)):
-                        _card.width
+                        Math.min(parent.width, Math.max(-_main.x - _.space, parent.width / 4)):
+                        parent.width
                     )
                     implicitHeight: (
                         _.isVertical ?
-                        _card.height:
-                        Math.min(_card.height, Math.max(-_main.y - _.space, _card.height / 4))
+                        parent.height:
+                        Math.min(parent.height, Math.max(-_main.y - _.space, parent.height / 4))
                     )
                     visible: _.isVertical ? _main.x < 0: _main.y < 0
                     Text {
@@ -122,8 +122,8 @@ Angulia {
                 }
                 Card {
                     id: _main
-                    implicitWidth: _card.width
-                    implicitHeight: _card.height
+                    implicitWidth: parent.width
+                    implicitHeight: parent.height
                     radius: _.radius
                     color: _.cardColor
                     activeColor: _.textColor
@@ -132,30 +132,30 @@ Angulia {
 
                     imageWidth: _.imageWidth
                     imageHeight: _.imageHeight
-                    imageSource: _card.modelData.image || Quickshell.iconPath(_card.modelData.appIcon, true)
+                    imageSource: parent.modelData.image || Quickshell.iconPath(parent.modelData.appIcon, true)
 
-                    topText: _card.modelData.summary
+                    topText: parent.modelData.summary
                     topFont: _._data.summaryFont
-                    topMaximumLineCount: _card.modelData.urgency === Notifications.critical ? 0: 2
+                    topMaximumLineCount: parent.modelData.urgency === Notifications.critical ? 0: 2
 
-                    bottomText: _card.modelData.body
+                    bottomText: parent.modelData.body
                     bottomFont: _._data.bodyFont
-                    bottomMaximumLineCount: _card.modelData.urgency === Notifications.critical ? 0: 3
+                    bottomMaximumLineCount: parent.modelData.urgency === Notifications.critical ? 0: 3
 
                     Mouse {
                         cursorShape: Qt.ArrowCursor
-                        onEntered: _main.active = true
-                        onExited: _main.active = false
+                        onEntered: parent.active = true
+                        onExited: parent.active = false
                         onClicked: mouse => {
-                        if (_.isVertical)
+                        if (parent.isVertical)
                         {
                             if (mouse.button === Qt.LeftButton)
                             {
-                                parent.x = _card.width / 4 + _.space
+                                parent.x = parent.width / 4 + parent.space
                             }
                             else if (mouse.button === Qt.RightButton)
                             {
-                                parent.x = -_card.width / 4 - _.space
+                                parent.x = -parent.width / 4 - parent.space
                             }
                             else if (mouse.button === Qt.MiddleButton)
                             {
@@ -166,11 +166,11 @@ Angulia {
                         {
                             if (mouse.button === Qt.LeftButton)
                             {
-                                parent.y = _card.height / 4 + _.space
+                                parent.y = parent.height / 4 + parent.space
                             }
                             else if (mouse.button === Qt.RightButton)
                             {
-                                parent.y = -_card.height / 4 - _.space
+                                parent.y = -parent.height / 4 - parent.space
                             }
                             else if (mouse.button === Qt.MiddleButton)
                             {
@@ -179,20 +179,20 @@ Angulia {
                         }}
                     }
                     DragHandler {
-                        xAxis.enabled: _.isVertical
-                        yAxis.enabled: !_.isVertical
+                        xAxis.enabled: parent.isVertical
+                        yAxis.enabled: !parent.isVertical
                         onActiveChanged: {
-                            if (_.isVertical)
+                            if (parent.isVertical)
                             {
-                                if (parent.x < -_card.width / 2 - _.space)
+                                if (parent.x < -parent.width / 2 - parent.space)
                                 {
                                     _card.modelData.dismiss()
                                 }
-                                else if (parent.x < -_card.width / 4)
+                                else if (parent.x < -parent.width / 4)
                                 {
-                                    parent.x = -_card.width / 4 - _.space
+                                    parent.x = -parent.width / 4 - parent.space
                                 }
-                                else if (parent.x > _card.width / 2 + _.space)
+                                else if (parent.x > parent.width / 2 + parent.space)
                                 {
                                     if (_card.haveAction)
                                     {
@@ -201,9 +201,9 @@ Angulia {
                                     else {_card.modelData.dismiss()
                                     }
                                 }
-                                else if (parent.x > _card.width / 4)
+                                else if (parent.x > parent.width / 4)
                                 {
-                                    parent.x = _card.width / 4 + _.space
+                                    parent.x = parent.width / 4 + parent.space
                                 }
                                 else {
                                     parent.x = 0
@@ -211,15 +211,15 @@ Angulia {
                             }
                             else
                             {
-                                if (parent.y < -_card.height / 2 - _.space)
+                                if (parent.y < -parent.height / 2 - parent.space)
                                 {
                                     _card.modelData.dismiss()
                                 }
-                                else if (parent.y < -_card.height / 4)
+                                else if (parent.y < -parent.height / 4)
                                 {
-                                    parent.y = -_card.height / 4 - _.space
+                                    parent.y = -parent.height / 4 - parent.space
                                 }
-                                else if (parent.y > _card.height / 2 + _.space)
+                                else if (parent.y > parent.height / 2 + parent.space)
                                 {
                                     if (_card.haveAction)
                                     {
@@ -227,9 +227,9 @@ Angulia {
                                     }
                                     else {_card.modelData.dismiss()}
                                 }
-                                else if (parent.y > _card.height / 4)
+                                else if (parent.y > parent.height / 4)
                                 {
-                                    parent.y = _card.height / 4 + _.space
+                                    parent.y = parent.height / 4 + parent.space
                                 }
                                 else
                                 {
