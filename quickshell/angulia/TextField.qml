@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 
-TextField {
+TextInput {
     id: _
     property int space: (0)
     property real radius: (0)
@@ -9,14 +9,27 @@ TextField {
     anchors.margins: space
     leftPadding: space
     rightPadding: space
+    clip: true
     focus: true
     enabled: true
 
-    placeholderText: ""
-    placeholderTextColor: Qt.rgba(color.r, color.g, color.b, 0.5)
+    property string placeholderText: ("")
+    property color placeholderTextColor: Qt.rgba(color.r, color.g, color.b, 0.5)
 
-    background: Rectangle {
+    Rectangle {
+        anchors.fill: parent
         radius: _.radius
         color: _.backgroundColor
+        z: -1
+    }
+    Text {
+        anchors.fill: parent
+        leftPadding: _.space
+        rightPadding: _.space
+        text: _.placeholderText
+        color: _.placeholderTextColor
+        verticalAlignment: _.verticalAlignment
+        horizontalAlignment: _.horizontalAlignment
+        visible: _.text === ""
     }
 }

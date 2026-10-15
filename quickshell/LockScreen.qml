@@ -21,7 +21,7 @@ ShellRoot {
             Angulia {
                 customX: parent.width / 2
                 customY: parent.height
-                implicitWidth: 300
+                implicitWidth: 200
                 implicitHeight: bar.height
                 TextField {
                     anchors.fill: parent
@@ -29,9 +29,11 @@ ShellRoot {
                     space: parent.space
                     color: parent.textColor
                     backgroundColor: parent.cardColor
+                    enabled: !LockScreen.inputLock
                     radius: parent.radius
+                    placeholderText: LockScreen.placeholderText
                     verticalAlignment: TextInput.AlignVCenter
-                    horizontalAlignment: TextInput.AlignHCenter
+                    onTextChanged: LockScreen.placeholderText = ""
                     Keys.onReturnPressed: {LockScreen.authenticate(this.text); this.text = ""}
                 }
             }

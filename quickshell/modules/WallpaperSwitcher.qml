@@ -53,7 +53,7 @@ Angulia {
         y: _._data.inputAtTop ? anchors.topMargin: Math.max(parent.height - height - anchors.bottomMargin, anchors.topMargin)
         anchors.left: parent.left
         anchors.right: parent.right
-        implicitHeight: _.bar.height - space * 2
+        height: _.bar.height - space * 2
         space: _.space
         radius: _.radius
         color: _.textColor

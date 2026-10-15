@@ -5,6 +5,8 @@ import Quickshell.Io
 Singleton {
     id: _
     property bool open: (false)
+    property string placeholderText: ("")
+    readonly property bool inputLock: (_pam.lock)
 
     IpcHandler {
         id: _ipc
@@ -21,5 +23,6 @@ Singleton {
     Pam {
         id: _pam
         onSucceeded: _.open = false
+        onFailed: _.placeholderText = "Password Incorrect"
     }
 }
