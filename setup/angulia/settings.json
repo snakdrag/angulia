@@ -1,7 +1,7 @@
 {
   "radius": 12,
   "edge": 5,
-  "float": 0,
+  "float": 10,
   "space": 10,
 
   "gaps_in": 5,
@@ -13,8 +13,9 @@
   },
 
   "notification": {
+    "exclusiveZoneIgnore": false,
     "isVertical": true,
-    "x": 800,
+    "x": 1600,
     "y": 0,
     "cardWidth": 360,
     "cardHeight": 70,
@@ -24,30 +25,49 @@
   },
 
   "launcher": {
-    "isVertical": true,
+    "exclusiveZoneIgnore": true,
+    "isVertical": false,
     "x": 800,
     "y": 900,
-    "cardWidth": 360,
-    "cardHeight": 70,
+    "cardWidth": 120,
+    "cardHeight": 80,
     "iconSize": 40,
-    "inputAtTop": false,
     "nameFont": { "family": "Inter", "pixelSize": 12, "bold": true },
-    "commentFont": { "family": "Inter", "pixelSize": 12, "bold": false }
+    "commentFont": { "family": "Inter", "pixelSize": 12, "bold": false },
+    "inputAtTop": false
   },
 
   "clock": {
+    "exclusiveZoneIgnore": true,
     "isVertical": false,
     "x": 0,
     "y": 900,
+    "font": { "family": "Inter", "pixelSize": 15, "bold": false },
     "width": 300,
-    "height": 300,
-    "font": { "family": "Inter", "pixelSize": 15, "bold": false }
+    "height": 300
   },
 
   "systemtray": {
+    "exclusiveZoneIgnore": true,
     "isVertical": false,
     "x": 1600,
     "y": 900,
     "iconSize": 24
+  },
+
+  "wallpaperswitcher": {
+    "exclusiveZoneIgnore": true,
+    "isVertical": false,
+    "x": 800,
+    "y": 900,
+    "cardWidth": 320,
+    "cardHeight": 180,
+    "font": { "family": "Inter", "pixelSize": 12, "bold": true },
+    "inputAtTop": false
+  },
+
+  "popup": {
+    "cardHeight": 40,
+    "font": { "family": "Inter", "pixelSize": 12, "bold": true }
   }
 }

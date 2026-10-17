@@ -25,7 +25,7 @@ Button {
     Behavior on x { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
     Behavior on y { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
 
-    readonly property int textHeight: (_top.height + _bottom.height + _.space / 2)
+    readonly property int textHeight: (_top.height + (_bottom.text === "" ? 0: _bottom.height + _.space / 2))
 
     ClippingRectangle {
         anchors.fill: parent
@@ -52,8 +52,8 @@ Button {
             anchors.margins: _.space
             width: _.imageWidth
             height: _.imageHeight
-            sourceSize.width: _.imageWidth
-            sourceSize.height: _.imageHeight
+            sourceSize.width: this.width
+            sourceSize.height: this.height
             source: _.imageSource || ""
             fillMode: _.imageFillMode
             visible: this.status === Image.Ready && this.source != ""

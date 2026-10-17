@@ -25,7 +25,10 @@ PanelWindow {
         MouseArea {
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-            onClicked: root.ipcCloseAll()
+            onClicked: {
+                root.ipcCloseAll()
+                _popup.close()
+            }
         }
     }
 

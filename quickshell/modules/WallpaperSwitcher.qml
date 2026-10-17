@@ -44,10 +44,10 @@ Angulia {
         function open()
         {
             root.ipcCloseAll()
-            _.show = true
             _.getWallpaper()
             _field.text = ""
             _field.forceActiveFocus()
+            _.show = true
         }
         function close()
         {

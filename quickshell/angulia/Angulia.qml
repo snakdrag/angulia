@@ -18,10 +18,10 @@ Rectangle {
     property bool exclusiveZoneIgnore: (this._data.exclusiveZoneIgnore === undefined ? true: this._data.exclusiveZoneIgnore)
 
     anchors.margins: this.edge + this.float
-    anchors.topMargin: this.exclusiveZoneIgnore ? this.anchors.margins: root.topExclusiveZone
-    anchors.leftMargin: this.exclusiveZoneIgnore ? this.anchors.margins: root.leftExclusiveZone
-    anchors.rightMargin: this.exclusiveZoneIgnore ? this.anchors.margins: root.rightExclusiveZone
-    anchors.bottomMargin: this.exclusiveZoneIgnore ? this.anchors.margins: root.bottomExclusiveZone
+    anchors.topMargin: this.exclusiveZoneIgnore ? this.anchors.margins: root.topExclusiveZone + this.float
+    anchors.leftMargin: this.exclusiveZoneIgnore ? this.anchors.margins: root.leftExclusiveZone + this.float
+    anchors.rightMargin: this.exclusiveZoneIgnore ? this.anchors.margins: root.rightExclusiveZone + this.float
+    anchors.bottomMargin: this.exclusiveZoneIgnore ? this.anchors.margins: root.bottomExclusiveZone + this.float
 
     x: Math.max(
         this.anchors.leftMargin,
@@ -69,6 +69,7 @@ Rectangle {
     property color backgroundColor: (this.color)
 
     // size
+    property int gaps_out: (Settings.gaps_out)
     property int edge: (Settings.edge)
     property int space: (Settings.space)
     property int float: (Settings.float)

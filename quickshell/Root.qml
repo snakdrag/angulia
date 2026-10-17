@@ -1,6 +1,5 @@
 import QtQuick
 import Quickshell
-import "../../settings"
 
 ShellRoot {
     id: _
@@ -13,11 +12,15 @@ ShellRoot {
     property bool _right: (false)
     property bool _bottom: (false)
 
-    readonly property int gaps_out: (Settings.gaps_out)
-    readonly property int topExclusiveZone: (Settings.edge + (this._top ? Settings.float + Settings.bar.height: 0))
-    readonly property int leftExclusiveZone: (Settings.edge + (this._left ? Settings.float + Settings.bar.width: 0))
-    readonly property int rightExclusiveZone: (Settings.edge + (this._right ? Settings.float + Settings.bar.width: 0))
-    readonly property int bottomExclusiveZone: (Settings.edge + (this._bottom ? Settings.float + Settings.bar.height: 0))
+    property var bar: ({})
+    property int gaps_out: (0)
+    property int float: (0)
+    property int edge: (0)
+
+    readonly property int topExclusiveZone: (this.edge + (this._top ? this.float + this.bar.height: 0))
+    readonly property int leftExclusiveZone: (this.edge + (this._left ? this.float + this.bar.width: 0))
+    readonly property int rightExclusiveZone: (this.edge + (this._right ? this.float + this.bar.width: 0))
+    readonly property int bottomExclusiveZone: (this.edge + (this._bottom ? this.float + this.bar.height: 0))
 
     PanelWindow {
         anchors.top: true
@@ -53,6 +56,7 @@ ShellRoot {
                 child.ipc.close()
             }
         }
+        _popup.close()
     }
     function set()
     {
@@ -101,14 +105,19 @@ ShellRoot {
                 let a2XWidth = a2.x + a2.width
                 let a2YHeight = a2.y + a2.height
 
-                let a1_Top = a2.y <= a1.y && a1.y <= a2YHeight
-                let a1_Left = a2.x <= a1.x && a1.x <= a2XWidth
-                let a1_Right = a2.x <= a1XWidth && a1XWidth <= a2XWidth
-                let a1_Bottom = a2.y <= a1YHeight && a1YHeight <= a2YHeight
-                let a2_Top = a1.y <= a2.y && a2.y <= a1YHeight
-                let a2_Left = a1.x <= a2.x && a2.x <= a1XWidth
-                let a2_Right = a1.x <= a2XWidth && a2XWidth <= a1XWidth
-                let a2_Bottom = a1.y <= a2YHeight && a2YHeight <= a1YHeight
+                let a1w = a1.roundcorners.widthRadius + a2.roundcorners.finalRadius
+                let a1h = a1.roundcorners.heightRadius + a2.roundcorners.finalRadius
+                let a2w = a2.roundcorners.widthRadius + a1.roundcorners.finalRadius
+                let a2h = a2.roundcorners.heightRadius + a1.roundcorners.finalRadius
+
+                let a1_Top = a2.y + a1w <= a1.y && a1.y <= a2YHeight
+                let a1_Left = a2.x + a1h <= a1.x && a1.x <= a2XWidth
+                let a1_Right = a2.x <= a1XWidth && a1XWidth <= a2XWidth - a1h
+                let a1_Bottom = a2.y <= a1YHeight && a1YHeight <= a2YHeight - a1w
+                let a2_Top = a1.y + a2w <= a2.y && a2.y <= a1YHeight
+                let a2_Left = a1.x + a2h <= a2.x && a2.x <= a1XWidth
+                let a2_Right = a1.x <= a2XWidth && a2XWidth <= a1XWidth - a2h
+                let a2_Bottom = a1.y <= a2YHeight && a2YHeight <= a1YHeight - a2w
 
                 if (a1.y == a2YHeight)
                 {

@@ -1,8 +1,8 @@
 import QtQuick
 import Quickshell.Wayland
-import "angulia"
-import "states"
-import "../settings"
+import "../states"
+import "../angulia"
+import "../../settings"
 
 WlSessionLock {
     locked: LockScreen.open

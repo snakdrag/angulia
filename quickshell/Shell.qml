@@ -1,12 +1,15 @@
 import QtQuick // for Item
 import Quickshell // for Region
-import "angulia" // for Root
 import "modules" as Modules
 
 Root {
     id: root
     childrens: ([..._edge.children, ..._overlay.children, ..._top.children, ])
     modules: ([..._top.children, ])
+    gaps_out: _popup.gaps_out
+    bar: _popup.bar
+    float: _popup.float
+    edge: _popup.edge
     Layer {
         id: _Overlay
         modules: _overlay
@@ -25,14 +28,16 @@ Root {
         id: _Top
         modules: _top
         layer: this.layers.Top
+        keyboardFocus: _popup.show
         Item {
             id: _top
             anchors.fill: parent
             layer.enabled: true
+            Modules.Edge { id: _edge }
+            Modules.Popup { id: _popup }
             Modules.Clock {}
             Modules.SystemTray {}
-            Modules.Edge { id: _edge }
         }
     }
-    LockScreen {}
+    Modules.LockScreen {}
 }

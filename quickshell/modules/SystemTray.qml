@@ -1,4 +1,5 @@
 import QtQuick
+import Quickshell
 import Quickshell.Widgets
 import Quickshell.Services.SystemTray
 import "../angulia"
@@ -17,7 +18,7 @@ Angulia {
 
     show: _list.contentWidth !== 0 && _list.contentHeight !== 0
 
-    ClippingRectangle {
+    Rectangle {
         anchors.fill: parent
         anchors.margins: _.space
         color: _.backgroundColor
@@ -25,10 +26,11 @@ Angulia {
         List {
             id: _list
             spacing: _.space
-            model: SystemTray.items
+            model: ScriptModel { values: SystemTray.items.values }
             isVertical: _.isVertical
             interactive: false
             delegate: Card {
+                id: _card
                 required property var modelData
                 implicitWidth: _.cardWidth
                 implicitHeight: _.cardHeight
@@ -42,18 +44,24 @@ Angulia {
                 mouseArea.onClicked: mouse => {
                 if (mouse.button === Qt.LeftButton)
                 {
+                    _popup.close()
                     this.modelData.activate()
                 }
                 else if (mouse.button === Qt.MiddleButton)
                 {
+                    _popup.close()
                     this.modelData.secondaryActivate()
                 }
                 else if (mouse.button === Qt.RightButton && this.modelData.hasMenu)
                 {
-                    // this.modelData.display(_Top, _.x + this.x, _.y + this.y)
+                    _popup.call(_.x + _.space + this.x + this.width / 2, _.y + _.space + this.y + this.height / 2, _menu.children)
                 }}
                 mouseArea.onEntered: this.active = true
                 mouseArea.onExited: this.active = false
+                QsMenuOpener {
+                    id: _menu
+                    menu: _card.modelData.menu
+                }
             }
         }
     }

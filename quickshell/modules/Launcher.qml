@@ -30,10 +30,10 @@ Angulia {
         function open()
         {
             root.ipcCloseAll()
-            _.show = true
             _.selectedIndex = 0
             _field.text = ""
             _field.forceActiveFocus()
+            _.show = true
         }
         function close()
         {
