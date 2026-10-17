@@ -7,7 +7,6 @@ Rectangle {
 
     property var _data: ({})
     readonly property var bar: (Settings.bar)
-    readonly property string _itemName: ("Angulia")
     readonly property Region region: (_region)
     Region { id: _region; item: _ }
 
@@ -16,7 +15,14 @@ Rectangle {
     property real customX: (this._data.x || 0)
     property real customY: (this._data.y || 0)
 
+    property bool exclusiveZoneIgnore: (this._data.exclusiveZoneIgnore === undefined ? true: this._data.exclusiveZoneIgnore)
+
     anchors.margins: this.edge + this.float
+    anchors.topMargin: this.exclusiveZoneIgnore ? this.anchors.margins: root.topExclusiveZone
+    anchors.leftMargin: this.exclusiveZoneIgnore ? this.anchors.margins: root.leftExclusiveZone
+    anchors.rightMargin: this.exclusiveZoneIgnore ? this.anchors.margins: root.rightExclusiveZone
+    anchors.bottomMargin: this.exclusiveZoneIgnore ? this.anchors.margins: root.bottomExclusiveZone
+
     x: Math.max(
         this.anchors.leftMargin,
         Math.min(parent.width - this.width - this.anchors.rightMargin, this.customX - this.width / 2)
@@ -27,28 +33,30 @@ Rectangle {
     )
 
     property bool isVertical: (this._data.isVertical || false)
-    readonly property bool isTop: (y <= this.anchors.topMargin && !isVertical)
-    readonly property bool isLeft: (x <= this.anchors.leftMargin && isVertical)
-    readonly property bool isRight: (x + this.width >= parent.width - this.anchors.rightMargin && this.isVertical)
-    readonly property bool isBottom: (y + this.height >= parent.height - this.anchors.bottomMargin && !this.isVertical)
-
-    property bool isTopLeft: (false)
-    property bool isTopRight: (false)
-    property bool isLeftTop: (false)
-    property bool isLeftBottom: (false)
-    property bool isRightTop: (false)
-    property bool isRightBottom: (false)
-    property bool isBottomLeft: (false)
-    property bool isBottomRight: (false)
-
-    property bool forceTopLeft: (false)
-    property bool forceTopRight: (false)
-    property bool forceLeftTop: (false)
-    property bool forceLeftBottom: (false)
-    property bool forceRightTop: (false)
-    property bool forceRightBottom: (false)
-    property bool forceBottomLeft: (false)
-    property bool forceBottomRight: (false)
+    readonly property bool isTop: (
+        this.exclusiveZoneIgnore &&
+        this.visible &&
+        y <= this.anchors.topMargin &&
+        !this.isVertical
+    )
+    readonly property bool isLeft: (
+        this.exclusiveZoneIgnore &&
+        this.visible &&
+        x <= this.anchors.leftMargin &&
+        this.isVertical
+    )
+    readonly property bool isRight: (
+        this.exclusiveZoneIgnore &&
+        this.visible &&
+        x + this.width >= parent.width - this.anchors.rightMargin &&
+        this.isVertical
+    )
+    readonly property bool isBottom: (
+        this.exclusiveZoneIgnore &&
+        this.visible &&
+        y + this.height >= parent.height - this.anchors.bottomMargin &&
+        !this.isVertical
+    )
 
     // behavior
     Behavior on width { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
@@ -58,7 +66,7 @@ Rectangle {
     color: Settings.colors.surface
     property color textColor: (Settings.colors.on_surface)
     property color cardColor: (Settings.colors.surface_container)
-    property color backgroundColor: (Settings.colors.surface)
+    property color backgroundColor: (this.color)
 
     // size
     property int edge: (Settings.edge)
@@ -84,16 +92,36 @@ Rectangle {
 
     // radius
     radius: Settings.radius
-    topLeftRadius: (this.isTopLeft || this.isLeftTop || this.forceTopLeft || this.forceLeftTop) ? 0: this.radius
-    topRightRadius: (this.isTopRight || this.isRightTop || this.forceTopRight || this.forceRightTop) ? 0: this.radius
-    bottomLeftRadius: (this.isBottomLeft || this.isLeftBottom || this.forceBottomLeft || this.forceLeftBottom) ? 0: this.radius
-    bottomRightRadius: (this.isBottomRight || this.isRightBottom || this.forceBottomRight || this.forceRightBottom) ? 0: this.radius
+    topLeftRadius: (
+        this.roundcorners.isTopLeft ||
+        this.roundcorners.isLeftTop ||
+        this.roundcorners.forceTopLeft ||
+        this.roundcorners.forceLeftTop
+    ) ? 0: this.radius
+    topRightRadius: (
+        this.roundcorners.isTopRight ||
+        this.roundcorners.isRightTop ||
+        this.roundcorners.forceTopRight ||
+        this.roundcorners.forceRightTop
+    ) ? 0: this.radius
+    bottomLeftRadius: (
+        this.roundcorners.isBottomLeft ||
+        this.roundcorners.isLeftBottom ||
+        this.roundcorners.forceBottomLeft ||
+        this.roundcorners.forceLeftBottom
+    ) ? 0: this.radius
+    bottomRightRadius: (
+        this.roundcorners.isBottomRight ||
+        this.roundcorners.isRightBottom ||
+        this.roundcorners.forceBottomRight ||
+        this.roundcorners.forceRightBottom
+    ) ? 0: this.radius
 
     // signal
     signal positionChanged()
 
-    // onXChanged: positionChanged()
-    // onYChanged: positionChanged()
+    onXChanged: this.positionChanged()
+    onYChanged: this.positionChanged()
     onWidthChanged: this.positionChanged()
     onHeightChanged: this.positionChanged()
     onPositionChanged: root.check()
@@ -106,5 +134,6 @@ Rectangle {
     onIsBottomChanged: this.directionChanged()
     onDirectionChanged: root.set()
 
-    RoundCorners {}
+    RoundCorners { id: _roundcorners }
+    property RoundCorners roundcorners: (_roundcorners)
 }

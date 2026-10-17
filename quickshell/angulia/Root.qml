@@ -47,7 +47,7 @@ ShellRoot {
     function ipcCloseAll()
     {
         for (let i = 0; i < this.childrens.length; i++) {
-            let child =this. childrens[i]
+            let child = this.childrens[i]
             if (child && child.ipc !== undefined)
             {
                 child.ipc.close()
@@ -57,43 +57,38 @@ ShellRoot {
     function set()
     {
         Qt.callLater(() => {
-        let angulia = []
-        for (let i = 0; i < this.modules.length; i++) {
-            let module = this.modules[i]
-            if (module && module._itemName === "Angulia")
-            {
-                angulia.push(module)
-            }
-        }
         this._top = false
         this._left = false
         this._right = false
         this._bottom = false
-        for (let i = 0; i < angulia.length; i++) {
-            this._top = this._top || angulia[i].isTop
-            this._left = this._left || angulia[i].isLeft
-            this._right = this._right || angulia[i].isRight
-            this._bottom = this._bottom || angulia[i].isBottom
+        for (let i = 0; i < this.modules.length; i++) {
+            let module = this.modules[i]
+            if (module && module.roundcorners !== undefined)
+            {
+                this._top = this._top || module.isTop
+                this._left = this._left || module.isLeft
+                this._right = this._right || module.isRight
+                this._bottom = this._bottom || module.isBottom
+            }
         }})
     }
     function check()
     {
         Qt.callLater(() => {
-        let tolerance = 0
         let angulia = []
         for (let i = 0; i < this.childrens.length; i++) {
             let child = this.childrens[i]
-            if (child && child._itemName === "Angulia")
+            if (child && child.roundcorners !== undefined)
             {
                 angulia.push(child)
-                child.isTopLeft = false
-                child.isTopRight = false
-                child.isLeftTop = false
-                child.isLeftBottom = false
-                child.isRightTop = false
-                child.isRightBottom = false
-                child.isBottomLeft = false
-                child.isBottomRight = false
+                child.roundcorners.isTopLeft = false
+                child.roundcorners.isTopRight = false
+                child.roundcorners.isLeftTop = false
+                child.roundcorners.isLeftBottom = false
+                child.roundcorners.isRightTop = false
+                child.roundcorners.isRightBottom = false
+                child.roundcorners.isBottomLeft = false
+                child.roundcorners.isBottomRight = false
             }
         }
         for (let i = 0; i < angulia.length; i++) {
@@ -106,58 +101,58 @@ ShellRoot {
                 let a2XWidth = a2.x + a2.width
                 let a2YHeight = a2.y + a2.height
 
-                let a1_Top = a2.y - a1.y <= tolerance && a1.y - a2YHeight <= tolerance
-                let a1_Left = a2.x - a1.x <= tolerance && a1.x - a2XWidth <= tolerance
-                let a1_Right = a2.x - a1XWidth <= tolerance && a1XWidth - a2XWidth <= tolerance
-                let a1_Bottom = a2.y - a1YHeight <= tolerance && a1YHeight - a2YHeight <= tolerance
-                let a2_Top = a1.y - a2.y <= tolerance && a2.y - a1YHeight <= tolerance
-                let a2_Left = a1.x - a2.x <= tolerance && a2.x - a1XWidth <= tolerance
-                let a2_Right = a1.x - a2XWidth <= tolerance && a2XWidth - a1XWidth <= tolerance
-                let a2_Bottom = a1.y - a2YHeight <= tolerance && a2YHeight - a1YHeight <= tolerance
+                let a1_Top = a2.y <= a1.y && a1.y <= a2YHeight
+                let a1_Left = a2.x <= a1.x && a1.x <= a2XWidth
+                let a1_Right = a2.x <= a1XWidth && a1XWidth <= a2XWidth
+                let a1_Bottom = a2.y <= a1YHeight && a1YHeight <= a2YHeight
+                let a2_Top = a1.y <= a2.y && a2.y <= a1YHeight
+                let a2_Left = a1.x <= a2.x && a2.x <= a1XWidth
+                let a2_Right = a1.x <= a2XWidth && a2XWidth <= a1XWidth
+                let a2_Bottom = a1.y <= a2YHeight && a2YHeight <= a1YHeight
 
-                if (-tolerance * 2 <= (a1.y - a2YHeight) && (a1.y - a2YHeight) <= 0)
+                if (a1.y == a2YHeight)
                 {
-                    if (a1_Left) a1.isTopLeft = true
-                    if (a1_Right) a1.isTopRight = true
-                    if (a2_Left) a2.isBottomLeft = true
-                    if (a2_Right) a2.isBottomRight = true
-                    if (a1_Left && !a2_Left) a1.isLeftTop = true
-                    if (a1_Right && !a2_Right) a1.isRightTop = true
-                    if (a2_Left && !a1_Left) a2.isLeftBottom = true
-                    if (a2_Right && !a1_Right) a2.isRightBottom = true
+                    if (a1_Left) a1.roundcorners.isTopLeft = true
+                    if (a1_Right) a1.roundcorners.isTopRight = true
+                    if (a2_Left) a2.roundcorners.isBottomLeft = true
+                    if (a2_Right) a2.roundcorners.isBottomRight = true
+                    if (a1_Left && !a2_Left) a1.roundcorners.isLeftTop = true
+                    if (a1_Right && !a2_Right) a1.roundcorners.isRightTop = true
+                    if (a2_Left && !a1_Left) a2.roundcorners.isLeftBottom = true
+                    if (a2_Right && !a1_Right) a2.roundcorners.isRightBottom = true
                 }
-                if (-tolerance * 2 <= (a1.x - a2XWidth) && (a1.x - a2XWidth) <= 0)
+                if (a1.x == a2XWidth)
                 {
-                    if (a1_Top) a1.isLeftTop = true
-                    if (a1_Bottom) a1.isLeftBottom = true
-                    if (a2_Top) a2.isRightTop = true
-                    if (a2_Bottom) a2.isRightBottom = true
-                    if (a1_Top && !a2_Top) a1.isTopLeft = true
-                    if (a1_Bottom && !a2_Bottom) a1.isBottomLeft = true
-                    if (a2_Top && !a1_Top) a2.isTopRight = true
-                    if (a2_Bottom && !a1_Bottom) a2.isBottomRight = true
+                    if (a1_Top) a1.roundcorners.isLeftTop = true
+                    if (a1_Bottom) a1.roundcorners.isLeftBottom = true
+                    if (a2_Top) a2.roundcorners.isRightTop = true
+                    if (a2_Bottom) a2.roundcorners.isRightBottom = true
+                    if (a1_Top && !a2_Top) a1.roundcorners.isTopLeft = true
+                    if (a1_Bottom && !a2_Bottom) a1.roundcorners.isBottomLeft = true
+                    if (a2_Top && !a1_Top) a2.roundcorners.isTopRight = true
+                    if (a2_Bottom && !a1_Bottom) a2.roundcorners.isBottomRight = true
                 }
-                if (0 <= (a1XWidth - a2.x) && (a1XWidth - a2.x) <= tolerance * 2)
+                if (a1XWidth == a2.x)
                 {
-                    if (a1_Top) a1.isRightTop = true
-                    if (a1_Bottom) a1.isRightBottom = true
-                    if (a2_Top) a2.isLeftTop = true
-                    if (a2_Bottom) a2.isLeftBottom = true
-                    if (a1_Top && !a2_Top) a1.isTopRight = true
-                    if (a1_Bottom && !a2_Bottom) a1.isBottomRight = true
-                    if (a2_Top && !a1_Top) a2.isTopLeft = true
-                    if (a2_Bottom && !a1_Bottom) a2.isBottomLeft = true
+                    if (a1_Top) a1.roundcorners.isRightTop = true
+                    if (a1_Bottom) a1.roundcorners.isRightBottom = true
+                    if (a2_Top) a2.roundcorners.isLeftTop = true
+                    if (a2_Bottom) a2.roundcorners.isLeftBottom = true
+                    if (a1_Top && !a2_Top) a1.roundcorners.isTopRight = true
+                    if (a1_Bottom && !a2_Bottom) a1.roundcorners.isBottomRight = true
+                    if (a2_Top && !a1_Top) a2.roundcorners.isTopLeft = true
+                    if (a2_Bottom && !a1_Bottom) a2.roundcorners.isBottomLeft = true
                 }
-                if (0 <= (a1YHeight - a2.y) && (a1YHeight - a2.y) <= tolerance * 2)
+                if (a1YHeight == a2.y)
                 {
-                    if (a1_Left) a1.isBottomLeft = true
-                    if (a1_Right) a1.isBottomRight = true
-                    if (a2_Left) a2.isTopLeft = true
-                    if (a2_Right) a2.isTopRight = true
-                    if (a1_Left && !a2_Left) a1.isLeftBottom = true
-                    if (a1_Right && !a2_Right) a1.isRightBottom = true
-                    if (a2_Left && !a1_Left) a2.isLeftTop = true
-                    if (a2_Right && !a1_Right) a2.isRightTop = true
+                    if (a1_Left) a1.roundcorners.isBottomLeft = true
+                    if (a1_Right) a1.roundcorners.isBottomRight = true
+                    if (a2_Left) a2.roundcorners.isTopLeft = true
+                    if (a2_Right) a2.roundcorners.isTopRight = true
+                    if (a1_Left && !a2_Left) a1.roundcorners.isLeftBottom = true
+                    if (a1_Right && !a2_Right) a1.roundcorners.isRightBottom = true
+                    if (a2_Left && !a1_Left) a2.roundcorners.isLeftTop = true
+                    if (a2_Right && !a1_Right) a2.roundcorners.isRightTop = true
                 }
             }
         }})

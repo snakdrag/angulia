@@ -68,34 +68,10 @@ Angulia {
         visible: _.show
         font: _._data.nameFont
         onTextChanged: _.selectedIndex = 0
-        Keys.onUpPressed: {
-            if (_list.count > 0)
-            {
-                _.selectedIndex = Math.max(_.selectedIndex - 1, 0)
-                _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
-            }
-        }
-        Keys.onDownPressed: {
-            if (_list.count > 0)
-            {
-                _.selectedIndex = Math.min(_.selectedIndex + 1, _list.count - 1)
-                _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
-            }
-        }
-        Keys.onLeftPressed: {
-            if (_list.count > 0)
-            {
-                _.selectedIndex = Math.max(_.selectedIndex - 1, 0)
-                _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
-            }
-        }
-        Keys.onRightPressed: {
-            if (_list.count > 0)
-            {
-                _.selectedIndex = Math.min(_.selectedIndex + 1, _list.count - 1)
-                _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
-            }
-        }
+        Keys.onUpPressed: if (_list.count > 0) _.selectedIndex = Math.max(_.selectedIndex - 1, 0)
+        Keys.onDownPressed: if (_list.count > 0) _.selectedIndex = Math.min(_.selectedIndex + 1, _list.count - 1)
+        Keys.onLeftPressed: if (_list.count > 0) _.selectedIndex = Math.max(_.selectedIndex - 1, 0)
+        Keys.onRightPressed: if (_list.count > 0) _.selectedIndex = Math.min(_.selectedIndex + 1, _list.count - 1)
         Keys.onReturnPressed: {
             if (_list.count > 0)
             {
@@ -150,11 +126,9 @@ Angulia {
                 bottomFont: _._data.commentFont
                 bottomMaximumLineCount: 1
 
-                Mouse {
-                    onClicked: {
-                        parent.modelData.execute()
-                        _ipc.close()
-                    }
+                mouseArea.onClicked: {
+                    this.modelData.execute()
+                    _ipc.close()
                 }
             }
         }

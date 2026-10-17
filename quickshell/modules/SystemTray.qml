@@ -39,23 +39,21 @@ Angulia {
                 imageHeight: _.imageHeight
                 imageSource: this.modelData.icon
                 centerIn: true
-                Mouse {
-                    onClicked: mouse => {
-                    if (mouse.button === Qt.LeftButton)
-                    {
-                        parent.modelData.activate()
-                    }
-                    else if (mouse.button === Qt.MiddleButton)
-                    {
-                        parent.modelData.secondaryActivate()
-                    }
-                    else if (mouse.button === Qt.RightButton && parent.modelData.hasMenu)
-                    {
-                        // parent.modelData.display(_Top, _.x + parent.x, _.y + parent.y)
-                    }}
-                    onEntered: parent.active = true
-                    onExited: parent.active = false
+                mouseArea.onClicked: mouse => {
+                if (mouse.button === Qt.LeftButton)
+                {
+                    this.modelData.activate()
                 }
+                else if (mouse.button === Qt.MiddleButton)
+                {
+                    this.modelData.secondaryActivate()
+                }
+                else if (mouse.button === Qt.RightButton && this.modelData.hasMenu)
+                {
+                    // this.modelData.display(_Top, _.x + this.x, _.y + this.y)
+                }}
+                mouseArea.onEntered: this.active = true
+                mouseArea.onExited: this.active = false
             }
         }
     }

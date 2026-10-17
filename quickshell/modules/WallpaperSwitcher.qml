@@ -20,6 +20,20 @@ Angulia {
     ) + _field.height + this.space * 2
 
     property int selectedIndex: (0)
+    function getWallpaper()
+    {
+        let values = _list.model.values
+        if (!values) return;
+        for (let i = 0; i < values.length; i++)
+        {
+            if (values[i].path === Settings.colors.image)
+            {
+                this.selectedIndex = i;
+                return;
+            }
+        }
+        this.selectedIndex = 0;
+    }
 
     show: false
     readonly property IpcHandler ipc: (_ipc)
@@ -31,7 +45,7 @@ Angulia {
         {
             root.ipcCloseAll()
             _.show = true
-            _.selectedIndex = 0
+            _.getWallpaper()
             _field.text = ""
             _field.forceActiveFocus()
         }
@@ -69,34 +83,10 @@ Angulia {
         visible: _.show
         font: _._data.font
         onTextChanged: _.selectedIndex = 0
-        Keys.onUpPressed: {
-            if (_list.count > 0)
-            {
-                _.selectedIndex = Math.max(_.selectedIndex - 1, 0)
-                _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
-            }
-        }
-        Keys.onDownPressed: {
-            if (_list.count > 0)
-            {
-                _.selectedIndex = Math.min(_.selectedIndex + 1, _list.count - 1)
-                _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
-            }
-        }
-        Keys.onLeftPressed: {
-            if (_list.count > 0)
-            {
-                _.selectedIndex = Math.max(_.selectedIndex - 1, 0)
-                _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
-            }
-        }
-        Keys.onRightPressed: {
-            if (_list.count > 0)
-            {
-                _.selectedIndex = Math.min(_.selectedIndex + 1, _list.count - 1)
-                _list.positionViewAtIndex(_.selectedIndex, ListView.Contain)
-            }
-        }
+        Keys.onUpPressed: if (_list.count > 0) _.selectedIndex = Math.max(_.selectedIndex - 1, 0)
+        Keys.onDownPressed: if (_list.count > 0) _.selectedIndex = Math.min(_.selectedIndex + 1, _list.count - 1)
+        Keys.onLeftPressed: if (_list.count > 0) _.selectedIndex = Math.max(_.selectedIndex - 1, 0)
+        Keys.onRightPressed: if (_list.count > 0) _.selectedIndex = Math.min(_.selectedIndex + 1, _list.count - 1)
         Keys.onReturnPressed: {
             if (_list.count > 0)
             {
@@ -125,6 +115,9 @@ Angulia {
             currentIndex: _.selectedIndex
             displaced: null
             model: ScriptModel { values: WallpaperSwitcher.search(_field.text).sort((a, b) => a.name.localeCompare(b.name)) }
+            highlightRangeMode: ListView.StrictlyEnforceRange
+            preferredHighlightBegin: this.isVertical ? this.height / 2 - _.cardHeight / 2: this.width / 2 - _.cardWidth / 2
+            preferredHighlightEnd: this.isVertical ? this.height / 2 + _.cardHeight / 2: this.width / 2 + _.cardWidth / 2
             delegate: Card {
                 required property var modelData
                 required property int index
@@ -141,16 +134,14 @@ Angulia {
                 isVertical: _.isVertical
                 centerIn: true
 
-                imageWidth: _.imageWidth
-                imageHeight: _.imageHeight
+                imageWidth: this.width
+                imageHeight: this.height
                 imageSource: this.modelData.path
                 imageFillMode: Image.PreserveAspectCrop
 
-                Mouse {
-                    onClicked: {
-                        parent.modelData.execute()
-                        _ipc.close()
-                    }
+                mouseArea.onClicked: {
+                    this.modelData.execute()
+                    _ipc.close()
                 }
             }
         }

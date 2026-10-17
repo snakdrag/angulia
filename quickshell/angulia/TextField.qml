@@ -27,6 +27,7 @@ TextInput {
         leftPadding: parent.leftPadding
         rightPadding: parent.rightPadding
         bottomPadding: parent.bottomPadding
+        font: parent.font
         text: parent.placeholderText
         color: parent.placeholderTextColor
         verticalAlignment: parent.verticalAlignment

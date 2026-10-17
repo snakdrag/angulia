@@ -23,8 +23,8 @@ Item {
         anchors.bottom: parent.bottom
         anchors.margins: 0
         radius: 0
-        forceLeftTop: true
-        forceLeftBottom: true
+        roundcorners.forceLeftTop: true
+        roundcorners.forceLeftBottom: true
     }
     Angulia {
         anchors.top: parent.top
@@ -32,7 +32,7 @@ Item {
         anchors.bottom: parent.bottom
         anchors.margins: 0
         radius: 0
-        forceRightTop: true
-        forceRightBottom: true
+        roundcorners.forceRightTop: true
+        roundcorners.forceRightBottom: true
     }
 }

@@ -15,6 +15,7 @@ Root {
         Item {
             id: _overlay
             anchors.fill: parent
+            layer.enabled: true
             Modules.Notifications {}
             Modules.WallpaperSwitcher { id: _wallpaperswitcher }
             Modules.Launcher { id: _launcher }
@@ -27,6 +28,7 @@ Root {
         Item {
             id: _top
             anchors.fill: parent
+            layer.enabled: true
             Modules.Clock {}
             Modules.SystemTray {}
             Modules.Edge { id: _edge }

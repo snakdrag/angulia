@@ -3,8 +3,6 @@ import Quickshell // for PanelWindow
 import Quickshell.Wayland // for WlrLayershell and BackgroundEffect
 
 PanelWindow {
-    id: _
-
     Component.onCompleted: setRegions()
 
     readonly property var layers: ({ Overlay: 0, Top: 1, Bottom: 2, Background: 3 })
@@ -12,7 +10,6 @@ PanelWindow {
 
     property Item modules: (_item)
     property bool keyboardFocus: (false)
-    property bool enableBlur: (true)
 
     anchors.top: true
     anchors.left: true
@@ -39,17 +36,14 @@ PanelWindow {
         layer === this.layers.Bottom ? WlrLayer.Bottom:
         WlrLayer.Background
     )
-    BackgroundEffect.blurRegion: Region { item: this.enableBlur ? _item: null }
+    BackgroundEffect.blurRegion: Region { item: _item }
 
     function setRegions()
     {
         _region.regions = [];
         for (let i = 0; i < this.modules.children.length; i++) {
             let module = this.modules.children[i];
-            if (module && module._itemName === "Angulia")
-            {
-                _region.regions.push(module.region);
-            }
+            if (module && module.roundcorners !== undefined) _region.regions.push(module.region);
         }
     }
 }

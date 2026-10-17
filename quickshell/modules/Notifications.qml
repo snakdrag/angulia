@@ -13,6 +13,7 @@ Angulia {
     implicitWidth: Math.max(_list.contentWidth, this.cardWidth) + this.space * 2
     implicitHeight: Math.max(_list.contentHeight, this.cardHeight) + this.space * 2
 
+    exclusiveZoneIgnore: false
     show: _list.contentWidth !== 0 && _list.contentHeight !== 0
 
     ClippingRectangle {
@@ -65,20 +66,18 @@ Angulia {
                             ((_main.y - _.space - _card.height / 8) / _card.height * 8)
                         )
                     }
-                    Mouse {
-                        onClicked: {
-                            if (_card.haveAction)
-                            {
-                                _card.modelData.actions[0].invoke()
-                            }
-                            else
-                            {
-                                _card.modelData.dismiss()
-                            }
+                    mouseArea.onClicked: {
+                        if (parent.haveAction)
+                        {
+                            parent.modelData.actions[0].invoke()
                         }
-                        onEntered: parent.hovered = true
-                        onExited: parent.hovered = false
+                        else
+                        {
+                            parent.modelData.dismiss()
+                        }
                     }
+                    mouseArea.onEntered: this.hovered = true
+                    mouseArea.onExited: this.hovered = false
                 }
                 Button {
                     property bool hovered: (false)
@@ -114,11 +113,9 @@ Angulia {
                             ((-_main.y - _.space - _card.height / 8) / _card.height * 8)
                         )
                     }
-                    Mouse {
-                        onClicked: _card.modelData.dismiss()
-                        onEntered: parent.hovered = true
-                        onExited: parent.hovered = false
-                    }
+                    mouseArea.onClicked: parent.modelData.dismiss()
+                    mouseArea.onEntered: this.hovered = true
+                    mouseArea.onExited: this.hovered = false
                 }
                 Card {
                     id: _main
@@ -142,99 +139,56 @@ Angulia {
                     bottomFont: _._data.bodyFont
                     bottomMaximumLineCount: parent.modelData.urgency === Notifications.critical ? 0: 3
 
-                    Mouse {
-                        cursorShape: Qt.ArrowCursor
-                        onEntered: parent.active = true
-                        onExited: parent.active = false
-                        onClicked: mouse => {
-                        if (parent.isVertical)
-                        {
-                            if (mouse.button === Qt.LeftButton)
-                            {
-                                parent.x = parent.width / 4 + parent.space
-                            }
-                            else if (mouse.button === Qt.RightButton)
-                            {
-                                parent.x = -parent.width / 4 - parent.space
-                            }
-                            else if (mouse.button === Qt.MiddleButton)
-                            {
-                                parent.x = 0
-                            }
-                        }
-                        else
-                        {
-                            if (mouse.button === Qt.LeftButton)
-                            {
-                                parent.y = parent.height / 4 + parent.space
-                            }
-                            else if (mouse.button === Qt.RightButton)
-                            {
-                                parent.y = -parent.height / 4 - parent.space
-                            }
-                            else if (mouse.button === Qt.MiddleButton)
-                            {
-                                parent.y = 0
-                            }
-                        }}
+                    mouseArea.cursorShape: Qt.ArrowCursor
+                    mouseArea.onEntered: this.active = true
+                    mouseArea.onExited: this.active = false
+                    mouseArea.onClicked: mouse => {
+                    let place = 0
+                    if (mouse.button === Qt.LeftButton) place = (this.isVertical ? this.width: this.height) / 4 + this.space
+                    if (mouse.button === Qt.RightButton) place = -(this.isVertical ? this.width: this.height) / 4 - this.space
+                    if (this.isVertical) this.x = place
+                    else this.y = place
                     }
                     DragHandler {
                         xAxis.enabled: parent.isVertical
                         yAxis.enabled: !parent.isVertical
                         onActiveChanged: {
-                            if (parent.isVertical)
+                            let place = parent.isVertical ? parent.x: parent.y
+                            let size = parent.isVertical ? parent.width: parent.height
+                            if (place < -size / 2 - parent.space)
                             {
-                                if (parent.x < -parent.width / 2 - parent.space)
-                                {
-                                    _card.modelData.dismiss()
-                                }
-                                else if (parent.x < -parent.width / 4)
-                                {
-                                    parent.x = -parent.width / 4 - parent.space
-                                }
-                                else if (parent.x > parent.width / 2 + parent.space)
-                                {
-                                    if (_card.haveAction)
-                                    {
-                                        _card.modelData.actions[0].invoke()
-                                    }
-                                    else {_card.modelData.dismiss()
-                                    }
-                                }
-                                else if (parent.x > parent.width / 4)
-                                {
-                                    parent.x = parent.width / 4 + parent.space
-                                }
-                                else {
-                                    parent.x = 0
-                                }
+                                _card.modelData.dismiss()
                             }
-                            else
+                            else if (place < -size / 4)
                             {
-                                if (parent.y < -parent.height / 2 - parent.space)
+                                place = -size / 4 - parent.space
+                            }
+                            else if (place > size / 2 + parent.space)
+                            {
+                                if (_card.haveAction)
                                 {
-                                    _card.modelData.dismiss()
-                                }
-                                else if (parent.y < -parent.height / 4)
-                                {
-                                    parent.y = -parent.height / 4 - parent.space
-                                }
-                                else if (parent.y > parent.height / 2 + parent.space)
-                                {
-                                    if (_card.haveAction)
-                                    {
-                                        _card.modelData.actions[0].invoke()
-                                    }
-                                    else {_card.modelData.dismiss()}
-                                }
-                                else if (parent.y > parent.height / 4)
-                                {
-                                    parent.y = parent.height / 4 + parent.space
+                                    _card.modelData.actions[0].invoke()
                                 }
                                 else
                                 {
-                                    parent.y = 0
+                                    _card.modelData.dismiss()
                                 }
+                            }
+                            else if (place > size / 4)
+                            {
+                                place = size / 4 + parent.space
+                            }
+                            else
+                            {
+                                place = 0
+                            }
+                            if (parent.isVertical)
+                            {
+                                parent.x = place
+                            }
+                            else
+                            {
+                                parent.y = place
                             }
                         }
                     }
