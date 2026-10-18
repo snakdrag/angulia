@@ -40,6 +40,7 @@ Angulia {
                 imageWidth: _.imageWidth
                 imageHeight: _.imageHeight
                 imageSource: this.modelData.icon
+                asynchronous: false
                 centerIn: true
                 mouseArea.onClicked: mouse => {
                 if (mouse.button === Qt.LeftButton)
@@ -54,14 +55,10 @@ Angulia {
                 }
                 else if (mouse.button === Qt.RightButton && this.modelData.hasMenu)
                 {
-                    _popup.call(_.x + _.space + this.x + this.width / 2, _.y + _.space + this.y + this.height / 2, _menu.children)
+                    _popup.call(_.x + _.space + this.x + this.width / 2, _.y + _.space + this.y + this.height / 2, this.modelData.menu)
                 }}
                 mouseArea.onEntered: this.active = true
                 mouseArea.onExited: this.active = false
-                QsMenuOpener {
-                    id: _menu
-                    menu: _card.modelData.menu
-                }
             }
         }
     }

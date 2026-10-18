@@ -7,6 +7,8 @@ Button {
     property bool centerIn: (false)
     property int space: (0)
 
+    property bool asynchronous: (true)
+
     property int imageWidth: (0)
     property int imageHeight: (0)
     property string imageSource: ("")
@@ -52,8 +54,9 @@ Button {
             anchors.margins: _.space
             width: _.imageWidth
             height: _.imageHeight
-            sourceSize.width: this.width
-            sourceSize.height: this.height
+            asynchronous: _.asynchronous
+            sourceSize.width: _.imageWidth
+            sourceSize.height: _.imageHeight
             source: _.imageSource || ""
             fillMode: _.imageFillMode
             visible: this.status === Image.Ready && this.source != ""

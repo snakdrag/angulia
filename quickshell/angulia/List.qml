@@ -9,4 +9,5 @@ ListView {
 
     displaced: Transition { NumberAnimation { properties:"x, y" ;duration: 300; easing.type: Easing.OutCubic } }
     highlightMoveDuration: 300
+    cacheBuffer: 300
 }
