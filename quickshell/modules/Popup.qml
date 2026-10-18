@@ -8,9 +8,12 @@ Angulia {
     id: _
 
     _data: Settings.popup
-    property ObjectModel menuData: (_menu.children)
+
+    readonly property ObjectModel menuData: (_menu.children)
     property QtObject menu
+
     exclusiveZoneIgnore: false
+
     implicitWidth: this.cardWidth + this.space * 2
     implicitHeight: _list.contentHeight + this.space * 2
 

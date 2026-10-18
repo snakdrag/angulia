@@ -6,6 +6,7 @@
 <img src="./assets/showcase.gif" width="800" alt="example">
 
 if you want to use this, please go to ~/.config/quickshell/angulia/hyprland/custom/ and change hyprland by your own.
+you can set quickshell settings in ~/.config/angulia/settings.json
 
 required:
 

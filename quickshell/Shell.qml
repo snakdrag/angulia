@@ -1,5 +1,4 @@
 import QtQuick // for Item
-import Quickshell // for Region
 import "modules" as Modules
 
 Root {
@@ -28,7 +27,6 @@ Root {
         id: _Top
         modules: _top
         layer: this.layers.Top
-        keyboardFocus: _popup.show
         Item {
             id: _top
             anchors.fill: parent

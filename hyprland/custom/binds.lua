@@ -25,7 +25,7 @@ binds_create("SUPER + E", hl.dsp.exec_cmd("nautilus"))
 binds_create("SUPER + W", hl.dsp.exec_cmd("flatpak run com.brave.Browser"))
 binds_create("SUPER + D", hl.dsp.exec_cmd("flatpak run dev.vencord.Vesktop"))
 binds_create("SUPER + C", hl.dsp.exec_cmd("distrobox-enter -n fedora -- code"))
-binds_create("SUPER + P", hl.dsp.exec_cmd('grim -g "$(slurp)" - | wl-copy'))
+binds_create("SUPER + P", hl.dsp.exec_cmd('pkill slurp || grim -g "$(slurp)" - | wl-copy'))
 binds_create("SUPER + R", hl.dsp.exec_cmd(
     'pkill wf-recorder && notify-send "Recording Done!" "saved as ~/Videos/Recording_$(date +"%Y-%m-%d_%H-%M-%S").mp4" || ' ..
     '(notify-send "Recording..." && wf-recorder --audio -f ~/Videos/$(date +"%Y-%m-%d_%H-%M-%S").mp4)'
@@ -43,7 +43,7 @@ return {
         wallpaperswitcher = "SUPER + S",
     },
     session = {
-        logout = "SUPER + M",
+        logout = "",
     },
     window = {
         close = "SUPER + Q",

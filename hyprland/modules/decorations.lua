@@ -14,7 +14,7 @@ hl.config({
         border_size      = 2,
 
         col              = {
-            active_border   = { colors = { settings.colors.primary }, angle = 45 },
+            active_border   = settings.colors.primary,
             inactive_border = settings.colors.outline,
         },
 
@@ -43,7 +43,7 @@ hl.config({
 
         blur             = {
             enabled  = true,
-            size     = 5,
+            size     = 10,
             passes   = 3,
             vibrancy = 0.1696,
         },
