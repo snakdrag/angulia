@@ -9,8 +9,6 @@ Item {
         anchors.right: parent.right
         anchors.margins: this.edge
         anchors.topMargin: 0
-        x: 0
-        y: 0
     }
     Angulia {
         anchors.left: parent.left
@@ -18,8 +16,6 @@ Item {
         anchors.bottom: parent.bottom
         anchors.margins: this.edge
         anchors.bottomMargin: 0
-        x: 0
-        y: 0
     }
     Angulia {
         anchors.top: parent.top
@@ -27,8 +23,6 @@ Item {
         anchors.bottom: parent.bottom
         anchors.margins: 0
         radius: 0
-        x: 0
-        y: 0
         roundcorners.forceLeftTop: true
         roundcorners.forceLeftBottom: true
     }
@@ -38,8 +32,6 @@ Item {
         anchors.bottom: parent.bottom
         anchors.margins: 0
         radius: 0
-        x: 0
-        y: 0
         roundcorners.forceRightTop: true
         roundcorners.forceRightBottom: true
     }

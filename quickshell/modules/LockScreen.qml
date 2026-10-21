@@ -14,10 +14,20 @@ WlSessionLock {
             sourceSize.height: parent.height
             fillMode: Image.PreserveAspectCrop
         }
+        Clock {
+            customX: parent.width / 2
+            customY: parent.height / 4
+            show: false
+            opacity: 0.6
+            textColor: "#ffffff"
+            font.family: "Inter"
+            font.pixelSize: parent.height / 8
+            font.bold: true
+        }
         Angulia {
             customX: parent.width / 2
             customY: parent.height
-            implicitWidth: 200
+            implicitWidth: parent.width / 6
             implicitHeight: this.bar.height
             TextField {
                 anchors.fill: parent

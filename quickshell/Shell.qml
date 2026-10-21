@@ -5,8 +5,8 @@ Root {
     id: root
     childrens: ([..._edge.children, ..._overlay.children, ..._top.children, ])
     modules: ([..._top.children, ])
-    gaps_out: _popup.gaps_out
     bar: _popup.bar
+    gaps_out: _popup.gaps_out
     float: _popup.float
     edge: _popup.edge
     Layer {
