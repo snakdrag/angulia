@@ -15,7 +15,7 @@
   "notification": {
     "exclusiveZoneIgnore": false,
     "isVertical": true,
-    "x": 1600,
+    "x": 800,
     "y": 0,
     "cardWidth": 360,
     "cardHeight": 70,
@@ -69,5 +69,15 @@
   "popup": {
     "cardHeight": 40,
     "font": { "family": "Inter", "pixelSize": 12, "bold": true }
+  },
+
+  "polkit": {
+    "exclusiveZoneIgnore": true,
+    "isVertical": true,
+    "x": 800,
+    "y": 900,
+    "width": 320,
+    "font": { "family": "Inter", "pixelSize": 12, "bold": true },
+    "inputAtTop": false
   }
 }
