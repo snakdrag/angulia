@@ -19,6 +19,11 @@ Singleton {
         command: ["systemctl", "reboot"]
     },
     Command {
+        icon: ""
+        name: "Force kill quickshell"
+        command: ["qs", "kill"]
+    },
+    Command {
         icon: "system-shutdown"
         name: "Poweroff"
         command: ["systemctl", "poweroff"]

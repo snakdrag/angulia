@@ -10,7 +10,7 @@ Angulia {
     _data: Settings.polkit
 
     implicitWidth: this._data.width
-    implicitHeight: bar.height
+    implicitHeight: bar.height + _card.textHeight + this.space * 3
 
     show: PolkitAgent.isActive
     onShowChanged: {
@@ -30,22 +30,39 @@ Angulia {
         space: _.space
         color: _.textColor
         visible: _.show
+        enabled: !PolkitAgent.inputLock
         font: _._data.font
         background.radius: _.radius
         background.color: _.cardColor
-        placeholderText: PolkitAgent.flow !== null ? PolkitAgent.flow.inputPrompt: ""
+        placeholderText: (
+            PolkitAgent.placeholderText === "" ?
+            (
+                PolkitAgent.flow !== null ? PolkitAgent.flow.inputPrompt: ""
+            ):
+            PolkitAgent.placeholderText
+        )
         echoMode: TextInput.Password
         verticalAlignment: TextInput.AlignVCenter
-        Keys.onReturnPressed: PolkitAgent.submit(this.text)
+        Keys.onReturnPressed: {PolkitAgent.submit(this.text); this.text = ""}
         Keys.onEscapePressed: PolkitAgent.cancelAuthenticationRequest()
     }
-    Rectangle {
+    Card {
+        id: _card
         anchors.fill: parent
         anchors.margins: _.space
         anchors.topMargin: _._data.inputAtTop ? _field.height + _.space * 2: _.space
         anchors.bottomMargin: _._data.inputAtTop ? _.space: _field.height + _.space * 2
         radius: _.radius
-        color: _.backgroundColor
+        color: _.cardColor
         visible: _.show
+        activeColor: _.textColor
+        space: _.space
+        isVertical: _.isVertical
+        imageWidth: Math.min(this.width, this.height) - this.space * 2
+        imageHeight: Math.min(this.width, this.height) - this.space * 2
+        imageSource: PolkitAgent.flow !== null ? Quickshell.iconPath(PolkitAgent.flow.iconName, true): ""
+        wrapMode: Text.WordWrap
+        topText: PolkitAgent.flow !== null ? PolkitAgent.flow.message: ""
+        topFont: _._data.font
     }
 }

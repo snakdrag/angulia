@@ -1,12 +1,13 @@
 pragma Singleton
 import Quickshell // for Singleton
 import Quickshell.Io
+import "../services"
 
 Singleton {
     id: _
     property bool open: (false)
     property string placeholderText: ("")
-    readonly property bool inputLock: (_pam.lock)
+    readonly property bool inputLock: (Pam.lock)
 
     IpcHandler {
         id: _ipc
@@ -18,11 +19,11 @@ Singleton {
     }
     function authenticate(password)
     {
-        _pam.authenticate(password)
+        Pam.authenticate(password)
     }
-    Pam {
-        id: _pam
-        onSucceeded: _.open = false
-        onFailed: _.placeholderText = "Password Incorrect"
-    }
+
+    readonly property bool isSuccessful: (Pam.isSuccessful)
+    readonly property bool failed: (Pam.failed)
+    onIsSuccessfulChanged: if (this.isSuccessful) _.open = false
+    onFailedChanged: if (this.failed) _.placeholderText = "Password Incorrect"
 }

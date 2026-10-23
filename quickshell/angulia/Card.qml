@@ -13,6 +13,7 @@ Button {
     property int imageHeight: (0)
     property string imageSource: ("")
     property int imageFillMode: (Image.PreserveAspectFit)
+    property int wrapMode: (Text.WrapAnywhere)
 
     property string topText: ("")
     property int topMaximumLineCount: (0)
@@ -83,7 +84,7 @@ Button {
                 color: _.activeColor
                 elide: Text.ElideRight
                 horizontalAlignment: _.horizontalAlignment
-                wrapMode: _.isVertical ? Text.WrapAnywhere: Text.NoWrap
+                wrapMode: _.wrapMode
                 maximumLineCount: _.topMaximumLineCount
             }
             Text {
@@ -97,7 +98,7 @@ Button {
                 color: _.activeColor
                 elide: Text.ElideRight
                 horizontalAlignment: _.horizontalAlignment
-                wrapMode: Text.WrapAnywhere
+                wrapMode: _.wrapMode
                 maximumLineCount: _.bottomMaximumLineCount
             }
         }
