@@ -13,7 +13,7 @@ Root {
         id: _Overlay
         modules: _overlay
         layer: this.layers.Overlay
-        keyboardFocus: _launcher.show || _wallpaperswitcher.show
+        keyboardFocus: _launcher.show || _wallpaperswitcher.show || _polkit.show
         Item {
             id: _overlay
             anchors.fill: parent
@@ -21,6 +21,7 @@ Root {
             Modules.Notifications {}
             Modules.WallpaperSwitcher { id: _wallpaperswitcher }
             Modules.Launcher { id: _launcher }
+            Modules.Polkit { id: _polkit }
         }
     }
     Layer {

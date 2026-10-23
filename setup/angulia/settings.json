@@ -1,7 +1,7 @@
 {
   "radius": 12,
   "edge": 5,
-  "float": 10,
+  "float": 0,
   "space": 10,
 
   "gaps_in": 5,

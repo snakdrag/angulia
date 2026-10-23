@@ -32,11 +32,11 @@ WlSessionLock {
             TextField {
                 anchors.fill: parent
 
-                radius: parent.radius
+                background.radius: parent.radius
                 space: parent.space
 
                 color: parent.textColor
-                backgroundColor: parent.cardColor
+                background.color: parent.cardColor
 
                 echoMode: TextInput.Password
                 verticalAlignment: TextInput.AlignVCenter

@@ -60,9 +60,9 @@ Angulia {
         anchors.right: parent.right
         height: _.bar.height - this.space * 2
         space: _.space
-        radius: _.radius
+        background.radius: _.radius
         color: _.textColor
-        backgroundColor: _.cardColor
+        background.color: _.cardColor
         placeholderText: "Search..."
         verticalAlignment: TextInput.AlignVCenter
         visible: _.show
