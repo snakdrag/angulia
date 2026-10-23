@@ -10,7 +10,11 @@ Angulia {
     _data: Settings.polkit
 
     implicitWidth: this._data.width
-    implicitHeight: bar.height + _card.textHeight + this.space * 3 + (this.isVertical ? 0: this.imageHeight + this.space)
+    implicitHeight: bar.height + _card.textHeight + this.space * 3 + (
+        this.isVertical || !_card.image.visible ?
+        0:
+        this.imageHeight + this.space
+    )
 
     show: PolkitAgent.isActive
     onShowChanged: if (this.show) {_field.text = ""; _field.forceActiveFocus()}

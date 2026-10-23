@@ -13,6 +13,8 @@ Button {
     property int imageHeight: (0)
     property string imageSource: ("")
     property int imageFillMode: (Image.PreserveAspectFit)
+    property Image image: (_image)
+
     property int wrapMode: (Text.WrapAnywhere)
 
     property string topText: ("")
