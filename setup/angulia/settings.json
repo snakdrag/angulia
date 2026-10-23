@@ -73,10 +73,12 @@
 
   "polkit": {
     "exclusiveZoneIgnore": true,
-    "isVertical": true,
+    "isVertical": false,
     "x": 800,
     "y": 900,
-    "width": 320,
+    "width": 300,
+    "height": 300,
+    "iconSize": 40,
     "font": { "family": "Inter", "pixelSize": 12, "bold": true },
     "inputAtTop": false
   }

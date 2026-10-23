@@ -10,13 +10,10 @@ Angulia {
     _data: Settings.polkit
 
     implicitWidth: this._data.width
-    implicitHeight: bar.height + _card.textHeight + this.space * 3
+    implicitHeight: bar.height + _card.textHeight + this.space * 3 + (this.isVertical ? 0: this.imageHeight + this.space)
 
     show: PolkitAgent.isActive
-    onShowChanged: {
-        _field.text = ""
-        _field.forceActiveFocus()
-    }
+    onShowChanged: if (this.show) {_field.text = ""; _field.forceActiveFocus()}
 
     TextField {
         id: _field
@@ -58,8 +55,8 @@ Angulia {
         activeColor: _.textColor
         space: _.space
         isVertical: _.isVertical
-        imageWidth: Math.min(this.width, this.height) - this.space * 2
-        imageHeight: Math.min(this.width, this.height) - this.space * 2
+        imageWidth: _.imageWidth
+        imageHeight: _.imageHeight
         imageSource: PolkitAgent.flow !== null ? Quickshell.iconPath(PolkitAgent.flow.iconName, true): ""
         wrapMode: Text.WordWrap
         topText: PolkitAgent.flow !== null ? PolkitAgent.flow.message: ""
