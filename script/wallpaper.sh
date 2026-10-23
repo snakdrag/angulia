@@ -10,5 +10,3 @@ matugen image "$WALLPAPER" \
     --source-color-index 0 \
     --json hex > ~/.config/quickshell/angulia/settings/colors/colors.json
 hyprctl reload
-~/.config/quickshell/angulia/script/base16.sh
-~/.config/quickshell/angulia/script/sync_theme.sh

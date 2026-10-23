@@ -4,9 +4,9 @@ import Quickshell.Services.Polkit
 
 Singleton {
 
-    property bool isActive: (_polkitagent.isActive)
-    property AuthFlow flow: (_polkitagent.flow)
     property PolkitAgent polkitagent: (_polkitagent)
+    property AuthFlow flow: (this.polkitagent.flow)
+    property bool isActive: (this.polkitagent.isActive)
     property string placeholderText: ("")
     readonly property bool inputLock: (Pam.lock)
 
@@ -23,6 +23,7 @@ Singleton {
         this.flow.cancelAuthenticationRequest()
         this.placeholderText = ""
     }
+
     readonly property bool failed: (Pam.failed)
     onFailedChanged: if (this.failed) this.placeholderText = "Password Incorrect"
 }
