@@ -1,69 +1,93 @@
 import QtQuick
 import Quickshell
-import "../services"
-import "../angulia"
-import "../../settings"
+import "../states"
+import "../components"
 
-Angulia {
-    id: _
+Panel {
 
-    _data: Settings.polkit
+    anchors.margins: 5
+    customX: parent.width / 2
+    customY: parent.height
 
-    implicitWidth: this._data.width
-    implicitHeight: bar.height + _card.textHeight + this.space * 3 + (
-        this.isVertical || !_card.image.visible ?
-        0:
-        this.imageHeight + this.space
-    )
+    implicitWidth: 300
+    implicitHeight: _field.height + this.space * 2 + (_card.height === 0 ? 0: _card.height + this.space)
 
-    show: PolkitAgent.isActive
-    onShowChanged: if (this.show) {_field.text = ""; _field.forceActiveFocus()}
+    radius: 12
+
+    property int space: (10)
+    property color textColor: ("#ffffff")
+    property color cardColor: ("#222222")
+    property bool inputAtTop: (false)
+    property int iconSize: (40)
+    property int inputHeight: (30)
+    property font font: ({
+        family: "JetBrainMono",
+        pixelSize: 15
+    })
+
+    show: Polkit.agent.isActive
+    onShowChanged: {
+        if (this.show)
+        {
+            Polkit.agent.lock = false;
+            _field.text = "";
+            _field.forceActiveFocus()
+        }
+    }
 
     TextField {
         id: _field
-        y: _._data.inputAtTop ? this.anchors.topMargin: Math.max(
-            parent.height - this.height - this.anchors.bottomMargin,
-            this.anchors.topMargin
-        )
+        customY: parent.inputAtTop ? 0: parent.height
         anchors.left: parent.left
         anchors.right: parent.right
-        height: _.bar.height - this.space * 2
-        space: _.space
-        color: _.textColor
-        visible: _.show
-        enabled: !PolkitAgent.inputLock
-        font: _._data.font
-        background.radius: _.radius
-        background.color: _.cardColor
-        placeholderText: (
-            PolkitAgent.placeholderText === "" ?
-            (
-                PolkitAgent.flow !== null ? PolkitAgent.flow.inputPrompt: ""
-            ):
-            PolkitAgent.placeholderText
-        )
+        height: parent.inputHeight
+        space: parent.space
+
+        background.color: parent.cardColor
+        background.radius: parent.radius
+
+        enabled: !Polkit.inputLock
+
+        color: parent.textColor
         echoMode: TextInput.Password
-        verticalAlignment: TextInput.AlignVCenter
-        Keys.onReturnPressed: {PolkitAgent.submit(this.text); this.text = ""}
-        Keys.onEscapePressed: PolkitAgent.cancelAuthenticationRequest()
+        placeholderText: (
+            Polkit.placeholderText === "" ?
+            (
+                Polkit.flow !== null ? Polkit.flow.inputPrompt: ""
+            ):
+            Polkit.placeholderText
+        )
+
+        Keys.onReturnPressed: { Polkit.submit(this.text); this.text = "" }
+        Keys.onEscapePressed: Polkit.cancelAuthenticationRequest()
     }
     Card {
         id: _card
-        anchors.fill: parent
-        anchors.margins: _.space
-        anchors.topMargin: _._data.inputAtTop ? _field.height + _.space * 2: _.space
-        anchors.bottomMargin: _._data.inputAtTop ? _.space: _field.height + _.space * 2
-        radius: _.radius
-        color: _.cardColor
-        visible: _.show
-        activeColor: _.textColor
-        space: _.space
-        isVertical: _.isVertical
-        imageWidth: _.imageWidth
-        imageHeight: _.imageHeight
-        imageSource: PolkitAgent.flow !== null ? Quickshell.iconPath(PolkitAgent.flow.iconName, true): ""
-        wrapMode: Text.WordWrap
-        topText: PolkitAgent.flow !== null ? PolkitAgent.flow.message: ""
-        topFont: _._data.font
+        customY: parent.inputAtTop ? parent.height: 0
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.margins: this.space
+
+        topText.text: Polkit.flow !== null ? Polkit.flow.message: ""
+        topText.font.family: parent.font.family
+        topText.font.pixelSize: parent.font.pixelSize
+        topText.color: parent.textColor
+        topText.wrapMode: Text.WordWrap
+
+        color: parent.cardColor
+        radius: parent.radius
+        space: parent.space
+
+        item.customY: this.height / 2
+        item.anchors.leftMargin: this.image.visible ? this.image.width + this.space * 2: this.space
+        implicitHeight: Math.max(parent.iconSize, this.textHeight) + this.space * 2
+
+        image.customY: this.height / 2
+        image.anchors.margins: this.space
+        image.width: parent.iconSize
+        image.height: parent.iconSize
+        image.source: Polkit.flow !== null ? Quickshell.iconPath(Polkit.flow.iconName, true): ""
+
+        onClicked: Polkit.cancelAuthenticationRequest()
     }
 }

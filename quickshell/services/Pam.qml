@@ -3,43 +3,45 @@ import Quickshell // for Singleton
 import Quickshell.Services.Pam
 
 Singleton {
-    id: _
-    property bool lock: (false)
+    readonly property PamContext context: (_context)
 
-    property bool isSuccessful: (false)
-    property bool failed: (false)
-    readonly property PamContext pam: (_pam)
-
-    function authenticate(password)
-    {
-        this.lock = true
-        _pam.text = password
-        _pam.start()
-    }
     PamContext {
-        id: _pam
+        id: _context
+
         config: "login"
+
         property string text: ("")
+        property bool lock: (false)
+        property bool failed: (false)
+        property bool isSuccessful: (false)
 
-        onPamMessage: {
-            if (this.responseRequired)
-            {
-                this.respond(text)
-            }
-        }
-
+        onPamMessage: if (this.responseRequired) this.respond(this.text)
         onCompleted: result => {
         if (result == PamResult.Success)
         {
-            _.isSuccessful = true
+            this.isSuccessful = true
         }
         else
         {
-            _.failed = true
+            this.failed = true
         }
         this.text = ""
-        _.isSuccessful = false
-        _.failed = false
-        _.lock = false}
+        this.isSuccessful = false
+        this.failed = false
+        this.lock = false}
+    }
+
+    readonly property var error: (PamError)
+    readonly property var result: (PamResult)
+
+    readonly property bool lock: (this.context.lock)
+    readonly property bool failed: (this.context.failed)
+    readonly property bool isSuccessful: (this.context.isSuccessful)
+
+    function authenticate(password)
+    {
+        this.context.lock = true
+        this.context.text = password
+        this.context.start()
     }
 }

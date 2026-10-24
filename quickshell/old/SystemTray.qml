@@ -57,8 +57,6 @@ Angulia {
                 {
                     _popup.call(_.x + _.space + this.x + this.width / 2, _.y + _.space + this.y + this.height / 2, this.modelData.menu)
                 }}
-                mouseArea.onEntered: this.active = true
-                mouseArea.onExited: this.active = false
             }
         }
     }

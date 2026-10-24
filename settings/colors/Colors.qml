@@ -1,7 +1,7 @@
 pragma Singleton
-import QtQuick
-import Quickshell
-import Quickshell.Io
+import QtQuick // for color
+import Quickshell // for Singleton
+import Quickshell.Io // for FileView and JSON.parse
 
 Singleton {
     readonly property var data: (JSON.parse(_colors.text()))
@@ -17,9 +17,10 @@ Singleton {
     readonly property var base16: (this.data.base16)
     readonly property var colors: (this.data.colors)
     readonly property var palettes: (this.data.palettes)
+
     readonly property string image: (this.data.image)
-    readonly property bool isDarkMode: (this.data.is_dark_mode)
     readonly property string mode: (this.data.mode)
+    readonly property bool isDarkMode: (this.data.is_dark_mode)
 
     readonly property color primary: (this.colors.primary[this.mode].color)
     readonly property color on_primary: (this.colors.on_primary[this.mode].color)

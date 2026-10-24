@@ -1,46 +1,41 @@
 import QtQuick
-import "../angulia"
+import "../components"
 
 Item {
+
     anchors.fill: parent
-    Angulia {
+
+    property int edge: (5)
+    property real radius: (12)
+
+    Panel {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.margins: this.edge
-        anchors.topMargin: 0
-        x: 0
-        y: 0
+        anchors.leftMargin: parent.edge
+        anchors.rightMargin: parent.edge
+        implicitHeight: parent.edge
+        radius: parent.radius
     }
-    Angulia {
+    Panel {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.margins: this.edge
-        anchors.bottomMargin: 0
-        x: 0
-        y: 0
+        anchors.leftMargin: parent.edge
+        anchors.rightMargin: parent.edge
+        implicitHeight: parent.edge
+        radius: parent.radius
     }
-    Angulia {
+    Panel {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.bottom: parent.bottom
-        anchors.margins: 0
-        radius: 0
-        x: 0
-        y: 0
-        roundcorners.forceLeftTop: true
-        roundcorners.forceLeftBottom: true
+        implicitWidth: parent.edge
     }
-    Angulia {
+    Panel {
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.margins: 0
-        radius: 0
-        x: 0
-        y: 0
-        roundcorners.forceRightTop: true
-        roundcorners.forceRightBottom: true
+        implicitWidth: parent.edge
     }
 }

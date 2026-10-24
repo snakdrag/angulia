@@ -12,6 +12,8 @@ Rectangle {
         acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
         cursorShape: Qt.PointingHandCursor
         hoverEnabled: true
+        onEntered: parent.active = true
+        onExited: parent.active = false
     }
 
     Rectangle {

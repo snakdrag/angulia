@@ -19,20 +19,9 @@ Item {
                 fillColor: _.color
                 startX: _.radius
                 startY: 0
-                PathLine {
-                    x: 0
-                    y: 0
-                }
-                PathLine {
-                    x: 0
-                    y: _.radius
-                }
-                PathArc {
-                    x: _.radius
-                    y: 0
-                    radiusX: _.radius
-                    radiusY: _.radius
-                }
+                PathLine { x: 0; y: 0 }
+                PathLine { x: 0; y: _.radius }
+                PathArc { x: _.radius; y: 0; radiusX: _.radius; radiusY: _.radius }
             }
         }
     }

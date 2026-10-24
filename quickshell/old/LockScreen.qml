@@ -19,10 +19,6 @@ WlSessionLock {
             customY: parent.height / 4
             show: false
             opacity: 0.6
-            textColor: "#ffffff"
-            font.family: "Inter"
-            font.pixelSize: parent.height / 8
-            font.bold: true
         }
         Angulia {
             customX: parent.width / 2

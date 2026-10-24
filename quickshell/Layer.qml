@@ -1,7 +1,6 @@
 import QtQuick // for Item
 import Quickshell // for PanelWindow
 import Quickshell.Wayland // for WlrLayershell and BackgroundEffect
-import "services"
 
 PanelWindow {
     Component.onCompleted: setRegions()
@@ -26,10 +25,7 @@ PanelWindow {
         MouseArea {
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-            onClicked: {
-                root.ipcCloseAll()
-                PolkitAgent.cancelAuthenticationRequest()
-            }
+            onClicked: root.ipcCloseAll()
         }
     }
 

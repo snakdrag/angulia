@@ -4,8 +4,8 @@ import Quickshell.Io // for FileView and JSON.parse
 import "colors" // for Colors
 
 Singleton {
-
     readonly property var data: (JSON.parse(_angulia.text()))
+
     FileView {
         id: _angulia
         path: Quickshell.env("HOME") + "/.config/angulia/settings.json"
@@ -25,11 +25,12 @@ Singleton {
     readonly property int gaps_out: (this.data.gaps_out)
 
     readonly property var bar: (this.data.bar)
-    readonly property var notification: (this.data.notification)
-    readonly property var launcher: (this.data.launcher)
     readonly property var clock: (this.data.clock)
-    readonly property var systemtray: (this.data.systemtray)
-    readonly property var wallpaperswitcher: (this.data.wallpaperswitcher)
     readonly property var popup: (this.data.popup)
+    readonly property var launcher: (this.data.launcher)
+    readonly property var systemtray: (this.data.systemtray)
+    readonly property var polkitagent: (this.data.polkitagent)
+    readonly property var notification: (this.data.notification)
+    readonly property var wallpaperswitcher: (this.data.wallpaperswitcher)
     readonly property var polkit: (this.data.polkit)
 }

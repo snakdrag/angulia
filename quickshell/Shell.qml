@@ -1,5 +1,6 @@
 import QtQuick // for Item
-import "modules" as Modules
+import "old" as Modules
+import "modules"
 
 Root {
     id: root
@@ -13,15 +14,19 @@ Root {
         id: _Overlay
         modules: _overlay
         layer: this.layers.Overlay
-        keyboardFocus: _launcher.show || _wallpaperswitcher.show || _polkit.show
+        keyboardFocus: (
+            _launcher.show ||
+            _wallpaperswitcher.show ||
+            _polkit.show
+        )
         Item {
             id: _overlay
             anchors.fill: parent
             layer.enabled: true
-            Modules.Notifications {}
+            // Modules.Notifications {}
             Modules.WallpaperSwitcher { id: _wallpaperswitcher }
             Modules.Launcher { id: _launcher }
-            Modules.Polkit { id: _polkit }
+            Polkit { id: _polkit }
         }
     }
     Layer {
@@ -32,9 +37,9 @@ Root {
             id: _top
             anchors.fill: parent
             layer.enabled: true
-            Modules.Edge { id: _edge }
+            Edge { id: _edge }
             Modules.Popup { id: _popup }
-            Modules.Clock {}
+            Clock {}
             Modules.SystemTray {}
         }
     }

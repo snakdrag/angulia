@@ -1,12 +1,16 @@
 pragma Singleton
 import Quickshell // for Singleton
-import Quickshell.Services.Notifications // for NotificationServer and NotificationUrgency
+import Quickshell.Services.Notifications
 
 Singleton {
     readonly property NotificationServer server: (_server)
-    readonly property int critical: (NotificationUrgency.Critical)
+
     NotificationServer {
         id: _server
-        onNotification: notification => notification.tracked = true
+        onNotification: notification => {
+        notification.tracked = true}
     }
+
+    readonly property var urgency: (NotificationUrgency)
+    readonly property var closeReason: (NotificationCloseReason)
 }

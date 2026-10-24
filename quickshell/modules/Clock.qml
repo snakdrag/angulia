@@ -1,23 +1,30 @@
 import QtQuick
 import Quickshell // for SystemClock
-import "../angulia"
-import "../../settings"
+import "../components"
 
-Angulia {
-    id: _
+Panel {
 
-    _data: Settings.clock
+    anchors.margins: 5
+    customX: parent.width / 2
+    customY: parent.height
 
-    implicitWidth: this.isVertical ? this.bar.width: this._data.width
-    implicitHeight: this.isVertical ? this._data.height: this.bar.height
+    implicitWidth: 300
+    implicitHeight: 50
 
-    property font font: (_._data.font)
+    radius: 12
+
+    property color textColor: ("#ffffff")
+    property font font: ({
+        family: "Inter",
+        pixelSize: 15
+    })
 
     Text {
         anchors.centerIn: parent
         text: Qt.formatDateTime(_clock.date, "hh:mm")
-        color: _.textColor
-        font: _.font
+        color: parent.textColor
+        font.family: parent.font.family
+        font.pixelSize: parent.font.pixelSize
         SystemClock {
             id: _clock
             precision: SystemClock.Minutes
