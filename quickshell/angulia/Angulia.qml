@@ -93,29 +93,38 @@ Rectangle {
 
     // radius
     radius: Settings.radius
+    property bool noTopLeftRadius: (false)
+    property bool noTopRightRadius: (false)
+    property bool noBottomLeftRadius: (false)
+    property bool noBottomRightRadius: (false)
+
     topLeftRadius: (
         this.roundcorners.isTopLeft ||
         this.roundcorners.isLeftTop ||
         this.roundcorners.forceTopLeft ||
-        this.roundcorners.forceLeftTop
+        this.roundcorners.forceLeftTop ||
+        this.noTopLeftRadius
     ) ? 0: this.radius
     topRightRadius: (
         this.roundcorners.isTopRight ||
         this.roundcorners.isRightTop ||
         this.roundcorners.forceTopRight ||
-        this.roundcorners.forceRightTop
+        this.roundcorners.forceRightTop ||
+        this.noTopRightRadius
     ) ? 0: this.radius
     bottomLeftRadius: (
         this.roundcorners.isBottomLeft ||
         this.roundcorners.isLeftBottom ||
         this.roundcorners.forceBottomLeft ||
-        this.roundcorners.forceLeftBottom
+        this.roundcorners.forceLeftBottom ||
+        this.noBottomLeftRadius
     ) ? 0: this.radius
     bottomRightRadius: (
         this.roundcorners.isBottomRight ||
         this.roundcorners.isRightBottom ||
         this.roundcorners.forceBottomRight ||
-        this.roundcorners.forceRightBottom
+        this.roundcorners.forceRightBottom ||
+        this.noBottomRightRadius
     ) ? 0: this.radius
 
     // signal

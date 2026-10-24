@@ -23,7 +23,7 @@ Root {
             id: _overlay
             anchors.fill: parent
             layer.enabled: true
-            // Modules.Notifications {}
+            Notifications {}
             Modules.WallpaperSwitcher { id: _wallpaperswitcher }
             Modules.Launcher { id: _launcher }
             Polkit { id: _polkit }

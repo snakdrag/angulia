@@ -2,7 +2,8 @@ import QtQuick
 
 CustomRectangle {
 
-    property bool active: (false)
+    property bool hovered: (false)
+    property bool active: (this.hovered)
     property Rectangle cover: (_rectangle)
     property MouseArea mouseArea: (_mouseArea)
 
@@ -20,8 +21,8 @@ CustomRectangle {
         acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
         cursorShape: Qt.PointingHandCursor
         hoverEnabled: true
-        onEntered: parent.active = true
-        onExited: parent.active = false
+        onEntered: parent.hovered = true
+        onExited: parent.hovered = false
         onClicked: mouse => {
         if (mouse.button === Qt.LeftButton)
         {

@@ -5,25 +5,17 @@ import "../components"
 
 Panel {
 
-    anchors.margins: 5
     customX: parent.width / 2
     customY: parent.height
 
     implicitWidth: 300
     implicitHeight: _field.height + this.space * 2 + (_card.height === 0 ? 0: _card.height + this.space)
 
-    radius: 12
-
-    property int space: (10)
-    property color textColor: ("#ffffff")
-    property color cardColor: ("#222222")
     property bool inputAtTop: (false)
     property int iconSize: (40)
     property int inputHeight: (30)
-    property font font: ({
-        family: "JetBrainMono",
-        pixelSize: 15
-    })
+    property bool myMode: (false)
+    font.bold: true
 
     show: Polkit.agent.isActive
     onShowChanged: {
@@ -53,7 +45,7 @@ Panel {
         placeholderText: (
             Polkit.placeholderText === "" ?
             (
-                Polkit.flow !== null ? Polkit.flow.inputPrompt: ""
+                Polkit.flow === null ? "": Polkit.flow.inputPrompt
             ):
             Polkit.placeholderText
         )
@@ -68,9 +60,14 @@ Panel {
         anchors.right: parent.right
         anchors.margins: this.space
 
-        topText.text: Polkit.flow !== null ? Polkit.flow.message: ""
+        myMode: parent.myMode
+
+        cover.color: parent.textColor
+
         topText.font.family: parent.font.family
         topText.font.pixelSize: parent.font.pixelSize
+        topText.font.bold: parent.font.bold
+        topText.text: Polkit.flow === null ? "": Polkit.flow.message
         topText.color: parent.textColor
         topText.wrapMode: Text.WordWrap
 
@@ -78,15 +75,15 @@ Panel {
         radius: parent.radius
         space: parent.space
 
-        item.customY: this.height / 2
-        item.anchors.leftMargin: this.image.visible ? this.image.width + this.space * 2: this.space
-        implicitHeight: Math.max(parent.iconSize, this.textHeight) + this.space * 2
+        implicitHeight: (
+            this.myMode ?
+            (this.image.visible ? this.image.height + this.space: 0) + this.textHeight + this.space * 2:
+            Math.max(this.image.height, this.textHeight) + this.space * 2
+        )
 
-        image.customY: this.height / 2
-        image.anchors.margins: this.space
         image.width: parent.iconSize
         image.height: parent.iconSize
-        image.source: Polkit.flow !== null ? Quickshell.iconPath(Polkit.flow.iconName, true): ""
+        image.source: Polkit.flow === null ? "": Quickshell.iconPath(Polkit.flow.iconName, true)
 
         onClicked: Polkit.cancelAuthenticationRequest()
     }

@@ -6,7 +6,8 @@ Button {
 
     property int space: (0)
 
-    readonly property CustomItem item: (_item)
+    property bool myMode: (true)
+
     readonly property CustomImage image: (_image)
     readonly property Text topText: (_toptext)
     readonly property Text bottomText: (_bottomtext)
@@ -25,6 +26,9 @@ Button {
 
         CustomImage {
             id: _image
+            customY: _.myMode ? 0: parent.height / 2
+            customX: _.myMode ? parent.width / 2: 0
+            anchors.margins: _.space
             asynchronous: true
             sourceSize.width: this.width
             sourceSize.height: this.height
@@ -32,11 +36,13 @@ Button {
             fillMode: Image.PreserveAspectFit
         }
         CustomItem {
-            id: _item
+            customY: parent.height / 2
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.leftMargin: _.space
+            anchors.topMargin: _.image.visible && _.myMode ? _.image.height + _.space * 2: _.space
+            anchors.leftMargin: _.image.visible && !_.myMode ? _.image.width + _.space * 2: _.space
             anchors.rightMargin: _.space
+            anchors.bottomMargin: _.space
             implicitHeight: _.textHeight
             Text {
                 id: _toptext
@@ -45,6 +51,7 @@ Button {
                 anchors.right: parent.right
                 wrapMode: Text.WrapAnywhere
                 elide: Text.ElideRight
+                horizontalAlignment: _.myMode ? Text.AlignHCenter: Text.AlignLeft
             }
             Text {
                 id: _bottomtext
@@ -54,6 +61,7 @@ Button {
                 anchors.topMargin: _.space / 2
                 wrapMode: Text.WrapAnywhere
                 elide: Text.ElideRight
+                horizontalAlignment: _.myMode ? Text.AlignHCenter: Text.AlignLeft
             }
         }
     }
