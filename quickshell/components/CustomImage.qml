@@ -1,6 +1,7 @@
 import QtQuick
 
 Image {
+
     property real customX: (0)
     property real customY: (0)
 

@@ -12,7 +12,8 @@ Panel {
 
     implicitWidth: 300
     implicitHeight: _list.contentHeight + this.space * 2
-    property bool myMode: (true)
+
+    iconSize: 40
 
     exclusiveZoneIgnore: false
 
@@ -112,7 +113,7 @@ Panel {
 
                     bottomText.font.family: _.font.family
                     bottomText.font.pixelSize: _.font.pixelSize
-                    bottomText.font.bold: false
+                    bottomText.font.bold: _.font.bold
                     bottomText.text: parent.modelData.body
                     bottomText.color: _.textColor
                     bottomText.maximumLineCount: parent.modelData.urgency === Notifications.urgency.critical ? 0: 4

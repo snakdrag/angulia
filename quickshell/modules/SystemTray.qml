@@ -11,14 +11,13 @@ Panel {
     customX: parent.width
     customY: parent.height
 
-    implicitWidth: Math.max(_list.contentWidth, this.cardSize) + this.space * 2
-    implicitHeight: Math.max(_list.contentHeight, this.cardSize) + this.space * 2
+    implicitWidth: Math.max(_list.contentWidth, this.cardWidth) + this.space * 2
+    implicitHeight: Math.max(_list.contentHeight, this.cardHeight) + this.space * 2
 
-    property int cardSize: (30)
+    cardWidth: 30
+    cardHeight: 30
 
     iconSize: 24
-
-    property bool myMode: (true)
 
     show: _list.contentWidth > 0 || _list.contentHeight > 0
 
@@ -41,8 +40,8 @@ Panel {
                 implicitHeight: _main.height
                 Card {
                     id: _main
-                    implicitWidth: _.cardSize
-                    implicitHeight: _.cardSize
+                    implicitWidth: _.cardWidth
+                    implicitHeight: _.cardHeight
                     color: _.cardColor
                     space: _.space
                     radius: _.radius
@@ -51,9 +50,11 @@ Panel {
 
                     cover.color: _.textColor
 
-                    image.anchors.margins: (_.cardSize - _.iconSize) / 2
+                    image.anchors.margins: 0
                     image.width: _.iconSize
                     image.height: _.iconSize
+                    image.customX: this.width / 2
+                    image.customY: this.height / 2
                     image.source: parent.modelData.icon
                     image.asynchronous: false
 

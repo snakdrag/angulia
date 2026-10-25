@@ -6,7 +6,7 @@ import "../states"
 WlSessionLock {
     id: _
     locked: LockScreen.open
-    property string wallpaper: ("")
+    property string wallpaper: (Datas.colors.image)
     property font font: ({
         family: "Inter",
         pixelSize: 120,
@@ -23,7 +23,7 @@ WlSessionLock {
             customX: parent.width / 2
             customY: parent.height / 4
             show: false
-            opacity: 0.5
+            opacity: 0.8
             font.family: _.font.family
             font.pixelSize: _.font.pixelSize
             font.bold: _.font.bold

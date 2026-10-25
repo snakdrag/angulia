@@ -15,7 +15,7 @@ Panel {
 
     exclusiveZoneIgnore: false
 
-    property int iconSize: (20)
+    iconSize: (20)
     readonly property ObjectModel menuData: (Popup.menuData)
     onMenuDataChanged: countWidth()
 

@@ -6,15 +6,11 @@ import "../states"
 Panel {
 
     customX: parent.width / 2
-    customY: parent.height / 2
 
     implicitWidth: 300
     implicitHeight: _field.height + this.space * 2 + (_card.height === 0 ? 0: _card.height + this.space)
 
-    property bool inputAtTop: (false)
-    property int iconSize: (40)
-    property int inputHeight: (30)
-    property bool myMode: (false)
+    iconSize: 40
 
     show: Polkit.agent.isActive
     onShowChanged: {

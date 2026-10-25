@@ -23,9 +23,13 @@ PanelWindow {
         MouseArea {
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-            onClicked: Ipc.closeAll()
+            onClicked: {
+                Ipc.closeAll()
+                Popup.close()
+            }
         }
     }
+    BackgroundEffect.blurRegion: Region { item: _item }
 
     property bool focus: (false)
     WlrLayershell.keyboardFocus: this.focus ? WlrKeyboardFocus.Exclusive: WlrKeyboardFocus.None
@@ -35,4 +39,15 @@ PanelWindow {
         this.layer === this.layers.Bottom ? WlrLayer.Bottom:
         WlrLayer.Background
     )
+
+    property Item modules: (_item)
+    function setRegions()
+    {
+        _region.regions = [];
+        for (let i = 0; i < this.modules.children.length; i++) {
+            let module = this.modules.children[i];
+            if (module && module.roundcorners !== undefined) _region.regions.push(module.region);
+        }
+    }
+    Component.onCompleted: setRegions()
 }

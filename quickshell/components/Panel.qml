@@ -4,16 +4,20 @@ import Quickshell // for Region
 CustomRectangle {
     id: _
 
-    property var sets: ({})
+    property bool myMode: (true)
 
     radius: Datas.settings.radius
     property int edge: (Datas.settings.edge)
     property int float: (Datas.settings.float)
     property int space: (Datas.settings.space)
-    property int iconSize: (40)
 
-    property int cardWidth: (320)
-    property int cardHeight: (180)
+    property int iconSize: (0)
+
+    property int cardWidth: (0)
+    property int cardHeight: (0)
+
+    property bool inputAtTop: (true)
+    property int inputHeight: (30)
 
     color: Datas.colors.surface
     property color textColor: (Datas.colors.on_surface)
@@ -21,7 +25,7 @@ CustomRectangle {
     property color backgroundColor: ("transparent")
     property font font: ({
         family: "Inter",
-        pixelSize: 12
+        pixelSize: 12,
     })
 
     property bool exclusiveZoneIgnore: (true)
@@ -29,8 +33,14 @@ CustomRectangle {
     property bool isVertical: (false)
     property bool isHorizontal: (true)
 
-    readonly property bool isTop: (y <= this.anchors.topMargin && this.exclusiveZoneIgnore && this.visible && this.isHorizontal)
-    readonly property bool isLeft: (x <= this.anchors.leftMargin && this.exclusiveZoneIgnore && this.visible && this.isVertical)
+    readonly property bool isTop: (
+        y <= this.anchors.topMargin &&
+        this.exclusiveZoneIgnore && this.visible && this.isHorizontal
+    )
+    readonly property bool isLeft: (
+        x <= this.anchors.leftMargin &&
+        this.exclusiveZoneIgnore && this.visible && this.isVertical
+    )
     readonly property bool isRight: (
         x + this.width >= parent.width - this.anchors.rightMargin &&
         this.exclusiveZoneIgnore && this.visible && this.isVertical
@@ -41,17 +51,17 @@ CustomRectangle {
     )
 
     property var exclusiveZones: ({
-        top: (this.isTop ? this.edge + this.float + this.height: 0),
-        left: (this.isLeft ? this.edge + this.float + this.width: 0),
-        right: (this.isRight ? this.edge + this.float + this.width: 0),
-        bottom: (this.isBottom ? this.edge + this.float + this.height: 0),
+        top: (this.isTop ? this.float + this.edge + this.height: 0),
+        left: (this.isLeft ? this.float + this.edge + this.width: 0),
+        right: (this.isRight ? this.float + this.edge + this.width: 0),
+        bottom: (this.isBottom ? this.float + this.edge + this.height: 0),
     })
 
     anchors.margins: this.edge + this.float
-    anchors.topMargin: this.exclusiveZoneIgnore ? this.anchors.margins: root.topExclusiveZone + this.float
-    anchors.leftMargin: this.exclusiveZoneIgnore ? this.anchors.margins: root.leftExclusiveZone + this.float
-    anchors.rightMargin: this.exclusiveZoneIgnore ? this.anchors.margins: root.rightExclusiveZone + this.float
-    anchors.bottomMargin: this.exclusiveZoneIgnore ? this.anchors.margins: root.bottomExclusiveZone + this.float
+    anchors.topMargin: this.exclusiveZoneIgnore ? this.anchors.margins: ExclusiveZones.top + this.float
+    anchors.leftMargin: this.exclusiveZoneIgnore ? this.anchors.margins: ExclusiveZones.left + this.float
+    anchors.rightMargin: this.exclusiveZoneIgnore ? this.anchors.margins: ExclusiveZones.right + this.float
+    anchors.bottomMargin: this.exclusiveZoneIgnore ? this.anchors.margins: ExclusiveZones.bottom + this.float
 
     property bool show: (true)
 
@@ -98,8 +108,12 @@ CustomRectangle {
     RoundCorners { id: _roundcorners }
     property RoundCorners roundcorners: (_roundcorners)
 
-    onXChanged: root.check()
-    onYChanged: root.check()
-    onWidthChanged: root.set()
-    onHeightChanged: root.set()
+    onWidthChanged: {
+        ExclusiveZones.set()
+        root.check()
+    }
+    onHeightChanged: {
+        ExclusiveZones.set()
+        root.check()
+    }
 }

@@ -19,9 +19,7 @@ Panel {
     cardWidth: 120
     cardHeight: 80
 
-    property bool inputAtTop: (true)
-    property int inputHeight: (30)
-    property bool myMode: (true)
+    iconSize: 40
 
     show: Launcher.open
     onShowChanged: {
@@ -106,6 +104,10 @@ Panel {
 
                     cover.color: _.textColor
 
+                    image.width: _.iconSize
+                    image.height: _.iconSize
+                    image.source: Quickshell.iconPath(parent.modelData.icon, true)
+
                     topText.font.family: _.font.family
                     topText.font.pixelSize: _.font.pixelSize
                     topText.font.bold: true
@@ -120,14 +122,7 @@ Panel {
                     bottomText.color: _.textColor
                     bottomText.maximumLineCount: 1
 
-                    image.width: _.iconSize
-                    image.height: _.iconSize
-                    image.source: Quickshell.iconPath(parent.modelData.icon, true)
-
-                    onClicked: {
-                        parent.modelData.execute()
-                        Ipc.closeAll()
-                    }
+                    onClicked: {parent.modelData.execute(); Ipc.closeAll()}
                 }
             }
         }

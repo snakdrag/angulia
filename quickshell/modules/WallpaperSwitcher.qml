@@ -16,9 +16,8 @@ Panel {
         0: Math.max(_list.contentHeight, this.cardHeight) + this.space
     )
 
-    property bool inputAtTop: (true)
-    property int inputHeight: (30)
-    property bool myMode: (true)
+    cardWidth: 320
+    cardHeight: 180
 
     show: WallpaperSwitcher.open
     onShowChanged: {
