@@ -1,19 +1,20 @@
 import QtQuick
 import Quickshell // for Quickshell.iconPath
 import Quickshell.Widgets
-import "../states"
 import "../components"
+import "../states"
 
 Panel {
     id: _
 
     customX: parent.width / 2
-    customY: 0
+    customY: parent.height
 
     implicitWidth: 300
     implicitHeight: _list.contentHeight + this.space * 2
-    property int iconSize: (40)
     property bool myMode: (true)
+
+    exclusiveZoneIgnore: false
 
     show: _list.contentHeight > 0
 
@@ -22,6 +23,7 @@ Panel {
         anchors.margins: parent.space
         radius: parent.radius
         color: parent.backgroundColor
+        visible: parent.show
         List {
             id: _list
             spacing: _.space

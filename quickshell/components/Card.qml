@@ -35,8 +35,14 @@ Button {
             visible: this.status === Image.Ready && this.source != ""
             fillMode: Image.PreserveAspectFit
         }
-        CustomItem {
-            customY: parent.height / 2
+        Item {
+            y: Math.max(
+                this.anchors.topMargin,
+                Math.min(
+                    parent.height - this.anchors.bottomMargin - this.height,
+                    parent.height / 2 - this.height / 2
+                )
+            )
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.topMargin: _.image.visible && _.myMode ? _.image.height + _.space * 2: _.space

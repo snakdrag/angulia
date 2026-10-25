@@ -1,12 +1,12 @@
 import QtQuick
 import Quickshell
-import "../states"
 import "../components"
+import "../states"
 
 Panel {
 
     customX: parent.width / 2
-    customY: parent.height
+    customY: parent.height / 2
 
     implicitWidth: 300
     implicitHeight: _field.height + this.space * 2 + (_card.height === 0 ? 0: _card.height + this.space)
@@ -15,7 +15,6 @@ Panel {
     property int iconSize: (40)
     property int inputHeight: (30)
     property bool myMode: (false)
-    font.bold: true
 
     show: Polkit.agent.isActive
     onShowChanged: {
@@ -35,6 +34,10 @@ Panel {
         height: parent.inputHeight
         space: parent.space
 
+        font.family: parent.font.family
+        font.pixelSize: parent.font.pixelSize
+        font.bold: parent.font.bold
+
         background.color: parent.cardColor
         background.radius: parent.radius
 
@@ -42,16 +45,11 @@ Panel {
 
         color: parent.textColor
         echoMode: TextInput.Password
-        placeholderText: (
-            Polkit.placeholderText === "" ?
-            (
-                Polkit.flow === null ? "": Polkit.flow.inputPrompt
-            ):
-            Polkit.placeholderText
-        )
+        placeholderText: Polkit.placeholderText === "" ? (Polkit.flow === null ? "": Polkit.flow.inputPrompt): Polkit.placeholderText
 
         Keys.onReturnPressed: { Polkit.submit(this.text); this.text = "" }
         Keys.onEscapePressed: Polkit.cancelAuthenticationRequest()
+        visible: parent.show
     }
     Card {
         id: _card
@@ -77,14 +75,15 @@ Panel {
 
         implicitHeight: (
             this.myMode ?
-            (this.image.visible ? this.image.height + this.space: 0) + this.textHeight + this.space * 2:
-            Math.max(this.image.height, this.textHeight) + this.space * 2
-        )
+            (this.image.visible ? this.image.height + this.space: 0) + this.textHeight:
+            Math.max(this.image.height, this.textHeight)
+        ) + this.space * 2
 
         image.width: parent.iconSize
         image.height: parent.iconSize
         image.source: Polkit.flow === null ? "": Quickshell.iconPath(Polkit.flow.iconName, true)
 
         onClicked: Polkit.cancelAuthenticationRequest()
+        visible: parent.show
     }
 }

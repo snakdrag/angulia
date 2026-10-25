@@ -1,15 +1,12 @@
 import QtQuick // for Item
-import "old" as Modules
 import "modules"
 
 Root {
     id: root
     childrens: ([..._edge.children, ..._overlay.children, ..._top.children, ])
     modules: ([..._top.children, ])
-    bar: _popup.bar
-    gaps_out: _popup.gaps_out
-    float: _popup.float
-    edge: _popup.edge
+    gaps_out: 15
+    edge: 5
     Layer {
         id: _Overlay
         modules: _overlay
@@ -24,8 +21,8 @@ Root {
             anchors.fill: parent
             layer.enabled: true
             Notifications {}
-            Modules.WallpaperSwitcher { id: _wallpaperswitcher }
-            Modules.Launcher { id: _launcher }
+            WallpaperSwitcher { id: _wallpaperswitcher }
+            Launcher { id: _launcher }
             Polkit { id: _polkit }
         }
     }
@@ -38,10 +35,10 @@ Root {
             anchors.fill: parent
             layer.enabled: true
             Edge { id: _edge }
-            Modules.Popup { id: _popup }
             Clock {}
-            Modules.SystemTray {}
+            SystemTray {}
+            Popup { id: _popup }
         }
     }
-    Modules.LockScreen {}
+    LockScreen {}
 }

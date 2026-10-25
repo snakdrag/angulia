@@ -14,13 +14,12 @@ ShellRoot {
 
     property var bar: ({})
     property int gaps_out: (0)
-    property int float: (0)
     property int edge: (0)
 
-    property int topExclusiveZone: (this.edge + (this._top ? this.float + this.bar.height: 0))
-    property int leftExclusiveZone: (this.edge + (this._left ? this.float + this.bar.width: 0))
-    property int rightExclusiveZone: (this.edge + (this._right ? this.float + this.bar.width: 0))
-    property int bottomExclusiveZone: (this.edge + (this._bottom ? this.float + this.bar.height: 0))
+    property int topExclusiveZone: (this.edge)
+    property int leftExclusiveZone: (this.edge)
+    property int rightExclusiveZone: (this.edge)
+    property int bottomExclusiveZone: (this.edge)
 
     PanelWindow {
         anchors.top: true
@@ -61,13 +60,13 @@ ShellRoot {
     function set()
     {
         Qt.callLater(() => {
-        this.topExclusiveZone = 0
-        this.leftExclusiveZone = 0
-        this.rightExclusiveZone = 0
-        this.bottomExclusiveZone = 0
+        this.topExclusiveZone = this.edge
+        this.leftExclusiveZone = this.edge
+        this.rightExclusiveZone = this.edge
+        this.bottomExclusiveZone = this.edge
         for (let i = 0; i < this.modules.length; i++) {
             let module = this.modules[i]
-            if (module && module.exclusiveZones !== undefined)
+            if (module && module.exclusiveZones !== undefined && module.exclusiveZoneIgnore)
             {
                 this.topExclusiveZone = Math.max(this.topExclusiveZone, module.exclusiveZones.top)
                 this.leftExclusiveZone = Math.max(this.leftExclusiveZone, module.exclusiveZones.left)
@@ -93,10 +92,6 @@ ShellRoot {
                 child.roundcorners.isRightBottom = false
                 child.roundcorners.isBottomLeft = false
                 child.roundcorners.isBottomRight = false
-                child.noTopLeftRadius = false
-                child.noTopRightRadius = false
-                child.noBottomLeftRadius = false
-                child.noBottomRightRadius = false
             }
         }
         for (let i = 0; i < angulia.length; i++) {
@@ -132,14 +127,11 @@ ShellRoot {
                 {
                     if (a1_Left && a2_Left)
                     {
-                        a1.noTopLeftRadius = true
-                        a2.noBottomLeftRadius = true
+                        a1.roundcorners.isTopLeft = true
+                        a2.roundcorners.isBottomLeft = true
                     }
-                    if (a1_Right && a2_Right)
-                    {
-                        a1.noTopRightRadius = true
-                        a2.noBottomRightRadius = true
-                    }
+                    if (a1_Right && a2_Right) a1.roundcorners.isTopRight = true
+                    if (a2_Right && a1_Right) a2.roundcorners.isBottomRight = true
                     if (a1_Left && !a2_Left) a1.roundcorners.isLeftTop = true
                     if (a1_Right && !a2_Right) a1.roundcorners.isRightTop = true
                     if (a2_Left && !a1_Left) a2.roundcorners.isLeftBottom = true
@@ -149,13 +141,13 @@ ShellRoot {
                 {
                     if (a1_Top && a2_Top)
                     {
-                        a1.noTopLeftRadius = true
-                        a2.noTopRightRadius = true
+                        a1.roundcorners.isLeftTop = true
+                        a2.roundcorners.isRightTop = true
                     }
                     if (a1_Bottom && a2_Bottom)
                     {
-                        a1.noBottomLeftRadius = true
-                        a2.noBottomRightRadius = true
+                        a1.roundcorners.isLeftBottom = true
+                        a2.roundcorners.isRightBottom = true
                     }
                     if (a1_Top && !a2_Top) a1.roundcorners.isTopLeft = true
                     if (a2_Top && !a1_Top) a2.roundcorners.isTopRight = true
@@ -164,16 +156,10 @@ ShellRoot {
                 }
                 if (a1XWidth == a2.x)
                 {
-                    if (a1_Top && a2_Top)
-                    {
-                        a1.noTopRightRadius = true
-                        a2.noTopLeftRadius = true
-                    }
-                    if (a1_Bottom && a2_Bottom)
-                    {
-                        a1.noBottomRightRadius = true
-                        a2.noBottomLeftRadius = true
-                    }
+                    if (a1_Top && a2_Top) a1.roundcorners.isRightTop = true
+                    if (a2_Top && a1_Top) a2.roundcorners.isLeftTop = true
+                    if (a1_Bottom && a2_Bottom) a1.roundcorners.isRightBottom = true
+                    if (a2_Bottom && a1_Bottom) a2.roundcorners.isLeftBottom = true
                     if (a1_Top && !a2_Top) a1.roundcorners.isTopRight = true
                     if (a1_Bottom && !a2_Bottom) a1.roundcorners.isBottomRight = true
                     if (a2_Top && !a1_Top) a2.roundcorners.isTopLeft = true
@@ -181,16 +167,10 @@ ShellRoot {
                 }
                 if (a1YHeight == a2.y)
                 {
-                    if (a1_Left && a2_Left)
-                    {
-                        a1.noBottomLeftRadius = true
-                        a2.noTopLeftRadius = true
-                    }
-                    if (a1_Right && a2_Right)
-                    {
-                        a1.noBottomRightRadius = true
-                        a2.noTopRightRadius = true
-                    }
+                    if (a1_Left && a2_Left) a1.roundcorners.isBottomLeft = true
+                    if (a2_Left && a1_Left) a2.roundcorners.isTopLeft = true
+                    if (a1_Right && a2_Right) a1.roundcorners.isBottomRight = true
+                    if (a2_Right && a1_Right) a2.roundcorners.isTopRight = true
                     if (a1_Left && !a2_Left) a1.roundcorners.isLeftBottom = true
                     if (a1_Right && !a2_Right) a1.roundcorners.isRightBottom = true
                     if (a2_Left && !a1_Left) a2.roundcorners.isLeftTop = true

@@ -1,6 +1,7 @@
 import QtQuick // for Item
 import Quickshell // for PanelWindow
 import Quickshell.Wayland // for WlrLayershell and BackgroundEffect
+import "states"
 
 PanelWindow {
     Component.onCompleted: setRegions()
@@ -19,13 +20,14 @@ PanelWindow {
 
     exclusionMode: ExclusionMode.Ignore
     mask: Region { id: _region }
+    property Region region: (_region)
     Item {
         id: _item
         anchors.fill: parent
         MouseArea {
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-            onClicked: root.ipcCloseAll()
+            onClicked: Ipc.closeAll()
         }
     }
 

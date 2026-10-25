@@ -1,46 +1,60 @@
 import QtQuick
 import Quickshell.Wayland
+import "../components"
 import "../states"
-import "../angulia"
-import "../../settings"
 
 WlSessionLock {
+    id: _
     locked: LockScreen.open
+    property string wallpaper: ("")
+    property font font: ({
+        family: "Inter",
+        pixelSize: 120,
+        bold: true
+    })
     WlSessionLockSurface {
-        Image {
+        color: "#000000"
+        CustomImage {
             anchors.fill: parent
-            source: Settings.colors.image
-            sourceSize.width: parent.width
-            sourceSize.height: parent.height
+            source: _.wallpaper
             fillMode: Image.PreserveAspectCrop
         }
         Clock {
             customX: parent.width / 2
             customY: parent.height / 4
             show: false
-            opacity: 0.6
+            opacity: 0.5
+            font.family: _.font.family
+            font.pixelSize: _.font.pixelSize
+            font.bold: _.font.bold
         }
-        Angulia {
+        Panel {
             customX: parent.width / 2
             customY: parent.height
             implicitWidth: parent.width / 6
-            implicitHeight: this.bar.height
+            implicitHeight: 50
             TextField {
                 anchors.fill: parent
 
-                background.radius: parent.radius
                 space: parent.space
 
-                color: parent.textColor
-                background.color: parent.cardColor
+                font.family: parent.font.family
+                font.pixelSize: parent.font.pixelSize
+                font.bold: parent.font.bold
 
-                echoMode: TextInput.Password
-                verticalAlignment: TextInput.AlignVCenter
+                background.color: parent.cardColor
+                background.radius: parent.radius
 
                 enabled: !LockScreen.inputLock
+
+                color: parent.textColor
+                echoMode: TextInput.Password
+
                 placeholderText: LockScreen.placeholderText
                 onTextChanged: LockScreen.placeholderText = ""
+
                 Keys.onReturnPressed: {LockScreen.authenticate(this.text); this.text = ""}
+                Keys.onEscapePressed: this.text = ""
             }
         }
     }

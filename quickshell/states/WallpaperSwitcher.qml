@@ -1,10 +1,39 @@
 pragma Singleton
-import Qt.labs.folderlistmodel
 import QtQuick
 import Quickshell
+import Quickshell.Io
+import Qt.labs.folderlistmodel
 
 Singleton {
     id: _
+    readonly property IpcHandler ipc: (_ipc)
+
+    property bool open: (false)
+
+    IpcHandler {
+        id: _ipc
+        target: "wallpaperswitcher"
+        function open()
+        {
+            Ipc.closeAll()
+            _.open = true
+        }
+        function close()
+        {
+            _.open = false
+        }
+        function toggle()
+        {
+            if (_.open)
+            {
+                close()
+            }
+            else {
+                open()
+            }
+        }
+    }
+
     readonly property string wallpaperFile: ("~/Pictures/Wallpapers")
     property list<var> wallpapers: []
     property FolderListModel folderModel: FolderListModel {
@@ -12,12 +41,7 @@ Singleton {
         nameFilters: ["*.png", "*.jpg", "*.jpeg", "*.webp", ]
         showDirs: false
         sortField: FolderListModel.Name
-        onStatusChanged: {
-            if (FolderListModel.Ready === status)
-            {
-                _.updateWallpapers()
-            }
-        }
+        onStatusChanged: if (FolderListModel.Ready === status) _.updateWallpapers()
     }
     function updateWallpapers()
     {
@@ -38,10 +62,6 @@ Singleton {
 
     function search(text)
     {
-        // if (text === "")
-        // {
-        //     return []
-        // }
         return [...this.wallpapers].filter(entry => {
         let i = 0;
         return [...text.toLowerCase()].every(

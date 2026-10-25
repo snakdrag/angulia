@@ -1,13 +1,43 @@
 pragma Singleton
 import QtQuick
 import Quickshell
+import Quickshell.Io
 
 Singleton {
+    id: _
+    readonly property IpcHandler ipc: (_ipc)
+
+    property bool open: (false)
+
+    IpcHandler {
+        id: _ipc
+        target: "launcher"
+        function open()
+        {
+            Ipc.closeAll()
+            _.open = true
+        }
+        function close()
+        {
+            _.open = false
+        }
+        function toggle()
+        {
+            if (_.open)
+            {
+                close()
+            }
+            else {
+                open()
+            }
+        }
+    }
+
     component Command: Item {
     property string icon: ("")
     property string name: ("")
     property string comment: ("")
-    property list<string> command: ([])
+    property list<string> command: []
     function execute()
     {
         Quickshell.execDetached(command)

@@ -1,5 +1,5 @@
 pragma Singleton
-import QtQuick
+import QtQuick // for QtObject
 import Quickshell // for Singleton
 import "../services"
 
