@@ -24,13 +24,11 @@ Singleton {
 
     readonly property int gaps_out: (this.data.gaps_out)
 
-    readonly property var bar: (this.data.bar)
     readonly property var clock: (this.data.clock)
     readonly property var popup: (this.data.popup)
+    readonly property var polkit: (this.data.polkit)
     readonly property var launcher: (this.data.launcher)
     readonly property var systemtray: (this.data.systemtray)
-    readonly property var polkitagent: (this.data.polkitagent)
-    readonly property var notification: (this.data.notification)
+    readonly property var notifications: (this.data.notifications)
     readonly property var wallpaperswitcher: (this.data.wallpaperswitcher)
-    readonly property var polkit: (this.data.polkit)
 }

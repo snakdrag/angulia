@@ -4,9 +4,9 @@ import Quickshell
 ShellRoot {
 
     property list<var> modules: []
-    property list<var> childrens: []
     Component.onCompleted: ExclusiveZones.modules = this.modules
 
+    property list<var> childrens: []
     function check()
     {
         Qt.callLater(() => {

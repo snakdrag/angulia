@@ -4,19 +4,15 @@ import "../components"
 
 Panel {
 
-    customX: parent.width / 2
-    customY: parent.height
-
-    implicitWidth: 300
-    implicitHeight: 50
+    sets: Datas.settings.clock
+    implicitWidth: this.sets.width
+    implicitHeight: this.sets.height
 
     Text {
         anchors.centerIn: parent
         text: Qt.formatDateTime(_clock.date, "hh:mm")
         color: parent.textColor
-        font.family: parent.font.family
-        font.pixelSize: parent.font.pixelSize
-        font.bold: parent.font.bold
+        font: parent.font
         SystemClock {
             id: _clock
             precision: SystemClock.Minutes

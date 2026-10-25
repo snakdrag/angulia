@@ -7,8 +7,7 @@ import "../states"
 Panel {
     id: _
 
-    customX: parent.width / 2
-    customY: 0
+    sets: Datas.settings.wallpaperswitcher
 
     implicitWidth: Math.max(_list.contentWidth, this.cardWidth) + this.space * 2
     implicitHeight: _field.height + this.space * 2 + (
@@ -16,15 +15,9 @@ Panel {
         0: Math.max(_list.contentHeight, this.cardHeight) + this.space
     )
 
-    cardWidth: 320
-    cardHeight: 180
-
     show: WallpaperSwitcher.open
     onShowChanged: {
-        if (this.show)
-        {
-            _field.forceActiveFocus()
-        }
+        if (this.show) _field.forceActiveFocus();
         _field.text = ""
     }
 
@@ -36,9 +29,7 @@ Panel {
         height: parent.inputHeight
         space: parent.space
 
-        font.family: parent.font.family
-        font.pixelSize: parent.font.pixelSize
-        font.bold: parent.font.bold
+        font: parent.font
 
         background.color: parent.cardColor
         background.radius: parent.radius
@@ -69,10 +60,10 @@ Panel {
                 (parent.inputAtTop ? parent.height: 0) - this.height / 2
             )
         )
-        anchors.left: parent.left
-        anchors.right: parent.right
+        anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: parent.space
-        implicitHeight: parent.height - _field.height - _.space * 3
+        implicitWidth: parent.width - parent.space * 2
+        implicitHeight: parent.height - _field.height - parent.space * 3
         radius: parent.radius
         color: parent.backgroundColor
         visible: parent.show
@@ -80,7 +71,7 @@ Panel {
             id: _list
             spacing: _.space
             displaced: null
-            orientation: _.myMode ? ListView.Horizontal: ListView.Vertical
+            myMode: _.myMode
             model: ScriptModel { values: _.show ? WallpaperSwitcher.search(_field.text).sort((a, b) => a.name.localeCompare(b.name)): [] }
             delegate: Item {
                 required property var modelData

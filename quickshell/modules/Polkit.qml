@@ -5,12 +5,10 @@ import "../states"
 
 Panel {
 
-    customX: parent.width / 2
+    sets: Datas.settings.polkit
 
-    implicitWidth: 300
+    implicitWidth: this.sets.width
     implicitHeight: _field.height + this.space * 2 + (_card.height === 0 ? 0: _card.height + this.space)
-
-    iconSize: 40
 
     show: Polkit.agent.isActive
     onShowChanged: {

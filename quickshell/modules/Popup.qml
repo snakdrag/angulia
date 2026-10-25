@@ -7,6 +7,8 @@ import "../states"
 Panel {
     id: _
 
+    sets: Datas.settings.popup
+
     customX: Popup.customX
     customY: Popup.customY
 
@@ -15,7 +17,6 @@ Panel {
 
     exclusiveZoneIgnore: false
 
-    iconSize: (20)
     readonly property ObjectModel menuData: (Popup.menuData)
     onMenuDataChanged: countWidth()
 

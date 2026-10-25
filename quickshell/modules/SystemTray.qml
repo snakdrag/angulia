@@ -8,16 +8,10 @@ import "../states"
 Panel {
     id: _
 
-    customX: parent.width
-    customY: parent.height
+    sets: Datas.settings.systemtray
 
     implicitWidth: Math.max(_list.contentWidth, this.cardWidth) + this.space * 2
     implicitHeight: Math.max(_list.contentHeight, this.cardHeight) + this.space * 2
-
-    cardWidth: 30
-    cardHeight: 30
-
-    iconSize: 24
 
     show: _list.contentWidth > 0 || _list.contentHeight > 0
 
@@ -31,7 +25,7 @@ Panel {
             id: _list
             spacing: _.space
             interactive: false
-            orientation: _.myMode ? ListView.Horizontal: ListView.Vertical
+            myMode: _.myMode
             model: ScriptModel { values: SystemTray.items.values }
             delegate: Item {
                 id: _card

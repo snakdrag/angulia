@@ -48,7 +48,7 @@ Singleton {
         for (let i = 0; i < this.modules.length; i++)
         {
             let module = this.modules[i]
-            if (module && module.exclusiveZones !== undefined)
+            if (module && module.exclusiveZones !== undefined && module.exclusiveZoneIgnore)
             {
                 if (module.exclusiveZones.top && module.exclusiveZones.top > this.top)
                     this.top = module.exclusiveZones.top

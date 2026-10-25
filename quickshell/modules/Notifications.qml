@@ -7,15 +7,10 @@ import "../states"
 Panel {
     id: _
 
-    customX: parent.width / 2
-    customY: parent.height
+    sets: Datas.settings.notifications
 
-    implicitWidth: 300
+    implicitWidth: this.sets.width
     implicitHeight: _list.contentHeight + this.space * 2
-
-    iconSize: 40
-
-    exclusiveZoneIgnore: false
 
     show: _list.contentHeight > 0
 
