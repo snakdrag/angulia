@@ -75,8 +75,8 @@ CustomRectangle {
     width: this.show ? Math.min(this.implicitWidth, this.maxWidth): 0
     height: this.show ? Math.min(this.implicitHeight, this.maxHeight): 0
 
-    Behavior on width { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
-    Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
+    // Behavior on width { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
+    // Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
 
     topLeftRadius: (
         this.roundcorners.isTopLeft ||
@@ -118,4 +118,6 @@ CustomRectangle {
     onIsLeftChanged: ExclusiveZones.set()
     onIsRightChanged: ExclusiveZones.set()
     onIsBottomChanged: ExclusiveZones.set()
+
+    Component.onCompleted: {Qt.callLater(() => {ExclusiveZones.set()})}
 }
