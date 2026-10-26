@@ -29,6 +29,7 @@ Singleton {
     readonly property var polkit: (this.data.polkit)
     readonly property var launcher: (this.data.launcher)
     readonly property var systemtray: (this.data.systemtray)
+    readonly property var activewindow: (this.data.activewindow)
     readonly property var notifications: (this.data.notifications)
     readonly property var wallpaperswitcher: (this.data.wallpaperswitcher)
 }

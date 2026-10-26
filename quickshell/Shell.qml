@@ -36,6 +36,7 @@ Root {
             Modules.Edge { id: _edge }
             Modules.Clock {}
             Modules.SystemTray {}
+            Modules.ActiveWindow {}
         }
     }
     Layer {

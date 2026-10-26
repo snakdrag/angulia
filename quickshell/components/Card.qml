@@ -55,19 +55,15 @@ Button {
             implicitHeight: _.textHeight
             Text {
                 id: _toptext
-                anchors.top: parent.top
-                anchors.left: parent.left
-                anchors.right: parent.right
+                width: parent.width
                 wrapMode: Text.WrapAnywhere
                 elide: Text.ElideRight
                 horizontalAlignment: _.myMode ? Text.AlignHCenter: Text.AlignLeft
             }
             Text {
                 id: _bottomtext
-                anchors.top: _.topText.bottom
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.topMargin: _.space / 2
+                y: _toptext.y + _toptext.height + _.space / 2
+                width: parent.width
                 wrapMode: Text.WrapAnywhere
                 elide: Text.ElideRight
                 horizontalAlignment: _.myMode ? Text.AlignHCenter: Text.AlignLeft

@@ -1,7 +1,6 @@
 import QtQuick
-import Quickshell // for Quickshell.iconPath
+import Quickshell // for ScriptModel
 import Quickshell.Widgets
-import Quickshell.Services.SystemTray
 import "../components"
 import "../states"
 
@@ -12,6 +11,8 @@ Panel {
 
     implicitWidth: Math.max(_list.contentWidth, this.cardWidth) + this.space * 2
     implicitHeight: Math.max(_list.contentHeight, this.cardHeight) + this.space * 2
+
+    exclusiveZoneIgnore: true
 
     show: _list.contentWidth > 0 || _list.contentHeight > 0
 
