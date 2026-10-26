@@ -1,7 +1,7 @@
 pragma Singleton
 import Quickshell // for Singleton
 import Quickshell.Io
-import "../services"
+import "../services" as Services
 
 Singleton {
     id: _
@@ -9,7 +9,7 @@ Singleton {
 
     property bool open: (false)
     property string placeholderText: ("")
-    readonly property bool inputLock: (Pam.lock)
+    readonly property bool inputLock: (Services.Pam.lock)
 
     IpcHandler {
         id: _ipc
@@ -20,13 +20,13 @@ Singleton {
         }
     }
 
-    readonly property bool isSuccessful: (Pam.isSuccessful)
-    readonly property bool failed: (Pam.failed)
+    readonly property bool isSuccessful: (Services.Pam.isSuccessful)
+    readonly property bool failed: (Services.Pam.failed)
     onIsSuccessfulChanged: if (this.isSuccessful) _.open = false
     onFailedChanged: if (this.failed) _.placeholderText = "Password Incorrect"
 
     function authenticate(password)
     {
-        Pam.authenticate(password)
+        Services.Pam.authenticate(password)
     }
 }

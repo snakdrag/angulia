@@ -2,6 +2,7 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import "../services" as Services
 
 Singleton {
     id: _
@@ -33,6 +34,7 @@ Singleton {
         }
     }
 
+    readonly property ObjectModel applications: (Services.DesktopEntries.applications)
     component Command: Item {
     property string icon: ("")
     property string name: ("")
@@ -65,10 +67,7 @@ Singleton {
     }]
     function search(text)
     {
-        if (text === "")
-        {
-            return []
-        }
+        if (text === "") return [];
         if (text[0] === ">")
         {
             return [...this.commands].filter(entry => {
@@ -77,15 +76,8 @@ Singleton {
                 char => (i = entry.name.toLowerCase().indexOf(char, i)) !== -1 && i++ >= 0
             )})
         }
-        else
-        {
-            return DesktopEntries.applications.values.filter(
-                entry => {
-                let i = 0;
-                return [...text.toLowerCase()].every(
-                    char => (i = entry.name.toLowerCase().indexOf(char, i)) !== -1 && i++ >= 0
-                )}
-            )
+        else {
+            return Services.DesktopEntries.search(text)
         }
     }
 }

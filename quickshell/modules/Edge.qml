@@ -10,7 +10,6 @@ Item {
         anchors.topMargin: 0
         isVertical: false
         isHorizontal: true
-        exclusiveZones: ({top: this.edge})
         exclusiveZoneIgnore: true
     }
     Panel {
@@ -20,7 +19,6 @@ Item {
         anchors.bottomMargin: 0
         isVertical: false
         isHorizontal: true
-        exclusiveZones: ({bottom: this.edge})
         exclusiveZoneIgnore: true
     }
     Panel {
@@ -31,7 +29,6 @@ Item {
         radius: 0
         isVertical: true
         isHorizontal: false
-        exclusiveZones: ({left: this.edge})
         exclusiveZoneIgnore: true
     }
     Panel {
@@ -42,7 +39,6 @@ Item {
         radius: 0
         isVertical: true
         isHorizontal: false
-        exclusiveZones: ({right: this.edge})
         exclusiveZoneIgnore: true
     }
 }

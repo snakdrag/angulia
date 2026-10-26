@@ -134,7 +134,7 @@ Panel {
                             {
                                 parent.x = -parent.width / 4 - parent.space
                             }
-                            if (parent.x > parent.width / 2 + parent.space)
+                            else if (parent.x > parent.width / 2 + parent.space)
                             {
                                 _card.act()
                             }
@@ -146,7 +146,6 @@ Panel {
                             {
                                 parent.x = 0
                             }
-                            parent.x = parent.x
                         }
                     }
                 }

@@ -1,29 +1,29 @@
 import QtQuick // for Item
-import "modules"
 import "components"
+import "modules" as Modules
+import "states" as States
 
 Root {
     id: root
-    childrens: [..._edge.children, ..._overlay.children, ..._top.children, ]
-    modules: [..._top.children, ..._edge.children, ]
+    modules: [..._edge.children, ..._overlay.children, ..._top.children, ..._bottom.children, ..._background.children, ]
     Layer {
         modules: _overlay
         layer: this.layers.Overlay
         focus: (
-            _launcher.show ||
-            _wallpaperswitcher.show ||
-            _polkit.show ||
-            _popup.show
+            States.WallpaperSwitcher.open ||
+            States.Launcher.open ||
+            States.Polkit.open ||
+            States.Popup.open
         )
         Item {
             id: _overlay
             anchors.fill: parent
             layer.enabled: true
-            WallpaperSwitcher { id: _wallpaperswitcher }
-            Launcher { id: _launcher }
-            Polkit { id: _polkit }
-            Popup { id: _popup }
-            Notifications {}
+            Modules.WallpaperSwitcher {}
+            Modules.Launcher {}
+            Modules.Polkit {}
+            Modules.Popup {}
+            Modules.Notifications {}
         }
     }
     Layer {
@@ -33,10 +33,28 @@ Root {
             id: _top
             anchors.fill: parent
             layer.enabled: true
-            Edge { id: _edge }
-            Clock {}
-            SystemTray {}
+            Modules.Edge { id: _edge }
+            Modules.Clock {}
+            Modules.SystemTray {}
         }
     }
-    LockScreen {}
+    Layer {
+        modules: _bottom
+        layer: this.layers.Bottom
+        Item {
+            id: _bottom
+            anchors.fill: parent
+            layer.enabled: true
+        }
+    }
+    Layer {
+        modules: _background
+        layer: this.layers.Background
+        Item {
+            id: _background
+            anchors.fill: parent
+            layer.enabled: true
+        }
+    }
+    Modules.LockScreen {}
 }

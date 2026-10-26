@@ -1,26 +1,28 @@
 pragma Singleton
 import Quickshell // for Singleton
-import "../services"
+import "../services" as Services
 
 Singleton {
 
+    readonly property bool open: (this.agent.isActive)
+
     property string placeholderText: ("")
-    readonly property bool inputLock: (Polkit.lock)
+    readonly property bool inputLock: (Services.Polkit.lock)
 
-    readonly property var agent: (Polkit.agent)
-    readonly property var flow: (Polkit.flow)
+    readonly property var agent: (Services.Polkit.agent)
+    readonly property var flow: (Services.Polkit.flow)
 
-    readonly property bool failed: (Polkit.failed)
-    onFailedChanged: if (this.failed) {Polkit.agent.lock = false; this.placeholderText = "Password Incorrect"}
+    readonly property bool failed: (Services.Polkit.failed)
+    onFailedChanged: if (this.failed) {Services.Polkit.agent.lock = false; this.placeholderText = "Password Incorrect"}
 
     function submit(password)
     {
         this.placeholderText = ""
-        Polkit.submit(password)
+        Services.Polkit.submit(password)
     }
     function cancelAuthenticationRequest()
     {
         this.placeholderText = ""
-        Polkit.cancelAuthenticationRequest()
+        Services.Polkit.cancelAuthenticationRequest()
     }
 }

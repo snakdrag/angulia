@@ -14,6 +14,9 @@ Button {
 
     readonly property int textHeight: (this.topText.height + (this.bottomText.text === "" ? 0: this.bottomText.height + _.space / 2))
 
+    Behavior on x { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
+    Behavior on y { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
+
     ClippingRectangle {
         anchors.fill: parent
 

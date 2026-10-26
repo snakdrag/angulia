@@ -52,10 +52,10 @@ CustomRectangle {
     )
 
     property var exclusiveZones: ({
-        top: (this.isTop ? this.float + this.edge + this.height: 0),
-        left: (this.isLeft ? this.float + this.edge + this.width: 0),
-        right: (this.isRight ? this.float + this.edge + this.width: 0),
-        bottom: (this.isBottom ? this.float + this.edge + this.height: 0),
+        top: (this.isTop ? this.float + this.anchors.topMargin + this.height: 0),
+        left: (this.isLeft ? this.float + this.anchors.leftMargin + this.width: 0),
+        right: (this.isRight ? this.float + this.anchors.rightMargin + this.width: 0),
+        bottom: (this.isBottom ? this.float + this.anchors.bottomMargin + this.height: 0),
     })
 
     anchors.margins: this.edge + this.float
@@ -75,8 +75,11 @@ CustomRectangle {
     width: this.show ? Math.min(this.implicitWidth, this.maxWidth): 0
     height: this.show ? Math.min(this.implicitHeight, this.maxHeight): 0
 
-    // Behavior on width { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
-    // Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
+    readonly property bool widthCompleted: (width === (this.show ? Math.min(this.implicitWidth, this.maxWidth): 0))
+    readonly property bool heightCompleted: (height === (this.show ? Math.min(this.implicitHeight, this.maxHeight): 0))
+
+    Behavior on width { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
+    Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
 
     topLeftRadius: (
         this.roundcorners.isTopLeft ||
@@ -111,13 +114,11 @@ CustomRectangle {
 
     onXChanged: root.check()
     onYChanged: root.check()
-    onWidthChanged: root.check()
-    onHeightChanged: root.check()
+    onWidthCompletedChanged: {root.check(); ExclusiveZones.set()}
+    onHeightCompletedChanged: {root.check(); ExclusiveZones.set()}
 
     onIsTopChanged: ExclusiveZones.set()
     onIsLeftChanged: ExclusiveZones.set()
     onIsRightChanged: ExclusiveZones.set()
     onIsBottomChanged: ExclusiveZones.set()
-
-    Component.onCompleted: {Qt.callLater(() => {ExclusiveZones.set()})}
 }

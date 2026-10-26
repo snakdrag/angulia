@@ -10,14 +10,11 @@ Panel {
     implicitWidth: this.sets.width
     implicitHeight: _field.height + this.space * 2 + (_card.height === 0 ? 0: _card.height + this.space)
 
-    show: Polkit.agent.isActive
+    show: Polkit.open
     onShowChanged: {
-        if (this.show)
-        {
-            Polkit.agent.lock = false;
-            _field.text = "";
-            _field.forceActiveFocus()
-        }
+        if (this.show) _field.forceActiveFocus();
+        _field.text = "";
+        Polkit.agent.lock = false;
     }
 
     TextField {

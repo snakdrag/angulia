@@ -18,7 +18,7 @@ Panel {
     show: WallpaperSwitcher.open
     onShowChanged: {
         if (this.show) _field.forceActiveFocus();
-        _field.text = ""
+        _field.text = "";
     }
 
     TextField {

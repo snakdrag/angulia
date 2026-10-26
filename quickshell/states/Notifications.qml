@@ -1,14 +1,14 @@
 pragma Singleton
 import QtQuick // for QtObject
 import Quickshell // for Singleton
-import "../services"
+import "../services" as Services
 
 Singleton {
 
-    readonly property var server: (Notifications.server)
+    readonly property var server: (Services.Notifications.server)
     readonly property QtObject trackedNotifications: (this.server.trackedNotifications)
 
-    readonly property var urgency: (Notifications.urgency)
-    readonly property var closeReason: (Notifications.closeReason)
+    readonly property var urgency: (Services.Notifications.urgency)
+    readonly property var closeReason: (Services.Notifications.closeReason)
 
 }
