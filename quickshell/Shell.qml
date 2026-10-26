@@ -10,10 +10,9 @@ Root {
         modules: _overlay
         layer: this.layers.Overlay
         focus: (
-            States.WallpaperSwitcher.open ||
-            States.Launcher.open ||
             States.Polkit.open ||
-            States.SystemTrayPopup.open
+            States.Popup.open ||
+            States.Ipc.open
         )
         Item {
             id: _overlay
@@ -22,7 +21,7 @@ Root {
             Modules.WallpaperSwitcher {}
             Modules.Launcher {}
             Modules.Polkit {}
-            Modules.SystemTrayPopup {}
+            Modules.Popup {}
             Modules.Notifications {}
         }
     }
@@ -37,6 +36,7 @@ Root {
             Modules.Clock {}
             Modules.SystemTray {}
             Modules.ActiveWindow {}
+            Modules.ActiveWindowManager {}
         }
     }
     Layer {

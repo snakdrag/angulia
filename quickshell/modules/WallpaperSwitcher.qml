@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Widgets
 import "../components"
-import "../states"
+import "../states" as States
 
 Panel {
     id: _
@@ -15,7 +15,7 @@ Panel {
         0: Math.max(_list.contentHeight, this.cardHeight) + this.space
     )
 
-    show: WallpaperSwitcher.open
+    show: States.WallpaperSwitcher.open
     onShowChanged: {
         if (this.show) _field.forceActiveFocus();
         _field.text = "";
@@ -47,9 +47,9 @@ Panel {
             {
                 _list.currentItem.modelData.execute()
             }
-            Ipc.closeAll()
+            States.Ipc.closeAll()
         }
-        Keys.onEscapePressed: Ipc.closeAll()
+        Keys.onEscapePressed: States.Ipc.closeAll()
         visible: parent.show
     }
     ClippingRectangle {
@@ -72,7 +72,7 @@ Panel {
             spacing: _.space
             displaced: null
             myMode: _.myMode
-            model: ScriptModel { values: _.show ? WallpaperSwitcher.search(_field.text).sort((a, b) => a.name.localeCompare(b.name)): [] }
+            model: ScriptModel { values: _.show ? States.WallpaperSwitcher.search(_field.text).sort((a, b) => a.name.localeCompare(b.name)): [] }
             delegate: Item {
                 required property var modelData
                 required property int index
@@ -97,7 +97,7 @@ Panel {
 
                     onClicked: {
                         parent.modelData.execute()
-                        Ipc.closeAll()
+                        States.Ipc.closeAll()
                     }
                 }
             }

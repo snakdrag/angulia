@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell // for ScriptModel
 import Quickshell.Widgets
 import "../components"
-import "../states"
+import "../states" as States
 
 Panel {
     id: _
@@ -27,7 +27,7 @@ Panel {
             spacing: _.space
             interactive: false
             myMode: _.myMode
-            model: ScriptModel { values: SystemTray.items.values }
+            model: ScriptModel { values: States.SystemTray.items.values }
             delegate: Item {
                 id: _card
                 required property var modelData
@@ -54,7 +54,7 @@ Panel {
                     image.asynchronous: false
 
                     onLeftClicked: parent.modelData.activate()
-                    onRightClicked: SystemTrayPopup.call(
+                    onRightClicked: Popup.call(
                         _.x + _.space + parent.x + this.width / 2,
                         _.y + _.space + parent.y + this.height / 2,
                         parent.modelData.menu

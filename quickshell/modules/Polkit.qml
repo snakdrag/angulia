@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell
 import "../components"
-import "../states"
+import "../states" as States
 
 Panel {
 
@@ -10,11 +10,11 @@ Panel {
     implicitWidth: this.sets.width
     implicitHeight: _field.height + this.space * 2 + (_card.height === 0 ? 0: _card.height + this.space)
 
-    show: Polkit.open
+    show: States.Polkit.open
     onShowChanged: {
         if (this.show) _field.forceActiveFocus();
         _field.text = "";
-        Polkit.agent.lock = false;
+        States.Polkit.agent.lock = false;
     }
 
     TextField {
@@ -32,14 +32,14 @@ Panel {
         background.color: parent.cardColor
         background.radius: parent.radius
 
-        enabled: !Polkit.inputLock
+        enabled: !States.Polkit.inputLock
 
         color: parent.textColor
         echoMode: TextInput.Password
-        placeholderText: Polkit.placeholderText === "" ? (Polkit.flow === null ? "": Polkit.flow.inputPrompt): Polkit.placeholderText
+        placeholderText: States.Polkit.placeholderText === "" ? (States.Polkit.flow === null ? "": States.Polkit.flow.inputPrompt): States.Polkit.placeholderText
 
-        Keys.onReturnPressed: { Polkit.submit(this.text); this.text = "" }
-        Keys.onEscapePressed: Polkit.cancelAuthenticationRequest()
+        Keys.onReturnPressed: { States.Polkit.submit(this.text); this.text = "" }
+        Keys.onEscapePressed: States.Polkit.cancelAuthenticationRequest()
         visible: parent.show
     }
     Card {
@@ -56,7 +56,7 @@ Panel {
         topText.font.family: parent.font.family
         topText.font.pixelSize: parent.font.pixelSize
         topText.font.bold: parent.font.bold
-        topText.text: Polkit.flow === null ? "": Polkit.flow.message
+        topText.text: States.Polkit.flow === null ? "": States.Polkit.flow.message
         topText.color: parent.textColor
         topText.wrapMode: Text.WordWrap
 
@@ -72,9 +72,9 @@ Panel {
 
         image.width: parent.iconSize
         image.height: parent.iconSize
-        image.source: Polkit.flow === null ? "": Quickshell.iconPath(Polkit.flow.iconName, true)
+        image.source: States.Polkit.flow === null ? "": Quickshell.iconPath(States.Polkit.flow.iconName, true)
 
-        onClicked: Polkit.cancelAuthenticationRequest()
+        onClicked: States.Polkit.cancelAuthenticationRequest()
         visible: parent.show
     }
 }

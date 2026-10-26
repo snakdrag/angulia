@@ -25,7 +25,7 @@ PanelWindow {
             acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
             onClicked: {
                 Ipc.closeAll()
-                Popup.closeAll()
+                Popup.close()
             }
         }
     }

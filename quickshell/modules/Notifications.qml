@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell // for Quickshell.iconPath
 import Quickshell.Widgets
 import "../components"
-import "../states"
+import "../states" as States
 
 Panel {
     id: _
@@ -23,7 +23,7 @@ Panel {
         List {
             id: _list
             spacing: _.space
-            model: Notifications.trackedNotifications
+            model: States.Notifications.trackedNotifications
             delegate: Item {
                 id: _card
                 required property var modelData
@@ -104,14 +104,14 @@ Panel {
                     topText.font.bold: true
                     topText.text: parent.modelData.summary
                     topText.color: _.textColor
-                    topText.maximumLineCount: parent.modelData.urgency === Notifications.urgency.critical ? 0: 2
+                    topText.maximumLineCount: parent.modelData.urgency === States.Notifications.urgency.critical ? 0: 2
 
                     bottomText.font.family: _.font.family
                     bottomText.font.pixelSize: _.font.pixelSize
                     bottomText.font.bold: _.font.bold
                     bottomText.text: parent.modelData.body
                     bottomText.color: _.textColor
-                    bottomText.maximumLineCount: parent.modelData.urgency === Notifications.urgency.critical ? 0: 4
+                    bottomText.maximumLineCount: parent.modelData.urgency === States.Notifications.urgency.critical ? 0: 4
 
                     image.width: _.iconSize
                     image.height: _.iconSize

@@ -1,11 +1,11 @@
 import QtQuick
 import Quickshell.Wayland
 import "../components"
-import "../states"
+import "../states" as States
 
 WlSessionLock {
     id: _
-    locked: LockScreen.open
+    locked: States.LockScreen.open
     property string wallpaper: (Datas.colors.image)
     property font font: ({
         family: "Inter",
@@ -46,15 +46,15 @@ WlSessionLock {
                 background.color: parent.cardColor
                 background.radius: parent.radius
 
-                enabled: !LockScreen.inputLock
+                enabled: !States.LockScreen.inputLock
 
                 color: parent.textColor
                 echoMode: TextInput.Password
 
-                placeholderText: LockScreen.placeholderText
-                onTextChanged: LockScreen.placeholderText = ""
+                placeholderText: States.LockScreen.placeholderText
+                onTextChanged: States.LockScreen.placeholderText = ""
 
-                Keys.onReturnPressed: {LockScreen.authenticate(this.text); this.text = ""}
+                Keys.onReturnPressed: {States.LockScreen.authenticate(this.text); this.text = ""}
                 Keys.onEscapePressed: this.text = ""
             }
         }

@@ -20,6 +20,7 @@ local mouse_action = {
 -- app --
 ---------
 
+binds_create("SUPER + N", hl.dsp.exec_cmd("notify-send 'This is a test notification...' 'test\ntest\ntest'"))
 binds_create("SUPER + T", hl.dsp.exec_cmd("kitty"))
 binds_create("SUPER + E", hl.dsp.exec_cmd("nautilus"))
 binds_create("SUPER + W", hl.dsp.exec_cmd("flatpak run com.brave.Browser"))

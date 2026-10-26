@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Widgets
 import "../components"
-import "../states"
+import "../states" as States
 
 Panel {
     id: _
@@ -15,7 +15,7 @@ Panel {
         0: Math.max(_list.contentHeight, this.cardHeight) + this.space
     )
 
-    show: Launcher.open
+    show: States.Launcher.open
     onShowChanged: {
         if (this.show) _field.forceActiveFocus();
         _field.text = ""
@@ -46,9 +46,9 @@ Panel {
         Keys.onRightPressed: if (_list.count > 0) _list.currentIndex = Math.min(_list.currentIndex + 1, _list.count - 1)
         Keys.onReturnPressed: {
             if (_list.count > 0) _list.currentItem.modelData.execute();
-            Ipc.closeAll()
+            States.Ipc.closeAll()
         }
-        Keys.onEscapePressed: Ipc.closeAll()
+        Keys.onEscapePressed: States.Ipc.closeAll()
         visible: parent.show
     }
     ClippingRectangle {
@@ -71,7 +71,7 @@ Panel {
             spacing: _.space
             displaced: null
             myMode: _.myMode
-            model: ScriptModel { values: _.show ? Launcher.search(_field.text).sort((a, b) => a.name.localeCompare(b.name)): [] }
+            model: ScriptModel { values: _.show ? States.Launcher.search(_field.text).sort((a, b) => a.name.localeCompare(b.name)): [] }
             delegate: Item {
                 required property var modelData
                 required property int index
@@ -110,7 +110,7 @@ Panel {
                     bottomText.color: _.textColor
                     bottomText.maximumLineCount: 1
 
-                    onClicked: {parent.modelData.execute(); Ipc.closeAll()}
+                    onClicked: {parent.modelData.execute(); States.Ipc.closeAll()}
                 }
             }
         }

@@ -2,22 +2,22 @@ import QtQuick
 import Quickshell
 import Quickshell.Widgets
 import "../components"
-import "../states"
+import "../states" as States
 
 Panel {
     id: _
 
     sets: Datas.settings.popup
 
-    customX: SystemTrayPopup.customX
-    customY: SystemTrayPopup.customY
+    customX: States.Popup.customX
+    customY: States.Popup.customY
 
     implicitWidth: this.cardWidth + this.space * 2
     implicitHeight: _list.contentHeight + this.space * 2
 
     exclusiveZoneIgnore: false
 
-    readonly property ObjectModel menuData: (SystemTrayPopup.menuData)
+    readonly property ObjectModel menuData: (States.Popup.menuData)
     onMenuDataChanged: countWidth()
 
     TextMetrics {
@@ -42,7 +42,7 @@ Panel {
             if (w > this.cardWidth) this.cardWidth = w;
         }
     }
-    show: SystemTrayPopup.open
+    show: States.Popup.open
 
     ClippingRectangle {
         anchors.fill: parent
@@ -82,7 +82,7 @@ Panel {
                     topText.maximumLineCount: 1
 
                     mouseArea.cursorShape: parent.modelData.isSeparator ? Qt.ArrowCursor: Qt.PointingHandCursor
-                    onClicked: {parent.modelData.triggered(); Popup.closeAll()}
+                    onClicked: {parent.modelData.triggered(); States.Popup.close()}
                 }
             }
         }
