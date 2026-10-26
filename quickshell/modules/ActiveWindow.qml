@@ -16,7 +16,7 @@ Panel {
         anchors.fill: parent
         anchors.margins: this.space
 
-        myMode: parent.myMode
+        myMode: true
 
         cover.color: parent.textColor
 

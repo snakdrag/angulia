@@ -9,15 +9,15 @@ Panel {
 
     sets: Datas.settings.popup
 
-    customX: Popup.customX
-    customY: Popup.customY
+    customX: SystemTrayPopup.customX
+    customY: SystemTrayPopup.customY
 
     implicitWidth: this.cardWidth + this.space * 2
     implicitHeight: _list.contentHeight + this.space * 2
 
     exclusiveZoneIgnore: false
 
-    readonly property ObjectModel menuData: (Popup.menuData)
+    readonly property ObjectModel menuData: (SystemTrayPopup.menuData)
     onMenuDataChanged: countWidth()
 
     TextMetrics {
@@ -42,7 +42,7 @@ Panel {
             if (w > this.cardWidth) this.cardWidth = w;
         }
     }
-    show: Popup.open
+    show: SystemTrayPopup.open
 
     ClippingRectangle {
         anchors.fill: parent
@@ -82,7 +82,7 @@ Panel {
                     topText.maximumLineCount: 1
 
                     mouseArea.cursorShape: parent.modelData.isSeparator ? Qt.ArrowCursor: Qt.PointingHandCursor
-                    onClicked: {parent.modelData.triggered(); Popup.close()}
+                    onClicked: {parent.modelData.triggered(); Popup.closeAll()}
                 }
             }
         }

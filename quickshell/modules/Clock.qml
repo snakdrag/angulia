@@ -11,28 +11,14 @@ Panel {
 
     exclusiveZoneIgnore: true
 
-    Card {
-        anchors.fill: parent
-        anchors.margins: parent.space
-
-        myMode: true
-
-        cover.color: parent.textColor
-
-        topText.font: parent.font
-        topText.text: Qt.formatDateTime(_clock.date, "hh:mm")
-        topText.color: parent.textColor
-        topText.wrapMode: Text.WordWrap
-        topText.maximumLineCount: 1
-
-        color: parent.cardColor
-        radius: parent.radius
-
+    Text {
+        anchors.centerIn: parent
+        text: Qt.formatDateTime(_clock.date, "hh:mm")
+        color: parent.textColor
+        font: parent.font
         SystemClock {
             id: _clock
             precision: SystemClock.Minutes
         }
-
-        visible: parent.show
     }
 }

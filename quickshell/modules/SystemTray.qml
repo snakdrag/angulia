@@ -53,21 +53,13 @@ Panel {
                     image.source: parent.modelData.icon
                     image.asynchronous: false
 
-                    onLeftClicked: {
-                        parent.modelData.activate()
-                        Popup.close()
-                    }
-                    onRightClicked: {
-                        Popup.call(
-                            _.x + _.space + parent.x + this.width / 2,
-                            _.y + _.space + parent.y + this.height / 2,
-                            parent.modelData.menu
-                        )
-                    }
-                    onMiddleClicked: {
-                        parent.modelData.secondaryActivate()
-                        Popup.close()
-                    }
+                    onLeftClicked: parent.modelData.activate()
+                    onRightClicked: SystemTrayPopup.call(
+                        _.x + _.space + parent.x + this.width / 2,
+                        _.y + _.space + parent.y + this.height / 2,
+                        parent.modelData.menu
+                    )
+                    onMiddleClicked: parent.modelData.secondaryActivate()
                 }
             }
         }

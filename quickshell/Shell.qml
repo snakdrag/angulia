@@ -13,7 +13,7 @@ Root {
             States.WallpaperSwitcher.open ||
             States.Launcher.open ||
             States.Polkit.open ||
-            States.Popup.open
+            States.SystemTrayPopup.open
         )
         Item {
             id: _overlay
@@ -22,7 +22,7 @@ Root {
             Modules.WallpaperSwitcher {}
             Modules.Launcher {}
             Modules.Polkit {}
-            Modules.Popup {}
+            Modules.SystemTrayPopup {}
             Modules.Notifications {}
         }
     }

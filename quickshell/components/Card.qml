@@ -40,9 +40,9 @@ Button {
         }
         Item {
             y: Math.max(
-                this.anchors.topMargin,
+                (_.image.visible ? this.anchors.topMargin: 0),
                 Math.min(
-                    parent.height - this.anchors.bottomMargin - this.height,
+                    parent.height - (_.image.visible ? this.anchors.bottomMargin: 0) - this.height,
                     parent.height / 2 - this.height / 2
                 )
             )
