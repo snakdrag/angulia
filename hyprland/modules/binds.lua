@@ -35,6 +35,8 @@ binds.create(binds.session.logout, hl.dsp.exec_cmd(logoutCmd))
 binds.create(binds.window.close, hl.dsp.window.close())
 binds.create(binds.window.float, hl.dsp.window.float({ action = "toggle" }))
 binds.create(binds.window.fullscreen, hl.dsp.window.fullscreen())
+binds.create(binds.window.cycle_forward, hl.dsp.window.cycle_next({ tiled = true }))
+binds.create(binds.window.cycle_reverse, hl.dsp.window.cycle_next({ next = false, tiled = true }))
 
 -- Move focus with mainMod + arrow keys
 binds.create(binds.window.focuses.up, hl.dsp.focus({ direction = "up" }))

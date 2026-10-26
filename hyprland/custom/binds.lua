@@ -63,6 +63,8 @@ return {
         },
         drag = "SUPER + " .. mouse_action.left,
         resize = "SUPER + " .. mouse_action.right,
+        cycle_forward = "ALT + TAB",
+        cycle_reverse = "ALT + SHIFT + TAB",
     },
     workspace = {
         focuses = {

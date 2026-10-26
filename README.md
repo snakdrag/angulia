@@ -13,7 +13,6 @@ required:
 - `brightnessctl`
 - `matugen`
 - `awww`
-- `jq`
 
 installation
 

@@ -33,6 +33,7 @@ WlSessionLock {
             customY: parent.height
             implicitWidth: parent.width / 6
             implicitHeight: 50
+            exclusiveZoneIgnore: true
             TextField {
                 anchors.fill: parent
 
