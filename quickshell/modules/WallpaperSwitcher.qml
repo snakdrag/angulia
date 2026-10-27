@@ -43,10 +43,7 @@ Panel {
         Keys.onLeftPressed: if (_list.count > 0) _list.currentIndex = Math.max(_list.currentIndex - 1, 0)
         Keys.onRightPressed: if (_list.count > 0) _list.currentIndex = Math.min(_list.currentIndex + 1, _list.count - 1)
         Keys.onReturnPressed: {
-            if (_list.count > 0)
-            {
-                _list.currentItem.modelData.execute()
-            }
+            if (_list.count > 0) _list.currentItem.modelData.execute();
             States.Ipc.closeAll()
         }
         Keys.onEscapePressed: States.Ipc.closeAll()
@@ -95,10 +92,7 @@ Panel {
                     image.source: parent.modelData.path
                     image.fillMode: Image.PreserveAspectCrop
 
-                    onClicked: {
-                        parent.modelData.execute()
-                        States.Ipc.closeAll()
-                    }
+                    onClicked: {parent.modelData.execute(); States.Ipc.closeAll()}
                 }
             }
         }

@@ -18,7 +18,7 @@ Panel {
     show: States.Launcher.open
     onShowChanged: {
         if (this.show) _field.forceActiveFocus();
-        _field.text = ""
+        _field.text = "";
     }
 
     TextField {
@@ -29,9 +29,7 @@ Panel {
         height: parent.inputHeight
         space: parent.space
 
-        font.family: parent.font.family
-        font.pixelSize: parent.font.pixelSize
-        font.bold: parent.font.bold
+        font: parent.font
 
         background.color: parent.cardColor
         background.radius: parent.radius
