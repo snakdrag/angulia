@@ -19,10 +19,10 @@ Root {
             anchors.fill: parent
             layer.enabled: true
             Modules.WallpaperSwitcher {}
+            Modules.Notifications {}
             Modules.Launcher {}
             Modules.Polkit {}
             Modules.Popup {}
-            Modules.Notifications {}
         }
     }
     Layer {
@@ -35,8 +35,6 @@ Root {
             Modules.Edge { id: _edge }
             Modules.Clock {}
             Modules.SystemTray {}
-            Modules.ActiveWindow {}
-            Modules.ActiveWindowManager {}
         }
     }
     Layer {

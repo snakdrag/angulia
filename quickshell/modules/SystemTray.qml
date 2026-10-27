@@ -54,7 +54,7 @@ Panel {
                     image.asynchronous: false
 
                     onLeftClicked: parent.modelData.activate()
-                    onRightClicked: Popup.call(
+                    onRightClicked: States.Popup.call(
                         _.x + _.space + parent.x + this.width / 2,
                         _.y + _.space + parent.y + this.height / 2,
                         parent.modelData.menu
