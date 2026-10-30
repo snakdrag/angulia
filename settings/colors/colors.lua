@@ -1,4 +1,4 @@
-local f = assert(io.open((debug.getinfo(1, "S").source:sub(2):match("(.*/)") or "./") .. "colors.json", "r"))
+local f = assert(io.open(os.getenv("HOME") .. "/.config/angulia/colors.json", "r"))
 local data = f:read("*a")
 f:close()
 

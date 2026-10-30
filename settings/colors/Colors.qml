@@ -8,7 +8,7 @@ Singleton {
 
     FileView {
         id: _colors
-        path: Qt.resolvedUrl("./colors.json")
+        path: Quickshell.env("HOME") + "/.config/angulia/colors.json"
         blockLoading: true
         watchChanges: true
         onFileChanged: this.reload()
