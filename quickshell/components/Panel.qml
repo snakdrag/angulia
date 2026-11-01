@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell // for Region
+import "../custom"
 
 CustomRectangle {
     id: _

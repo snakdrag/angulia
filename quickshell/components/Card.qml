@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell.Widgets
+import "../custom"
 
 Button {
     id: _

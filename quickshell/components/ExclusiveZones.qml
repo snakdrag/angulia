@@ -12,10 +12,12 @@ Singleton {
     property int right: (0)
     property int bottom: (0)
 
-    ExclusiveZone { top: true; exclusiveZone: _.gaps_out + _.top }
-    ExclusiveZone { left: true; exclusiveZone: _.gaps_out + _.left }
-    ExclusiveZone { right: true; exclusiveZone: _.gaps_out + _.right }
-    ExclusiveZone { bottom: true; exclusiveZone: _.gaps_out + _.bottom }
+    component ExclusiveZone: PanelWindow { implicitWidth: 0; implicitHeight: 0 }
+
+    ExclusiveZone { anchors.top: true; exclusiveZone: _.gaps_out + _.top }
+    ExclusiveZone { anchors.left: true; exclusiveZone: _.gaps_out + _.left }
+    ExclusiveZone { anchors.right: true; exclusiveZone: _.gaps_out + _.right }
+    ExclusiveZone { anchors.bottom: true; exclusiveZone: _.gaps_out + _.bottom }
 
     property list<var> modules: []
     function set()

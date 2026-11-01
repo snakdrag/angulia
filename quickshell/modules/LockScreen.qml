@@ -14,7 +14,7 @@ WlSessionLock {
     })
     WlSessionLockSurface {
         color: "#000000"
-        CustomImage {
+        Image {
             anchors.fill: parent
             source: _.wallpaper
             fillMode: Image.PreserveAspectCrop

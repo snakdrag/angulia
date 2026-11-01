@@ -44,7 +44,7 @@ return {
         wallpaperswitcher = "SUPER + S",
     },
     session = {
-        logout = "",
+        logout = "SUPER + M",
     },
     window = {
         close = "SUPER + Q",

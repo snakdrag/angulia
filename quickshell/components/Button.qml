@@ -1,10 +1,11 @@
 import QtQuick
+import "../custom"
 
 CustomRectangle {
 
     property bool hovered: (false)
     property bool active: (this.hovered)
-    readonly property CustomRectangle cover: (_rectangle)
+    readonly property Rectangle cover: (_rectangle)
     readonly property MouseArea mouseArea: (_mouseArea)
 
     signal clicked()
@@ -27,7 +28,7 @@ CustomRectangle {
         parent.clicked()}
     }
 
-    CustomRectangle {
+    Rectangle {
         id: _rectangle
         anchors.fill: parent
 
