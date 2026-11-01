@@ -1,7 +1,6 @@
 import QtQuick // for Item
 import Quickshell // for PanelWindow
 import Quickshell.Wayland // for WlrLayershell and BackgroundEffect
-import "../states"
 
 PanelWindow {
 
@@ -17,18 +16,8 @@ PanelWindow {
     exclusionMode: ExclusionMode.Ignore
 
     mask: Region { id: _region }
-    Item {
-        id: _item
-        anchors.fill: parent
-        MouseArea {
-            anchors.fill: parent
-            acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-            onClicked: {
-                Ipc.closeAll()
-                Popup.close()
-            }
-        }
-    }
+
+    Item { id: _item; anchors.fill: parent }
     BackgroundEffect.blurRegion: Region { item: _item }
 
     property bool focus: (false)

@@ -37,6 +37,8 @@ CustomRectangle {
         bottomLeftRadius: parent.bottomLeftRadius
         bottomRightRadius: parent.bottomRightRadius
 
+        color: "transparent"
+
         opacity: parent.active ? 0.1: 0
         z: 1
     }
