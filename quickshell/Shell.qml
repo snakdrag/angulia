@@ -11,7 +11,6 @@ Root {
         layer: this.layers.Overlay
         focus: (
             States.Polkit.open ||
-            States.Popup.open ||
             States.Ipc.open
         )
         Item {
