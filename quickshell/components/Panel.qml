@@ -53,10 +53,10 @@ CustomRectangle {
     )
 
     property var exclusiveZones: ({
-        top: (this.isTop ? this.float + this.anchors.topMargin + this.height: 0),
-        left: (this.isLeft ? this.float + this.anchors.leftMargin + this.width: 0),
-        right: (this.isRight ? this.float + this.anchors.rightMargin + this.width: 0),
-        bottom: (this.isBottom ? this.float + this.anchors.bottomMargin + this.height: 0),
+        top: (this.isTop ? this.anchors.topMargin + this.height: 0),
+        left: (this.isLeft ? this.anchors.leftMargin + this.width: 0),
+        right: (this.isRight ? this.anchors.rightMargin + this.width: 0),
+        bottom: (this.isBottom ? this.anchors.bottomMargin + this.height: 0),
     })
 
     anchors.margins: this.edge + this.float
@@ -118,6 +118,7 @@ CustomRectangle {
     onWidthCompletedChanged: {root.check(); ExclusiveZones.set()}
     onHeightCompletedChanged: {root.check(); ExclusiveZones.set()}
 
+    onFloatChanged: ExclusiveZones.set()
     onIsTopChanged: ExclusiveZones.set()
     onIsLeftChanged: ExclusiveZones.set()
     onIsRightChanged: ExclusiveZones.set()

@@ -7,6 +7,7 @@ Item {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
+        anchors.margins: this.edge
         anchors.topMargin: 0
         isVertical: false
         isHorizontal: true
@@ -16,6 +17,7 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
+        anchors.margins: this.edge
         anchors.bottomMargin: 0
         isVertical: false
         isHorizontal: true
