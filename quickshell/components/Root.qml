@@ -25,14 +25,14 @@ ShellRoot {
                 module.roundcorners.isBottomLeft = false
                 module.roundcorners.isBottomRight = false
 
-                module.roundcorners.topLeftRadius = module.radius
-                module.roundcorners.topRightRadius = module.radius
-                module.roundcorners.leftTopRadius = module.radius
-                module.roundcorners.leftBottomRadius = module.radius
-                module.roundcorners.rightTopRadius = module.radius
-                module.roundcorners.rightBottomRadius = module.radius
-                module.roundcorners.bottomLeftRadius = module.radius
-                module.roundcorners.bottomRightRadius = module.radius
+                // module.roundcorners.topLeftRadius = module.radius
+                // module.roundcorners.topRightRadius = module.radius
+                // module.roundcorners.leftTopRadius = module.radius
+                // module.roundcorners.leftBottomRadius = module.radius
+                // module.roundcorners.rightTopRadius = module.radius
+                // module.roundcorners.rightBottomRadius = module.radius
+                // module.roundcorners.bottomLeftRadius = module.radius
+                // module.roundcorners.bottomRightRadius = module.radius
 
                 // module.topLeftRadius = module.radius
                 // module.topRightRadius = module.radius
