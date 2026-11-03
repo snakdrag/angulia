@@ -45,9 +45,8 @@ Panel {
     show: States.Popup.open
 
     ClippingRectangle {
-        anchors.centerIn: parent
-        implicitWidth: parent.cardWidth
-        implicitHeight: _list.contentHeight
+        anchors.fill: parent
+        anchors.margins: parent.space
         color: parent.backgroundColor
         radius: parent.radius
         visible: parent.show
