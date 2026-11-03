@@ -8,7 +8,7 @@ Panel {
     sets: Datas.settings.polkit
 
     implicitWidth: this.sets.width
-    implicitHeight: _field.height + this.space * 2 + (_card.height === 0 ? 0: _card.height + this.space)
+    implicitHeight: _field.height + _card.height + this.space * 3
 
     show: States.Polkit.open
     onShowChanged: {
