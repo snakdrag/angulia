@@ -12,7 +12,6 @@ required:
 - `hyprland`
 - `brightnessctl`
 - `matugen`
-- `awww`
 
 installation
 

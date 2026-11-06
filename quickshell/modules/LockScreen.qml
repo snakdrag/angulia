@@ -6,7 +6,6 @@ import "../states" as States
 WlSessionLock {
     id: _
     locked: States.LockScreen.open
-    property string wallpaper: (Datas.colors.image)
     property font font: ({
         family: "Inter",
         pixelSize: 120,
@@ -14,11 +13,7 @@ WlSessionLock {
     })
     WlSessionLockSurface {
         color: "#000000"
-        Image {
-            anchors.fill: parent
-            source: _.wallpaper
-            fillMode: Image.PreserveAspectCrop
-        }
+        Background {}
         Clock {
             customX: parent.width / 2
             customY: parent.height / 4

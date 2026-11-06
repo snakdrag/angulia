@@ -52,6 +52,7 @@ Root {
             id: _background
             anchors.fill: parent
             layer.enabled: true
+            Modules.Background {}
         }
     }
     Modules.LockScreen {}
