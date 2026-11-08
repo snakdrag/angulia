@@ -84,8 +84,6 @@ Panel {
                 }
                 Card {
                     id: _main
-                    Behavior on x { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
-                    Behavior on y { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
                     implicitWidth: parent.width
                     implicitHeight: (
                         this.myMode ?

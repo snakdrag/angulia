@@ -6,44 +6,8 @@ import "../services" as Services
 
 Singleton {
     id: _
-    readonly property IpcHandler ipc: (_ipc)
 
     property bool open: (false)
-
-    IpcHandler {
-        id: _ipc
-        target: "launcher"
-        function open()
-        {
-            Ipc.closeAll()
-            _.open = true
-        }
-        function close()
-        {
-            _.open = false
-        }
-        function toggle()
-        {
-            if (_.open)
-            {
-                close()
-            }
-            else {
-                open()
-            }
-        }
-    }
-
-    readonly property ObjectModel applications: (Services.DesktopEntries.applications)
-    component Command: Item {
-    property string icon: ("")
-    property string name: ("")
-    property string comment: ("")
-    property list<string> command: []
-    function execute()
-    {
-        Quickshell.execDetached(command)
-    }}
     property list<Command> commands: [
     Command {
         icon: "system-reboot"
@@ -65,6 +29,45 @@ Singleton {
         name: "Wallpaper switcher"
         command: ["sh", "-c", "qs ipc call wallpaperswitcher open"]
     }]
+    readonly property IpcHandler ipc: (_ipc)
+    readonly property ObjectModel applications: (Services.DesktopEntries.applications)
+
+    component Command: QtObject {
+    property string icon: ("")
+    property string name: ("")
+    property string comment: ("")
+    property list<string> command: []
+    function execute()
+    {
+        Quickshell.execDetached(command)
+    }}
+
+    IpcHandler {
+        id: _ipc
+
+        target: "launcher"
+
+        function open()
+        {
+            Ipc.closeAll()
+            _.open = true
+        }
+        function close()
+        {
+            _.open = false
+        }
+        function toggle()
+        {
+            if (_.open)
+            {
+                close()
+            }
+            else {
+                open()
+            }
+        }
+    }
+
     function search(text)
     {
         if (text === "") return [];
@@ -76,7 +79,8 @@ Singleton {
                 char => (i = entry.name.toLowerCase().indexOf(char, i)) !== -1 && i++ >= 0
             )})
         }
-        else {
+        else
+        {
             return Services.DesktopEntries.search(text)
         }
     }

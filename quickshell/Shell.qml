@@ -5,18 +5,18 @@ import "states" as States
 
 Root {
     id: root
+
     modules: [..._edge.children, ..._overlay.children, ..._top.children, ..._bottom.children, ..._background.children, ]
+
+    component LayerModule: Item { anchors.fill: parent }
+
     Layer {
         modules: _overlay
         layer: this.layers.Overlay
-        focus: (
-            States.Polkit.open ||
-            States.Ipc.open
-        )
-        Item {
+        focus: States.Ipc.open || States.Polkit.open
+        LayerModule {
             id: _overlay
-            anchors.fill: parent
-            layer.enabled: true
+
             Modules.WallpaperSwitcher {}
             Modules.Notifications {}
             Modules.Launcher {}
@@ -27,10 +27,9 @@ Root {
     Layer {
         modules: _top
         layer: this.layers.Top
-        Item {
+        LayerModule {
             id: _top
-            anchors.fill: parent
-            layer.enabled: true
+
             Modules.Edge { id: _edge }
             Modules.Clock {}
             Modules.SystemTray {}
@@ -39,19 +38,15 @@ Root {
     Layer {
         modules: _bottom
         layer: this.layers.Bottom
-        Item {
+        LayerModule {
             id: _bottom
-            anchors.fill: parent
-            layer.enabled: true
         }
     }
     Layer {
         modules: _background
         layer: this.layers.Background
-        Item {
+        LayerModule {
             id: _background
-            anchors.fill: parent
-            layer.enabled: true
             Modules.Background {}
         }
     }

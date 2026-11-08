@@ -15,10 +15,13 @@ CustomRectangle {
 
     MouseArea {
         id: _mouseArea
+
         anchors.fill: parent
+
         acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
         cursorShape: Qt.PointingHandCursor
         hoverEnabled: true
+
         onEntered: parent.hovered = true
         onExited: parent.hovered = false
         onClicked: mouse => {
@@ -30,16 +33,18 @@ CustomRectangle {
 
     Rectangle {
         id: _rectangle
+
         anchors.fill: parent
+        z: 1
+
+        color: "transparent"
+        opacity: parent.active ? 0.1: 0
 
         topLeftRadius: parent.topLeftRadius
         topRightRadius: parent.topRightRadius
         bottomLeftRadius: parent.bottomLeftRadius
         bottomRightRadius: parent.bottomRightRadius
 
-        color: "transparent"
-
-        opacity: parent.active ? 0.1: 0
-        z: 1
+        Behavior on opacity { CustomNumberAnimation {} }
     }
 }

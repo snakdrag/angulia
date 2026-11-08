@@ -6,13 +6,24 @@ import Qt.labs.folderlistmodel
 
 Singleton {
     id: _
-    readonly property IpcHandler ipc: (_ipc)
 
     property bool open: (false)
+    property list<var> wallpapers: []
+    property FolderListModel folderModel: FolderListModel {
+        folder: Qt.resolvedUrl(_.wallpaperFile.replace("~", Quickshell.env("HOME")))
+        nameFilters: ["*.png", "*.jpg", "*.jpeg", "*.webp", ]
+        showDirs: false
+        sortField: FolderListModel.Name
+        onStatusChanged: if (FolderListModel.Ready === status) _.updateWallpapers()
+    }
+    readonly property IpcHandler ipc: (_ipc)
+    readonly property string wallpaperFile: ("~/Pictures/Wallpapers")
 
     IpcHandler {
         id: _ipc
+
         target: "wallpaperswitcher"
+
         function open()
         {
             Ipc.closeAll()
@@ -24,29 +35,19 @@ Singleton {
         }
         function toggle()
         {
-            if (_.open)
+            if (_.open) close();
+            else
             {
-                close()
-            }
-            else {
                 open()
             }
         }
     }
 
-    readonly property string wallpaperFile: ("~/Pictures/Wallpapers")
-    property list<var> wallpapers: []
-    property FolderListModel folderModel: FolderListModel {
-        folder: Qt.resolvedUrl(_.wallpaperFile.replace("~", Quickshell.env("HOME")))
-        nameFilters: ["*.png", "*.jpg", "*.jpeg", "*.webp", ]
-        showDirs: false
-        sortField: FolderListModel.Name
-        onStatusChanged: if (FolderListModel.Ready === status) _.updateWallpapers()
-    }
     function updateWallpapers()
     {
         this.wallpapers = []
-        for (let i = 0; i < this.folderModel.count; i++) {
+        for (let i = 0; i < this.folderModel.count; i++)
+        {
             let filePath = this.folderModel.get(i, "filePath")
             let fileName = this.folderModel.get(i, "fileName")
 
@@ -59,7 +60,6 @@ Singleton {
             }})
         }
     }
-
     function search(text)
     {
         return [...this.wallpapers].filter(entry => {

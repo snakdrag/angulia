@@ -4,11 +4,11 @@ import Quickshell
 ShellRoot {
 
     property list<var> modules: []
+
     Component.onCompleted: ExclusiveZones.modules = this.modules
 
     function check()
     {
-        Qt.callLater(() => {
         let panels = []
         for (let i = 0; i < this.modules.length; i++)
         {
@@ -24,20 +24,6 @@ ShellRoot {
                 module.roundcorners.isRightBottom = false
                 module.roundcorners.isBottomLeft = false
                 module.roundcorners.isBottomRight = false
-
-                // module.roundcorners.topLeftRadius = module.radius
-                // module.roundcorners.topRightRadius = module.radius
-                // module.roundcorners.leftTopRadius = module.radius
-                // module.roundcorners.leftBottomRadius = module.radius
-                // module.roundcorners.rightTopRadius = module.radius
-                // module.roundcorners.rightBottomRadius = module.radius
-                // module.roundcorners.bottomLeftRadius = module.radius
-                // module.roundcorners.bottomRightRadius = module.radius
-
-                // module.topLeftRadius = module.radius
-                // module.topRightRadius = module.radius
-                // module.bottomLeftRadius = module.radius
-                // module.bottomRightRadius = module.radius
             }
         }
         for (let i = 0; i < panels.length; i++)
@@ -56,6 +42,7 @@ ShellRoot {
                 let a1_Left = a2.x <= a1.x && a1.x <= a2XWidth
                 let a1_Right = a2.x <= a1XWidth && a1XWidth <= a2XWidth
                 let a1_Bottom = a2.y <= a1YHeight && a1YHeight <= a2YHeight
+
                 let a2_Top = a1.y <= a2.y && a2.y <= a1YHeight
                 let a2_Left = a1.x <= a2.x && a2.x <= a1XWidth
                 let a2_Right = a1.x <= a2XWidth && a2XWidth <= a1XWidth
@@ -135,13 +122,13 @@ ShellRoot {
                     {
                         a1.roundcorners.isTopRight = true
                     }
-                    if (a1_Bottom && !a2_Bottom)
-                    {
-                        a1.roundcorners.isBottomRight = true
-                    }
                     if (a2_Top && !a1_Top)
                     {
                         a2.roundcorners.isTopLeft = true
+                    }
+                    if (a1_Bottom && !a2_Bottom)
+                    {
+                        a1.roundcorners.isBottomRight = true
                     }
                     if (a2_Bottom && !a1_Bottom)
                     {
@@ -164,13 +151,13 @@ ShellRoot {
                     {
                         a1.roundcorners.isLeftBottom = true
                     }
-                    if (a1_Right && !a2_Right)
-                    {
-                        a1.roundcorners.isRightBottom = true
-                    }
                     if (a2_Left && !a1_Left)
                     {
                         a2.roundcorners.isLeftTop = true
+                    }
+                    if (a1_Right && !a2_Right)
+                    {
+                        a1.roundcorners.isRightBottom = true
                     }
                     if (a2_Right && !a1_Right)
                     {
@@ -178,6 +165,6 @@ ShellRoot {
                     }
                 }
             }
-        }})
+        }
     }
 }

@@ -15,8 +15,8 @@ Item {
         sourceComponent: Shape {
             preferredRendererType: Shape.CurveRenderer
             ShapePath {
-                strokeColor: "transparent"
                 fillColor: _.color
+                strokeColor: "transparent"
                 startX: _.radius
                 startY: 0
                 PathLine { x: 0; y: 0 }

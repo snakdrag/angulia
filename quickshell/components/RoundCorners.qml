@@ -4,9 +4,7 @@ Item {
 
     anchors.fill: parent
 
-    property real radius: (parent.radius)
     property color color: (parent.color)
-
     property bool isTopLeft: (false)
     property bool isTopRight: (false)
     property bool isLeftTop: (false)
@@ -15,7 +13,7 @@ Item {
     property bool isRightBottom: (false)
     property bool isBottomLeft: (false)
     property bool isBottomRight: (false)
-
+    property real radius: (parent.radius)
     property real topLeftRadius: (this.radius)
     property real topRightRadius: (this.radius)
     property real leftTopRadius: (this.radius)
@@ -24,7 +22,6 @@ Item {
     property real rightBottomRadius: (this.radius)
     property real bottomLeftRadius: (this.radius)
     property real bottomRightRadius: (this.radius)
-
     readonly property real widthRadius: Math.min(this.radius, this.width / 2)
     readonly property real heightRadius: Math.min(this.radius, this.height / 2)
     readonly property real finalRadius: Math.min(this.widthRadius, this.heightRadius)

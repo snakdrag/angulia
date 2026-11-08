@@ -2,6 +2,7 @@ pragma Singleton
 import Quickshell // for Singleton and DesktopEntries
 
 Singleton {
+
     readonly property ObjectModel applications: (DesktopEntries.applications)
 
     function search(text)
