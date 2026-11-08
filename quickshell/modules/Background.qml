@@ -1,10 +1,13 @@
 import QtQuick
 import "../components"
 
-Image {
-    property string wallpaper: (Datas.colors.image)
-
+Rectangle {
     anchors.fill: parent
-    source: this.wallpaper
-    fillMode: Image.PreserveAspectCrop
+    color: "#000000"
+    property string wallpaper: (Datas.colors.image)
+    Image {
+        anchors.fill: parent
+        source: parent.wallpaper
+        fillMode: Image.PreserveAspectCrop
+    }
 }
