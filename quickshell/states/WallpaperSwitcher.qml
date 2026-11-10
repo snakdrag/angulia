@@ -38,7 +38,7 @@ Singleton {
             if (_.open) close();
             else
             {
-                open()
+                open();
             }
         }
     }
@@ -56,16 +56,20 @@ Singleton {
                 name: fileName,
                 path: filePath,
                 execute: function() {
-                Quickshell.execDetached(["sh", "-c", "~/.config/quickshell/angulia/script/wallpaper.sh \"$0\"", filePath])
+                Quickshell.execDetached(
+                    ["sh", "-c", "~/.config/quickshell/angulia/script/wallpaper.sh \"$0\"", filePath]
+                )
             }})
         }
     }
     function search(text)
     {
-        return [...this.wallpapers].filter(entry => {
-        let i = 0;
-        return [...text.toLowerCase()].every(
-            char => (i = entry.name.toLowerCase().indexOf(char, i)) !== -1 && i++ >= 0
-        )})
+        return [...this.wallpapers].filter(
+            entry => {
+            let i = 0;
+            return [...text.toLowerCase()].every(
+                char => (i = entry.name.toLowerCase().indexOf(char, i)) !== -1 && i++ >= 0
+            )}
+        )
     }
 }

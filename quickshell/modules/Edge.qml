@@ -10,27 +10,24 @@ Item {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.margins: this.edge
         anchors.topMargin: 0
 
+        exclusiveZoneIgnore: true
+        float: 0
         isVertical: false
         isHorizontal: true
-
-        exclusiveZoneIgnore: true
     }
     Panel {
 
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.margins: this.edge
         anchors.bottomMargin: 0
 
+        exclusiveZoneIgnore: true
+        float: 0
         isVertical: false
         isHorizontal: true
-
-        exclusiveZoneIgnore: true
-
     }
     Panel {
 
@@ -41,10 +38,9 @@ Item {
 
         radius: 0
 
+        exclusiveZoneIgnore: true
         isVertical: true
         isHorizontal: false
-
-        exclusiveZoneIgnore: true
     }
     Panel {
 
@@ -55,9 +51,8 @@ Item {
 
         radius: 0
 
+        exclusiveZoneIgnore: true
         isVertical: true
         isHorizontal: false
-
-        exclusiveZoneIgnore: true
     }
 }

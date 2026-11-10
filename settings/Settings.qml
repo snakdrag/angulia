@@ -24,6 +24,8 @@ Singleton {
 
     readonly property int gaps_out: (this.data.gaps_out)
 
+    readonly property list<var> commands: (this.data.commands)
+
     readonly property var clock: (this.data.clock)
     readonly property var popup: (this.data.popup)
     readonly property var polkit: (this.data.polkit)

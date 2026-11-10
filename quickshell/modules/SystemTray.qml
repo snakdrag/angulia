@@ -1,46 +1,49 @@
 import QtQuick
-import Quickshell // for ScriptModel
-import Quickshell.Widgets
+import Quickshell
 import "../components"
 import "../states" as States
 
 Panel {
     id: _
 
-    sets: Datas.settings.systemtray
-
     implicitWidth: Math.max(_list.contentWidth, this.cardWidth) + this.space * 2
     implicitHeight: Math.max(_list.contentHeight, this.cardHeight) + this.space * 2
 
     exclusiveZoneIgnore: true
-
+    sets: Datas.settings.systemtray
     show: _list.contentWidth > 0 || _list.contentHeight > 0
 
     ClippingRectangle {
+
         anchors.fill: parent
         anchors.margins: parent.space
-        radius: parent.radius
+
         color: parent.backgroundColor
-        visible: parent.show
+        radius: parent.radius
+
         List {
             id: _list
-            spacing: _.space
+
             interactive: false
             myMode: _.myMode
+            spacing: _.space
+
             model: ScriptModel { values: States.SystemTray.items.values }
             delegate: Item {
-                id: _card
+
                 required property var modelData
-                implicitWidth: _main.width
-                implicitHeight: _main.height
+
+                implicitWidth: _.cardWidth
+                implicitHeight: _.cardHeight
+
                 Card {
-                    id: _main
-                    implicitWidth: _.cardWidth
-                    implicitHeight: _.cardHeight
+
+                    anchors.fill: parent
+
                     color: _.cardColor
-                    space: _.space
                     radius: _.radius
 
+                    space: _.space
                     myMode: _.myMode
 
                     cover.color: _.textColor
