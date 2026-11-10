@@ -34,7 +34,7 @@ Panel {
         background.color: parent.cardColor
         background.radius: parent.radius
 
-        onTextChanged: _list.currentIndex = 0
+        onTextChanged: Qt.callLater(() => {_list.currentIndex = 0})
         Keys.onUpPressed: if (_list.count > 0) _list.currentIndex = Math.max(_list.currentIndex - 1, 0)
         Keys.onDownPressed: if (_list.count > 0) _list.currentIndex = Math.min(_list.currentIndex + 1, _list.count - 1)
         Keys.onLeftPressed: if (_list.count > 0) _list.currentIndex = Math.max(_list.currentIndex - 1, 0)
