@@ -3,124 +3,154 @@
   "edge": 5,
   "float": 0,
   "space": 10,
-
   "gaps_in": 5,
   "gaps_out": 15,
-
   "example": {
-    "font": { "family": "Inter", "pixelSize": 15, "bold": false },
+    "font": {
+      "family": "Inter",
+      "pixelSize": 15,
+      "bold": false
+    },
     "x": 800,
     "y": 0,
-
     "iconSize": 40,
     "width": 300,
     "height": 300,
-
     "cardWidth": 360,
     "cardHeight": 70,
-
     "myMode": true,
-
     "inputAtTop": false,
     "inputHeight": 30,
-
     "exclusiveZoneIgnore": false,
     "isVertical": true,
     "isHorizontal": false
   },
-
   "polkit": {
-    "font": { "family": "Inter", "pixelSize": 12, "bold": true },
+    "font": {
+      "family": "Inter",
+      "pixelSize": 12,
+      "bold": true
+    },
     "x": 800,
     "y": 0,
-
     "iconSize": 40,
     "width": 300,
-
     "myMode": true,
-
     "inputAtTop": true,
     "inputHeight": 30,
-
     "exclusiveZoneIgnore": false
   },
-
   "popup": {
-    "font": { "family": "Inter", "pixelSize": 12, "bold": true },
+    "font": {
+      "family": "Inter",
+      "pixelSize": 12,
+      "bold": true
+    },
     "iconSize": 20
   },
-
   "notifications": {
-    "font": { "family": "Inter", "pixelSize": 15, "bold": false },
+    "font": {
+      "family": "Inter",
+      "pixelSize": 15,
+      "bold": false
+    },
     "x": 800,
     "y": 0,
-
     "iconSize": 40,
     "width": 300,
-
     "myMode": true,
-
     "exclusiveZoneIgnore": false
   },
-
   "clock": {
-    "font": { "family": "Inter", "pixelSize": 15, "bold": false },
+    "font": {
+      "family": "Inter",
+      "pixelSize": 15,
+      "bold": false
+    },
     "x": 800,
     "y": 900,
-
     "width": 300,
     "height": 50,
-
     "exclusiveZoneIgnore": true,
     "isVertical": false,
     "isHorizontal": true
   },
-
   "systemtray": {
     "x": 1600,
     "y": 900,
-
     "myMode": true,
-
     "iconSize": 24,
     "cardWidth": 30,
     "cardHeight": 30,
-
     "exclusiveZoneIgnore": true,
     "isVertical": false,
     "isHorizontal": true
   },
-
   "launcher": {
-    "font": { "family": "Inter", "pixelSize": 12, "bold": false },
+    "font": {
+      "family": "Inter",
+      "pixelSize": 12,
+      "bold": false
+    },
     "x": 800,
     "y": 0,
-
     "iconSize": 40,
     "cardWidth": 120,
     "cardHeight": 80,
-
     "myMode": true,
-
     "inputAtTop": true,
     "inputHeight": 30,
-
     "exclusiveZoneIgnore": true
   },
-
   "wallpaperswitcher": {
-    "font": { "family": "Inter", "pixelSize": 12, "bold": false },
+    "font": {
+      "family": "Inter",
+      "pixelSize": 12,
+      "bold": false
+    },
     "x": 800,
     "y": 0,
-
     "cardWidth": 320,
     "cardHeight": 180,
-
     "myMode": true,
-
     "inputAtTop": true,
     "inputHeight": 30,
-
     "exclusiveZoneIgnore": true
-  }
+  },
+  "commands": [
+    {
+      "icon": "system-reboot",
+      "name": "Reboot",
+      "command": [
+        "systemctl",
+        "reboot"
+      ]
+    },
+    {
+      "icon": "system-shutdown",
+      "name": "Poweroff",
+      "command": [
+        "systemctl",
+        "poweroff"
+      ]
+    },
+    {
+      "icon": "system-log-out",
+      "name": "Logout",
+      "command": [
+        "sh",
+        "-c",
+        "command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"
+      ]
+    },
+    {
+      "icon": "preferences-desktop-wallpaper",
+      "name": "Wallpaper switcher",
+      "command": [
+        "sh",
+        "-c",
+        "qs ipc call wallpaperswitcher open"
+      ]
+    }
+  ]
 }
