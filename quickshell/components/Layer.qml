@@ -36,7 +36,7 @@ PanelWindow {
         _region.regions = [];
         for (let i = 0; i < this.modules.children.length; i++) {
             let module = this.modules.children[i];
-            if (module && module.roundcorners !== undefined) _region.regions.push(module.region);
+            if (module && module.roundcorners) _region.regions.push(module.region);
         }
     }
 }

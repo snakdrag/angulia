@@ -165,7 +165,10 @@ Panel {
                 function act()
                 {
                     if (this.haveAction) this.modelData.actions[0].invoke();
-                    if (!this.haveAction) this.modelData.dismiss();
+                    else
+                    {
+                        this.modelData.dismiss();
+                    }
                 }
             }
         }

@@ -16,79 +16,86 @@ Panel {
     show: States.WallpaperSwitcher.open
     onShowChanged: { if (this.show) _field.forceActiveFocus(); _field.text = "" }
 
-    TextField {
-        id: _field
+    Item {
 
-        customY: parent.inputAtTop ? 0: parent.height
-        anchors.left: parent.left
-        anchors.right: parent.right
-        height: parent.inputHeight
+        anchors.fill: parent
 
-        color: parent.textColor
+        visible: parent.show
 
-        space: parent.space
+        TextField {
+            id: _field
 
-        font: parent.font
-        placeholderText: "Search..."
+            customY: _.inputAtTop ? 0: parent.height
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: _.inputHeight
 
-        background.color: parent.cardColor
-        background.radius: parent.radius
+            color: _.textColor
 
-        onTextChanged: Qt.callLater(() => {_list.currentIndex = 0})
-        Keys.onUpPressed: if (_list.count > 0) _list.currentIndex = Math.max(_list.currentIndex - 1, 0)
-        Keys.onDownPressed: if (_list.count > 0) _list.currentIndex = Math.min(_list.currentIndex + 1, _list.count - 1)
-        Keys.onLeftPressed: if (_list.count > 0) _list.currentIndex = Math.max(_list.currentIndex - 1, 0)
-        Keys.onRightPressed: if (_list.count > 0) _list.currentIndex = Math.min(_list.currentIndex + 1, _list.count - 1)
-        Keys.onReturnPressed: { if (_list.count > 0) _list.currentItem.modelData.execute(); States.Ipc.closeAll() }
-        Keys.onEscapePressed: States.Ipc.closeAll()
-    }
-    ClippingRectangle {
+            space: _.space
 
-        customY: parent.inputAtTop ? parent.height: 0
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.margins: parent.space
-        implicitWidth: parent.width - parent.space * 2
-        implicitHeight: parent.height - _field.height - parent.space * 3
+            font: _.font
+            placeholderText: "Search..."
 
-        color: parent.backgroundColor
-        radius: parent.radius
+            background.color: _.cardColor
+            background.radius: _.radius
 
-        List {
-            id: _list
+            onTextChanged: Qt.callLater(() => {_list.currentIndex = 0})
+            Keys.onUpPressed: if (_list.count > 0) _list.currentIndex = Math.max(_list.currentIndex - 1, 0)
+            Keys.onDownPressed: if (_list.count > 0) _list.currentIndex = Math.min(_list.currentIndex + 1, _list.count - 1)
+            Keys.onLeftPressed: if (_list.count > 0) _list.currentIndex = Math.max(_list.currentIndex - 1, 0)
+            Keys.onRightPressed: if (_list.count > 0) _list.currentIndex = Math.min(_list.currentIndex + 1, _list.count - 1)
+            Keys.onReturnPressed: { if (_list.count > 0) _list.currentItem.modelData.execute(); States.Ipc.closeAll() }
+            Keys.onEscapePressed: States.Ipc.closeAll()
+        }
+        ClippingRectangle {
 
-            spacing: _.space
-            displaced: null
-            myMode: _.myMode
+            customY: _.inputAtTop ? parent.height: 0
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.margins: _.space
+            implicitWidth: parent.width - _.space * 2
+            implicitHeight: parent.height - _field.height - _.space * 3
 
-            model: ScriptModel {
-                values: States.WallpaperSwitcher.search(_field.text).sort((a, b) => a.name.localeCompare(b.name))
-            }
-            delegate: Item {
+            color: _.backgroundColor
+            radius: _.radius
 
-                required property var modelData
-                required property int index
+            List {
+                id: _list
 
-                implicitWidth: _.cardWidth
-                implicitHeight: _.cardHeight
+                spacing: _.space
+                displaced: null
+                myMode: _.myMode
 
-                Card {
+                model: ScriptModel {
+                    values: States.WallpaperSwitcher.search(_field.text).sort((a, b) => a.name.localeCompare(b.name))
+                }
+                delegate: Item {
 
-                    anchors.fill: parent
+                    required property var modelData
+                    required property int index
 
-                    color: _.cardColor
-                    radius: _.radius
+                    implicitWidth: _.cardWidth
+                    implicitHeight: _.cardHeight
 
-                    active: this.hovered || parent.index === _list.currentIndex
-                    myMode: _.myMode
+                    Card {
 
-                    cover.color: _.textColor
+                        anchors.fill: parent
 
-                    image.width: this.width
-                    image.height: this.height
-                    image.source: parent.modelData.path
-                    image.fillMode: Image.PreserveAspectCrop
+                        color: _.cardColor
+                        radius: _.radius
 
-                    onClicked: { parent.modelData.execute(); States.Ipc.closeAll() }
+                        active: this.hovered || parent.index === _list.currentIndex
+                        myMode: _.myMode
+
+                        cover.color: _.textColor
+
+                        image.width: this.width
+                        image.height: this.height
+                        image.source: parent.modelData.path
+                        image.fillMode: Image.PreserveAspectCrop
+
+                        onClicked: { parent.modelData.execute(); States.Ipc.closeAll() }
+                    }
                 }
             }
         }

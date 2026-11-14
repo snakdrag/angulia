@@ -10,6 +10,7 @@ Root {
 
     component LayerModule: Item { anchors.fill: parent }
 
+    Modules.LockScreen {}
     Layer {
         modules: _overlay
         layer: this.layers.Overlay
@@ -17,6 +18,7 @@ Root {
         LayerModule {
             id: _overlay
 
+            Modules.Close { show: States.Popup.open || States.Ipc.open || States.Polkit.open }
             Modules.WallpaperSwitcher {}
             Modules.Notifications {}
             Modules.Launcher {}
@@ -50,5 +52,4 @@ Root {
             Modules.Background {}
         }
     }
-    Modules.LockScreen {}
 }

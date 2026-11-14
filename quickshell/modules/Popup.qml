@@ -62,7 +62,7 @@ Panel {
                     image.anchors.bottomMargin: 0
                     image.width: _.iconSize
                     image.height: _.iconSize
-                    image.source: parent.modelData.icon
+                    image.source: parent.modelData.icon || ""
 
                     mouseArea.cursorShape: parent.modelData.isSeparator ? Qt.ArrowCursor: Qt.PointingHandCursor
 

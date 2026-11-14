@@ -16,8 +16,7 @@ TextInput {
     rightPadding: this.space
 
     clip: true
-    enabled: true
-    focus: true
+    wrapMode: Text.WrapAnywhere
 
     verticalAlignment: TextInput.AlignVCenter
 
@@ -34,8 +33,10 @@ TextInput {
         color: parent.color
         opacity: 0.5
 
+        elide: Text.ElideRight
         font: parent.font
         text: parent.placeholderText
+        wrapMode: Text.WrapAnywhere
 
         verticalAlignment: parent.verticalAlignment
         horizontalAlignment: parent.horizontalAlignment

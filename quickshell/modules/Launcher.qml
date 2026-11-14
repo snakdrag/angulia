@@ -17,97 +17,104 @@ Panel {
 
     onShowChanged: { if (this.show) _field.forceActiveFocus(); _field.text = "" }
 
-    TextField {
-        id: _field
+    Item {
 
-        customY: parent.inputAtTop ? 0: parent.height
-        anchors.left: parent.left
-        anchors.right: parent.right
-        height: parent.inputHeight
+        anchors.fill: parent
 
-        color: parent.textColor
-        space: parent.space
+        visible: parent.show
 
-        font: parent.font
-        placeholderText: "Search..."
+        TextField {
+            id: _field
 
-        background.color: parent.cardColor
-        background.radius: parent.radius
+            customY: _.inputAtTop ? 0: parent.height
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: _.inputHeight
 
-        onTextChanged: Qt.callLater(() => {_list.currentIndex = 0})
-        Keys.onUpPressed: if (_list.count > 0) _list.currentIndex = Math.max(_list.currentIndex - 1, 0)
-        Keys.onDownPressed: if (_list.count > 0) _list.currentIndex = Math.min(_list.currentIndex + 1, _list.count - 1)
-        Keys.onLeftPressed: if (_list.count > 0) _list.currentIndex = Math.max(_list.currentIndex - 1, 0)
-        Keys.onRightPressed: if (_list.count > 0) _list.currentIndex = Math.min(_list.currentIndex + 1, _list.count - 1)
-        Keys.onReturnPressed: {
-            if (_list.count > 0) Quickshell.execDetached(_list.currentItem.modelData.command);
-            States.Ipc.closeAll()
-        }
-        Keys.onEscapePressed: States.Ipc.closeAll()
-    }
-    ClippingRectangle {
+            color: _.textColor
+            space: _.space
 
-        customY: parent.inputAtTop ? parent.height: 0
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.margins: parent.space
-        implicitWidth: parent.width - parent.space * 2
-        implicitHeight: parent.height - _field.height - parent.space * 3
+            font: _.font
+            placeholderText: "Search..."
 
-        radius: parent.radius
-        color: parent.backgroundColor
+            background.color: _.cardColor
+            background.radius: _.radius
 
-        List {
-            id: _list
-
-            spacing: _.space
-            displaced: null
-            myMode: _.myMode
-
-            model: ScriptModel {
-                values: States.Launcher.search(_field.text).sort((a, b) => a.name.localeCompare(b.name))
+            onTextChanged: Qt.callLater(() => {_list.currentIndex = 0})
+            Keys.onUpPressed: if (_list.count > 0) _list.currentIndex = Math.max(_list.currentIndex - 1, 0)
+            Keys.onDownPressed: if (_list.count > 0) _list.currentIndex = Math.min(_list.currentIndex + 1, _list.count - 1)
+            Keys.onLeftPressed: if (_list.count > 0) _list.currentIndex = Math.max(_list.currentIndex - 1, 0)
+            Keys.onRightPressed: if (_list.count > 0) _list.currentIndex = Math.min(_list.currentIndex + 1, _list.count - 1)
+            Keys.onReturnPressed: {
+                if (_list.count > 0) Quickshell.execDetached(_list.currentItem.modelData.command);
+                States.Ipc.closeAll()
             }
-            delegate: Item {
+            Keys.onEscapePressed: States.Ipc.closeAll()
+        }
+        ClippingRectangle {
 
-                required property var modelData
-                required property int index
+            customY: _.inputAtTop ? parent.height: 0
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.margins: _.space
+            implicitWidth: parent.width - _.space * 2
+            implicitHeight: parent.height - _field.height - _.space * 3
 
-                implicitWidth: _main.width
-                implicitHeight: _main.height
+            radius: _.radius
+            color: _.backgroundColor
 
-                Card {
-                    id: _main
+            List {
+                id: _list
 
-                    implicitWidth: _.cardWidth
-                    implicitHeight: this.myMode ? _.cardHeight: Math.max(_.cardHeight, this.textHeight) + this.space * 2
+                spacing: _.space
+                displaced: null
+                myMode: _.myMode
 
-                    color: _.cardColor
-                    radius: _.radius
+                model: ScriptModel {
+                    values: States.Launcher.search(_field.text).sort((a, b) => a.name.localeCompare(b.name))
+                }
+                delegate: Item {
 
-                    active: this.hovered || parent.index === _list.currentIndex
-                    myMode: _.myMode
-                    space: _.space
+                    required property var modelData
+                    required property int index
 
-                    cover.color: _.textColor
+                    implicitWidth: _main.width
+                    implicitHeight: _main.height
 
-                    image.width: _.iconSize
-                    image.height: _.iconSize
-                    image.source: Quickshell.iconPath(parent.modelData.icon, true)
+                    Card {
+                        id: _main
 
-                    topText.font.family: _.font.family
-                    topText.font.pixelSize: _.font.pixelSize
-                    topText.font.bold: true
-                    topText.text: parent.modelData.name
-                    topText.color: _.textColor
-                    topText.maximumLineCount: 1
+                        implicitWidth: _.cardWidth
+                        implicitHeight: this.myMode ? _.cardHeight: Math.max(_.cardHeight, this.textHeight) + this.space * 2
 
-                    bottomText.font.family: _.font.family
-                    bottomText.font.pixelSize: _.font.pixelSize
-                    bottomText.font.bold: false
-                    bottomText.text: parent.modelData.comment || ""
-                    bottomText.color: _.textColor
-                    bottomText.maximumLineCount: 1
+                        color: _.cardColor
+                        radius: _.radius
 
-                    onClicked: { Quickshell.execDetached(parent.modelData.command); States.Ipc.closeAll() }
+                        active: this.hovered || parent.index === _list.currentIndex
+                        myMode: _.myMode
+                        space: _.space
+
+                        cover.color: _.textColor
+
+                        image.width: _.iconSize
+                        image.height: _.iconSize
+                        image.source: Quickshell.iconPath(parent.modelData.icon, true)
+
+                        topText.font.family: _.font.family
+                        topText.font.pixelSize: _.font.pixelSize
+                        topText.font.bold: true
+                        topText.text: parent.modelData.name
+                        topText.color: _.textColor
+                        topText.maximumLineCount: 1
+
+                        bottomText.font.family: _.font.family
+                        bottomText.font.pixelSize: _.font.pixelSize
+                        bottomText.font.bold: false
+                        bottomText.text: parent.modelData.comment || ""
+                        bottomText.color: _.textColor
+                        bottomText.maximumLineCount: 1
+
+                        onClicked: { Quickshell.execDetached(parent.modelData.command); States.Ipc.closeAll() }
+                    }
                 }
             }
         }

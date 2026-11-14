@@ -1,6 +1,6 @@
 pragma Singleton
 import QtQuick
-import Quickshell // for Singleton
+import Quickshell
 
 Singleton {
     id: _
@@ -21,19 +21,31 @@ Singleton {
 
     function set()
     {
-        Qt.callLater(() => {
-        let _top = 0; let _left = 0; let _right = 0; let _bottom = 0
-        for (let i = 0; i < this.modules.length; i++)
-        {
-            let module = this.modules[i]
-            if (module && module.exclusiveZones !== undefined && module.exclusiveZoneIgnore)
+        Qt.callLater(
+            () => {
+            let _top = 0;
+            let _left = 0;
+            let _right = 0;
+            let _bottom = 0;
+            for (let i = 0; i < this.modules.length; i++)
             {
-                if (module.exclusiveZones.top > _top) _top = module.exclusiveZones.top
-                if (module.exclusiveZones.left > _left) _left = module.exclusiveZones.left
-                if (module.exclusiveZones.right > _right) _right = module.exclusiveZones.right
-                if (module.exclusiveZones.bottom > _bottom) _bottom = module.exclusiveZones.bottom
+                let module = this.modules[i];
+                if (module && module.exclusiveZoneIgnore && module.visible)
+                {
+                    let mT = module.anchors.topMargin + module.height;
+                    let mL = module.anchors.leftMargin + module.width;
+                    let mR = module.anchors.rightMargin + module.width;
+                    let mB = module.anchors.bottomMargin + module.height;
+                    if (module.isTop && _top < mT) _top = mT;
+                    if (module.isLeft && _left < mL) _left = mL;
+                    if (module.isRight && _right < mR) _right = mR;
+                    if (module.isBottom && _bottom < mB) _bottom = mB;
+                }
             }
-        }
-        this.top = _top; this.left = _left; this.right = _right; this.bottom = _bottom})
+            this.top = _top;
+            this.left = _left;
+            this.right = _right;
+            this.bottom = _bottom;
+        })
     }
 }
