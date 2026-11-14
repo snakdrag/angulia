@@ -16,7 +16,6 @@ TextInput {
     rightPadding: this.space
 
     clip: true
-    wrapMode: Text.WrapAnywhere
 
     verticalAlignment: TextInput.AlignVCenter
 
