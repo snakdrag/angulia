@@ -7,7 +7,7 @@ Panel {
     id: _
 
     implicitWidth: this.sets.width
-    implicitHeight: _field.height + _card.height + this.space * 3
+    implicitHeight: this.inputHeight + _card.height + this.space * 3
 
     sets: Datas.settings.polkit
     show: States.Polkit.open

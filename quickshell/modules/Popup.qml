@@ -28,6 +28,8 @@ Panel {
         color: parent.backgroundColor
         radius: parent.radius
 
+        visible: parent.show
+
         List {
             id: _list
 

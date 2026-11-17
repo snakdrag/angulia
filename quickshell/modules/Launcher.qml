@@ -7,7 +7,7 @@ Panel {
     id: _
 
     implicitWidth: Math.max(_list.contentWidth, this.cardWidth) + this.space * 2
-    implicitHeight: _field.height + this.space * 2 + (
+    implicitHeight: this.inputHeight + this.space * 2 + (
         _list.contentWidth === 0 || _list.contentHeight === 0 ?
         0: Math.max(_list.contentHeight, this.cardHeight) + this.space
     )
