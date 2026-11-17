@@ -14,6 +14,7 @@ Panel {
 
     sets: Datas.settings.wallpaperswitcher
     show: States.WallpaperSwitcher.open
+
     onShowChanged: { if (this.show) _field.forceActiveFocus(); _field.text = "" }
 
     Item {

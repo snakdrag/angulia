@@ -11,6 +11,7 @@ Panel {
 
     sets: Datas.settings.polkit
     show: States.Polkit.open
+
     onShowChanged: { if (this.show) _field.forceActiveFocus(); _field.text = ""; States.Polkit.agent.lock = false }
 
     Item {

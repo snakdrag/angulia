@@ -16,6 +16,7 @@ TextInput {
     rightPadding: this.space
 
     clip: true
+    focus: true
 
     verticalAlignment: TextInput.AlignVCenter
 
