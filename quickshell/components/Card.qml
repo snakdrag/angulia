@@ -10,7 +10,11 @@ Button {
     readonly property CustomImage image: (_image)
     readonly property Text topText: (_toptext)
     readonly property Text bottomText: (_bottomtext)
-    readonly property int textHeight: (this.topText.height + (this.bottomText.text === "" ? 0: this.bottomText.height + this.bottomText.anchors.topMargin))
+    readonly property int textHeight: (
+        this.topText.height + (
+            this.bottomText.text === "" ? 0: this.bottomText.height + this.bottomText.anchors.topMargin
+        )
+    )
 
     Behavior on x { CustomNumberAnimation {} }
     Behavior on y { CustomNumberAnimation {} }
