@@ -11,13 +11,13 @@ local locked = { locked = true }
 local repeating = { repeating = true }
 local locked_repeating = { locked = true, repeating = true }
 
-----------------
--- quickshell --
-----------------
+-------------
+-- angulia --
+-------------
 
-binds.create(binds.quickshell.launcher, hl.dsp.exec_cmd("qs ipc call launcher toggle"))
-binds.create(binds.quickshell.wallpaperswitcher, hl.dsp.exec_cmd("qs ipc call wallpaperswitcher toggle"))
-binds.create(binds.quickshell.lock, hl.dsp.exec_cmd("qs ipc call lockscreen lock"))
+binds.create(binds.angulia.lock, hl.dsp.global("angulia:lock"))
+binds.create(binds.angulia.launcher, hl.dsp.global("angulia:launcher"))
+binds.create(binds.angulia.wallpaperswitcher, hl.dsp.global("angulia:wallpaperswitcher"))
 
 -------------
 -- session --

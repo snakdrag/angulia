@@ -38,7 +38,7 @@ binds_create("SUPER + R", hl.dsp.exec_cmd(
 
 return {
     create = binds_create,
-    quickshell = {
+    angulia = {
         launcher = "SUPER + A",
         lock = "SUPER + L",
         wallpaperswitcher = "SUPER + S",

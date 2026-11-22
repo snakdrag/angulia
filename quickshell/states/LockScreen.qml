@@ -1,6 +1,7 @@
 pragma Singleton
 import Quickshell // for Singleton
 import Quickshell.Io
+import "../components"
 import "../services" as Services
 
 Singleton {
@@ -15,6 +16,11 @@ Singleton {
 
     onIsSuccessfulChanged: if (this.isSuccessful) _.open = false
     onFailedChanged: if (this.failed) _.placeholderText = "Password Incorrect"
+
+    GlobalShortcut {
+        name: "lock"
+        onPressed: _.ipc.lock()
+    }
 
     IpcHandler {
         id: _ipc

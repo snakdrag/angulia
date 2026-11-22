@@ -3,6 +3,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Qt.labs.folderlistmodel
+import "../components"
 
 Singleton {
     id: _
@@ -18,6 +19,11 @@ Singleton {
     }
     readonly property IpcHandler ipc: (_ipc)
     readonly property string wallpaperFile: ("~/Pictures/Wallpapers")
+
+    GlobalShortcut {
+        name: "wallpaperswitcher"
+        onPressed: _.ipc.toggle()
+    }
 
     IpcHandler {
         id: _ipc

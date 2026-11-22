@@ -1,5 +1,3 @@
-import QtQuick
-import Quickshell
 import "../components"
 import "../states" as States
 import "../widgets" as Widgets

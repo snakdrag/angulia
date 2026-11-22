@@ -1,6 +1,7 @@
 pragma Singleton
 import Quickshell
 import Quickshell.Io
+import "../components"
 import "../services" as Services
 import "../../settings"
 
@@ -11,6 +12,11 @@ Singleton {
     readonly property list<var> commands: (Settings.commands)
     readonly property IpcHandler ipc: (_ipc)
     readonly property ObjectModel applications: (Services.DesktopEntries.applications)
+
+    GlobalShortcut {
+        name: "launcher"
+        onPressed: _.ipc.toggle()
+    }
 
     IpcHandler {
         id: _ipc
