@@ -11,14 +11,20 @@ Item {
     height: this.radius
 
     Loader {
+
         active: parent.radius > 0 && parent.visible && parent.opacity > 0
-        sourceComponent: Shape {
+
+        Shape {
+
             preferredRendererType: Shape.CurveRenderer
+
             ShapePath {
+
                 fillColor: _.color
                 strokeColor: "transparent"
                 startX: _.radius
                 startY: 0
+
                 PathLine { x: 0; y: 0 }
                 PathLine { x: 0; y: _.radius }
                 PathArc { x: _.radius; y: 0; radiusX: _.radius; radiusY: _.radius }

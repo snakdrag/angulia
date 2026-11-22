@@ -1,6 +1,7 @@
 pragma Singleton
 import QtQuick
 import Quickshell
+import Quickshell.Wayland
 
 Singleton {
     id: _
@@ -12,7 +13,12 @@ Singleton {
     property list<var> modules: []
     readonly property int gaps_out: (Datas.settings.gaps_out)
 
-    component ExclusiveZone: PanelWindow { implicitWidth: 0; implicitHeight: 0 }
+    component ExclusiveZone:
+    PanelWindow {
+        implicitWidth: 0
+        implicitHeight: 0
+        WlrLayershell.namespace: "angulia-exclusion"
+    }
 
     ExclusiveZone { anchors.top: true; exclusiveZone: _.gaps_out + _.top }
     ExclusiveZone { anchors.left: true; exclusiveZone: _.gaps_out + _.left }

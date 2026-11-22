@@ -29,6 +29,7 @@ Panel {
             customY: _.inputAtTop ? 0: parent.height
             anchors.left: parent.left
             anchors.right: parent.right
+            anchors.margins: _.space
             height: _.inputHeight
 
             color: _.textColor
@@ -66,7 +67,6 @@ Panel {
                 id: _list
 
                 spacing: _.space
-                displaced: null
                 myMode: _.myMode
 
                 model: ScriptModel {

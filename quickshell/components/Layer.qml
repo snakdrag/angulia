@@ -25,6 +25,13 @@ PanelWindow {
         this.layer === this.layers.Bottom ? WlrLayer.Bottom:
         WlrLayer.Background
     )
+    WlrLayershell.namespace: "angulia-" + (
+        this.layer === this.layers.Overlay ? "overlay":
+        this.layer === this.layers.Top ? "top":
+        this.layer === this.layers.Bottom ? "bottom":
+        this.layer === this.layers.Background ? "background":
+        "unknown"
+    )
 
     Component.onCompleted: setRegions()
 

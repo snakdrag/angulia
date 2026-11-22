@@ -18,7 +18,7 @@ Root {
         LayerModule {
             id: _overlay
 
-            Modules.Close { show: States.Popup.open || States.Ipc.open || States.Polkit.open }
+            Modules.Close { show: States.Ipc.open || States.Polkit.open }
             Modules.WallpaperSwitcher {}
             Modules.Notifications {}
             Modules.Launcher {}

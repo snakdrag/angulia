@@ -12,6 +12,7 @@ Panel {
     Widgets.Notifications {
         id: _notifications
 
+        x: 0; y: 0
         anchors.fill: parent
         anchors.margins: parent.space
     }

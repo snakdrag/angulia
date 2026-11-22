@@ -34,8 +34,10 @@ CustomRectangle {
     Rectangle {
         id: _rectangle
 
-        anchors.fill: parent
         z: 1
+        anchors.centerIn: parent
+        implicitWidth: parent.width
+        implicitHeight: parent.height
 
         color: "transparent"
         opacity: parent.active ? 0.1: 0

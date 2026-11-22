@@ -60,6 +60,7 @@ CustomRectangle {
     Region { id: _region; item: _ }
     RoundCorners { id: _roundcorners }
 
+    onSetsChanged: root.check()
     onXChanged: root.check()
     onYChanged: root.check()
     onFloatChanged: ExclusiveZones.set()

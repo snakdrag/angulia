@@ -8,6 +8,7 @@ Button {
     property int space: (0)
     property bool myMode: (true)
     readonly property CustomImage image: (_image)
+    readonly property CustomItem item: (_item)
     readonly property Text topText: (_toptext)
     readonly property Text bottomText: (_bottomtext)
     readonly property int textHeight: (
@@ -45,6 +46,7 @@ Button {
             visible: this.status === Image.Ready && this.source != ""
         }
         CustomItem {
+            id: _item
 
             customY: parent.height / 2
             anchors.left: parent.left

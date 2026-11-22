@@ -10,7 +10,6 @@ TextInput {
 
     x: Math.max(this.anchors.leftMargin, Math.min(parent.width - this.anchors.rightMargin - this.width, this.customX - this.width / 2))
     y: Math.max(this.anchors.topMargin, Math.min(parent.height - this.anchors.bottomMargin - this.height, this.customY - this.height / 2))
-    anchors.margins: this.space
 
     leftPadding: this.space
     rightPadding: this.space

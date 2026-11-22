@@ -35,6 +35,7 @@ WlSessionLock {
             TextField {
 
                 anchors.fill: parent
+                anchors.margins: this.space
 
                 space: parent.space
 
