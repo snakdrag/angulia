@@ -54,12 +54,6 @@ CustomRectangle {
     bottomLeftRadius: this.roundcorners.isBottomLeft || this.roundcorners.isLeftBottom ? 0: this.radius
     bottomRightRadius: this.roundcorners.isBottomRight || this.roundcorners.isRightBottom ? 0: this.radius
 
-    Behavior on width { CustomNumberAnimation { onRunningChanged: {root.check(); ExclusiveZones.set()} } }
-    Behavior on height { CustomNumberAnimation { onRunningChanged: {root.check(); ExclusiveZones.set()} } }
-
-    Region { id: _region; item: _ }
-    RoundCorners { id: _roundcorners }
-
     onSetsChanged: root.check()
     onXChanged: root.check()
     onYChanged: root.check()
@@ -68,4 +62,10 @@ CustomRectangle {
     onIsLeftChanged: ExclusiveZones.set()
     onIsRightChanged: ExclusiveZones.set()
     onIsBottomChanged: ExclusiveZones.set()
+
+    Behavior on width { CustomNumberAnimation { onRunningChanged: {root.check(); ExclusiveZones.set()} } }
+    Behavior on height { CustomNumberAnimation { onRunningChanged: {root.check(); ExclusiveZones.set()} } }
+
+    Region { id: _region; item: _ }
+    RoundCorners { id: _roundcorners }
 }

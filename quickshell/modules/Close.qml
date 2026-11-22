@@ -3,29 +3,24 @@ import Quickshell
 import "../components"
 import "../states" as States
 
-Panel {
+Button {
+    id: _
 
-    customX: parent.width / 2
-    customY: parent.height / 2
+    property bool show: (false)
+    readonly property Region region: (_region)
+
     z: -1
-    maxWidth: parent.width
-    maxHeight: parent.height
-    implicitWidth: parent.width
-    implicitHeight: parent.height
+    implicitWidth: this.show ? parent.width: 0
+    implicitHeight: this.show ? parent.height: 0
 
     color: "transparent"
-    edge: 0
-    float: 0
 
-    MouseArea {
+    mouseArea.cursorShape: Qt.ArrowCursor
 
-        anchors.fill: parent
-
-        acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-
-        onClicked: {
-            States.Popup.close()
-            States.Ipc.closeAll()
-        }
+    onClicked: {
+        States.Popup.close()
+        States.Ipc.closeAll()
     }
+
+    Region { id: _region; item: _ }
 }
