@@ -39,7 +39,7 @@ binds_create("SUPER + R", hl.dsp.exec_cmd(
 return {
     create = binds_create,
     angulia = {
-        launcher = "SUPER + A",
+        launcher = "SUPER_L",
         lock = "SUPER + L",
         wallpaperswitcher = "SUPER + S",
     },

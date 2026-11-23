@@ -1,7 +1,6 @@
 pragma Singleton
 import Quickshell
 import Quickshell.Io
-import "../components"
 import "../services" as Services
 import "../../settings"
 
@@ -15,7 +14,7 @@ Singleton {
 
     GlobalShortcut {
         name: "launcher"
-        onPressed: _.ipc.toggle()
+        onCalled: _.ipc.toggle()
     }
 
     IpcHandler {
@@ -23,21 +22,13 @@ Singleton {
 
         target: "launcher"
 
-        function open()
-        {
-            Ipc.closeAll()
-            _.open = true
-        }
-        function close()
-        {
-            _.open = false
-        }
         function toggle()
         {
-            if (_.open) close();
+            if (_.open) _.open = false;
             else
             {
-                open();
+                Ipc.closeAll()
+                _.open = true
             }
         }
     }

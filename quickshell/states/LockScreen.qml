@@ -1,7 +1,6 @@
 pragma Singleton
 import Quickshell // for Singleton
 import Quickshell.Io
-import "../components"
 import "../services" as Services
 
 Singleton {

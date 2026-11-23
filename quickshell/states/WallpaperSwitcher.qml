@@ -3,7 +3,6 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Qt.labs.folderlistmodel
-import "../components"
 
 Singleton {
     id: _
@@ -22,7 +21,7 @@ Singleton {
 
     GlobalShortcut {
         name: "wallpaperswitcher"
-        onPressed: _.ipc.toggle()
+        onCalled: _.ipc.toggle()
     }
 
     IpcHandler {
@@ -30,21 +29,13 @@ Singleton {
 
         target: "wallpaperswitcher"
 
-        function open()
-        {
-            Ipc.closeAll()
-            _.open = true
-        }
-        function close()
-        {
-            _.open = false
-        }
         function toggle()
         {
-            if (_.open) close();
+            if (_.open) _.open = false;
             else
             {
-                open();
+                Ipc.closeAll()
+                _.open = true
             }
         }
     }

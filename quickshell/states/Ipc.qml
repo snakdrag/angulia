@@ -3,6 +3,7 @@ import Quickshell // for Singleton
 
 Singleton {
 
+    property bool active: (false)
     readonly property bool open: (
         WallpaperSwitcher.open ||
         Launcher.open
@@ -10,7 +11,7 @@ Singleton {
 
     function closeAll()
     {
-        Launcher.ipc.close()
-        WallpaperSwitcher.ipc.close()
+        Launcher.open = false
+        WallpaperSwitcher.open = false
     }
 }
