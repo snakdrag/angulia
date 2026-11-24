@@ -1,6 +1,5 @@
 pragma Singleton
 import Quickshell
-import Quickshell.Io
 import "../services" as Services
 import "../../settings"
 
@@ -9,30 +8,22 @@ Singleton {
 
     property bool open: (false)
     readonly property list<var> commands: (Settings.commands)
-    readonly property IpcHandler ipc: (_ipc)
     readonly property ObjectModel applications: (Services.DesktopEntries.applications)
 
     GlobalShortcut {
         name: "launcher"
-        onCalled: _.ipc.toggle()
+        onCalled: _.toggle()
     }
 
-    IpcHandler {
-        id: _ipc
-
-        target: "launcher"
-
-        function toggle()
+    function toggle()
+    {
+        if (this.open) this.open = false;
+        else
         {
-            if (_.open) _.open = false;
-            else
-            {
-                Ipc.closeAll()
-                _.open = true
-            }
+            Ipc.closeAll()
+            this.open = true
         }
     }
-
     function search(text)
     {
         if (text === "") return [];

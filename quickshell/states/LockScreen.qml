@@ -1,6 +1,5 @@
 pragma Singleton
 import Quickshell // for Singleton
-import Quickshell.Io
 import "../services" as Services
 
 Singleton {
@@ -8,7 +7,6 @@ Singleton {
 
     property bool open: (false)
     property string placeholderText: ("")
-    readonly property IpcHandler ipc: (_ipc)
     readonly property bool inputLock: (Services.Pam.lock)
     readonly property bool isSuccessful: (Services.Pam.isSuccessful)
     readonly property bool failed: (Services.Pam.failed)
@@ -18,20 +16,13 @@ Singleton {
 
     GlobalShortcut {
         name: "lock"
-        onPressed: _.ipc.lock()
+        onCalled: _.lock()
     }
 
-    IpcHandler {
-        id: _ipc
-
-        target: "lockscreen"
-
-        function lock()
-        {
-            _.open = true
-        }
+    function lock()
+    {
+        this.open = true
     }
-
     function authenticate(password)
     {
         Services.Pam.authenticate(password)

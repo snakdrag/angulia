@@ -1,7 +1,6 @@
 pragma Singleton
 import QtQuick
 import Quickshell
-import Quickshell.Io
 import Qt.labs.folderlistmodel
 
 Singleton {
@@ -16,30 +15,22 @@ Singleton {
         sortField: FolderListModel.Name
         onStatusChanged: if (FolderListModel.Ready === status) _.updateWallpapers()
     }
-    readonly property IpcHandler ipc: (_ipc)
     readonly property string wallpaperFile: ("~/Pictures/Wallpapers")
 
     GlobalShortcut {
         name: "wallpaperswitcher"
-        onCalled: _.ipc.toggle()
+        onCalled: _.toggle()
     }
 
-    IpcHandler {
-        id: _ipc
-
-        target: "wallpaperswitcher"
-
-        function toggle()
+    function toggle()
+    {
+        if (this.open) this.open = false;
+        else
         {
-            if (_.open) _.open = false;
-            else
-            {
-                Ipc.closeAll()
-                _.open = true
-            }
+            Ipc.closeAll()
+            this.open = true
         }
     }
-
     function updateWallpapers()
     {
         this.wallpapers = []

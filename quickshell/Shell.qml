@@ -14,11 +14,19 @@ Root {
     Layer {
         modules: _overlay
         layer: this.layers.Overlay
-        focus: States.Ipc.open || States.Polkit.open
+        focus: States.WallpaperSwitcher.open || States.Launcher.open || States.Polkit.open
         LayerModule {
             id: _overlay
 
-            Modules.Close { show: States.Ipc.open || States.Polkit.open || States.Popup.open }
+            Modules.Close {
+
+                show: (
+                    States.WallpaperSwitcher.open ||
+                    States.Launcher.open ||
+                    States.Polkit.open ||
+                    States.Popup.open
+                )
+            }
             Modules.WallpaperSwitcher {}
             Modules.Notifications {}
             Modules.Launcher {}
@@ -49,6 +57,7 @@ Root {
         layer: this.layers.Background
         LayerModule {
             id: _background
+
             Modules.Background {}
         }
     }
