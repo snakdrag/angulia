@@ -46,6 +46,7 @@
       "pixelSize": 12,
       "bold": true
     },
+    "width": 300,
     "iconSize": 20
   },
   "notifications": {
@@ -55,7 +56,7 @@
       "bold": false
     },
     "x": 800,
-    "y": 0,
+    "y": 900,
     "iconSize": 40,
     "width": 300,
     "myMode": true,
@@ -70,7 +71,7 @@
     "x": 800,
     "y": 900,
     "width": 300,
-    "height": 50,
+    "height": 60,
     "exclusiveZoneIgnore": true,
     "isVertical": false,
     "isHorizontal": true
@@ -80,8 +81,8 @@
     "y": 900,
     "myMode": true,
     "iconSize": 24,
-    "cardWidth": 30,
-    "cardHeight": 30,
+    "cardWidth": 40,
+    "cardHeight": 40,
     "exclusiveZoneIgnore": true,
     "isVertical": false,
     "isHorizontal": true
@@ -149,7 +150,7 @@
       "command": [
         "sh",
         "-c",
-        "qs ipc call wallpaperswitcher open"
+        "hyprctl dispatch 'hl.dsp.global(\"angulia:wallpaperswitcher\")'"
       ]
     }
   ]
