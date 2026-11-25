@@ -14,7 +14,6 @@ Root {
     Layer {
         modules: _overlay
         layer: this.layers.Overlay
-        focus: States.WallpaperSwitcher.open || States.Launcher.open || States.Polkit.open
         LayerModule {
             id: _overlay
 
@@ -23,6 +22,7 @@ Root {
     Layer {
         modules: _top
         layer: this.layers.Top
+        focus: States.WallpaperSwitcher.open || States.Launcher.open || States.Polkit.open
         LayerModule {
             id: _top
 
