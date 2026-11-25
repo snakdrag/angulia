@@ -2,9 +2,15 @@ pragma Singleton
 import QtQuick // for color
 import Quickshell // for Singleton
 import Quickshell.Io // for FileView and JSON.parse
-import qs.angulia.quickshell.custom
 
 Singleton {
+
+    component Animation:
+    ColorAnimation {
+        duration: 300
+        easing.type: Easing.OutCubic
+    }
+
     readonly property var data: (JSON.parse(_colors.text()))
 
     FileView {
@@ -70,49 +76,49 @@ Singleton {
     property color outline_variant: (this.colors.outline_variant[this.mode].color)
 
 
-    Behavior on primary { CustomColorAnimation {} }
-    Behavior on on_primary { CustomColorAnimation {} }
-    Behavior on primary_container { CustomColorAnimation {} }
-    Behavior on on_primary_container { CustomColorAnimation {} }
+    Behavior on primary { Animation {} }
+    Behavior on on_primary { Animation {} }
+    Behavior on primary_container { Animation {} }
+    Behavior on on_primary_container { Animation {} }
 
-    Behavior on secondary { CustomColorAnimation {} }
-    Behavior on on_secondary { CustomColorAnimation {} }
-    Behavior on secondary_container { CustomColorAnimation {} }
-    Behavior on on_secondary_container { CustomColorAnimation {} }
+    Behavior on secondary { Animation {} }
+    Behavior on on_secondary { Animation {} }
+    Behavior on secondary_container { Animation {} }
+    Behavior on on_secondary_container { Animation {} }
 
-    Behavior on tertiary { CustomColorAnimation {} }
-    Behavior on on_tertiary { CustomColorAnimation {} }
-    Behavior on tertiary_container { CustomColorAnimation {} }
-    Behavior on on_tertiary_container { CustomColorAnimation {} }
+    Behavior on tertiary { Animation {} }
+    Behavior on on_tertiary { Animation {} }
+    Behavior on tertiary_container { Animation {} }
+    Behavior on on_tertiary_container { Animation {} }
 
-    Behavior on error { CustomColorAnimation {} }
-    Behavior on on_error { CustomColorAnimation {} }
-    Behavior on error_container { CustomColorAnimation {} }
-    Behavior on on_error_container { CustomColorAnimation {} }
+    Behavior on error { Animation {} }
+    Behavior on on_error { Animation {} }
+    Behavior on error_container { Animation {} }
+    Behavior on on_error_container { Animation {} }
 
-    Behavior on background { CustomColorAnimation {} }
-    Behavior on on_background { CustomColorAnimation {} }
+    Behavior on background { Animation {} }
+    Behavior on on_background { Animation {} }
 
-    Behavior on surface { CustomColorAnimation {} }
-    Behavior on surface_bright { CustomColorAnimation {} }
+    Behavior on surface { Animation {} }
+    Behavior on surface_bright { Animation {} }
 
-    Behavior on surface_container_lowest { CustomColorAnimation {} }
-    Behavior on surface_container_low { CustomColorAnimation {} }
-    Behavior on surface_container { CustomColorAnimation {} }
-    Behavior on surface_container_high { CustomColorAnimation {} }
-    Behavior on surface_container_highest { CustomColorAnimation {} }
+    Behavior on surface_container_lowest { Animation {} }
+    Behavior on surface_container_low { Animation {} }
+    Behavior on surface_container { Animation {} }
+    Behavior on surface_container_high { Animation {} }
+    Behavior on surface_container_highest { Animation {} }
 
-    Behavior on surface_dim { CustomColorAnimation {} }
-    Behavior on surface_tint { CustomColorAnimation {} }
+    Behavior on surface_dim { Animation {} }
+    Behavior on surface_tint { Animation {} }
 
-    Behavior on on_surface { CustomColorAnimation {} }
+    Behavior on on_surface { Animation {} }
 
-    Behavior on inverse_surface { CustomColorAnimation {} }
-    Behavior on inverse_on_surface { CustomColorAnimation {} }
+    Behavior on inverse_surface { Animation {} }
+    Behavior on inverse_on_surface { Animation {} }
 
-    Behavior on surface_variant { CustomColorAnimation {} }
-    Behavior on on_surface_variant { CustomColorAnimation {} }
+    Behavior on surface_variant { Animation {} }
+    Behavior on on_surface_variant { Animation {} }
 
-    Behavior on outline { CustomColorAnimation {} }
-    Behavior on outline_variant { CustomColorAnimation {} }
+    Behavior on outline { Animation {} }
+    Behavior on outline_variant { Animation {} }
 }
