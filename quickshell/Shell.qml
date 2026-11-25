@@ -18,8 +18,15 @@ Root {
         LayerModule {
             id: _overlay
 
-            Modules.Close {
+        }
+    }
+    Layer {
+        modules: _top
+        layer: this.layers.Top
+        LayerModule {
+            id: _top
 
+            Modules.Close {
                 show: (
                     States.WallpaperSwitcher.open ||
                     States.Launcher.open ||
@@ -32,14 +39,6 @@ Root {
             Modules.Launcher {}
             Modules.Polkit {}
             Modules.Popup {}
-        }
-    }
-    Layer {
-        modules: _top
-        layer: this.layers.Top
-        LayerModule {
-            id: _top
-
             Modules.Edge { id: _edge }
             Modules.Clock {}
             Modules.SystemTray {}

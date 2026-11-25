@@ -6,6 +6,7 @@ Rectangle {
 
     property string wallpaper: (Datas.colors.image)
 
+    z: -2
     anchors.fill: parent
     color: "#000000"
 

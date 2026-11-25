@@ -6,6 +6,7 @@ import "../states" as States
 Panel {
     id: _
 
+    z: 1
     implicitWidth: Math.max(_list.contentWidth, this.cardWidth) + this.space * 2
     implicitHeight: this.inputHeight + this.space * 2 + (
         _list.contentWidth === 0 || _list.contentHeight === 0 ?

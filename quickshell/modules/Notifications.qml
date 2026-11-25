@@ -3,6 +3,7 @@ import "../widgets" as Widgets
 
 Panel {
 
+    z: 1
     implicitWidth: this.sets.width
     implicitHeight: _notifications.contentHeight + this.space * 2
 
